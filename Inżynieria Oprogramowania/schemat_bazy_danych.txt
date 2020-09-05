@@ -1,0 +1,65 @@
+
+User 
+
+ID: integer(10) 
+
+Name:varchar(255) 
+
+Surname:varchar(255) 
+
+Nick:varchar(255) 
+
+Email:varchar(255) 
+
+DateBirth:date 
+
+Password:varchar(255) 
+
+News 
+
+ID:integer(10) 
+
+Title:varchar(255) 
+
+Content:varchar(255) 
+
+Imagename:varchar(255) 
+
+Videoname:varchar(255) 
+
+Match 
+
+ID:integer(10) 
+
+Home Team : varchar(255) 
+
+Away Team:varchar(255) 
+
+Score:varchar(255) 
+
+Team 
+
+ID:integer(10) 
+
+Name:varchar(255) 
+
+Points:integer(10) 
+
+Player 
+
+ID:integer(10) 
+
+Team:varchar(255) 
+
+Number of goals:integer(10) 
+
+Number of assists:integer(10) 
+
+Stat 
+
+ID:integer(10) 
+
+Name:varchar(255) 
+
+Season:integer(10) 
+
