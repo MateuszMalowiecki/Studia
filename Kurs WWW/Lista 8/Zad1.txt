@@ -1,0 +1,5 @@
+Główne składowe:
+host(bo musimy wiedzieć skąd klient pobiera dane)
+tags(musimy wiedzieć co możemy pobrać)
+paths(musimy wiedzieć co pobiera i w jaki sposób - get,post,put)
+definitions(żeby klient wiedział jak wyglądają ciała requestów)
