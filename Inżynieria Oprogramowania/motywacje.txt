@@ -1,0 +1,4 @@
+Jesteśmy tu po to żeby stworzyć aplikację ligi piłkarskiej która będzie niezbędnikiem każdego kibica. 
+Ponieważ naszymi klientami są ludzie, którzy oddali by życie za swoje ukochane drużyny, więc chcemy dać im możliwość szybkiego dostępu do najważniejszych informacji dot. ich drużyn oraz rozgrywek piłkarskich.  
+Jednocześnie chcemy, poprzez naszą aplikację, wspierać rozwój piłki nożnej w Polsce oraz zachęcać coraz większe grono ludzi do pokochania tego sportu. 
+Zdecydowaliśmy się wykonać ten projekt, ponieważ sami jesteśmy kibicami piłkarskimi i wiemy jak bardzo przydatna mogłaby być taka aplikacja dla kibica piłkarskiego.
