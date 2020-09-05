@@ -1,0 +1,12 @@
+1. injection(wrogie dane częścią polecenia) - chyba nie dotyczy, w poleceniach nie mamy żadnych danych
+2. broken authentication(umożliwienie atakującym złamanie haseł i przejęcie tożsamości użytkowników):
+chyba nie dotyczy, bo nie robimy jeszcze autentykacji.
+3.Sensitive data exposure(brak ochrony wrażliwych danych)-chyba nie dotyczy, bo nie używamy danych wrażliwych.
+4.XML External Entities (encje zewnętrzne w dokumentach XML)-chyba nie, brak XML'a
+5.Broken access control(problemy z autoryzacją) - chyba nie, brak autentykacji
+6.Security misconfiguration(błędna konfiguracja zabezpieczeń) - dotyczy, nie konfigurujemy zabezpieczeń.
+7.XSS(aplikacja zawiera niezaufane dane) - dotyczy, bo bierzemy dane od użytkownika.
+8.Insecure deserialization(niebezpieczna deserializacja) - nie dotyczy, bo nie robimy deserializacji.
+9. Using components with known vulnerabilities(wykorzystanie podatnych komponentów):
+chyba nie dotyczy, komponenty express nie są podatne na atak.
+10.Insufficient Logging&Monitoring(złe monitorowanie)-chyba nie dotyczy
