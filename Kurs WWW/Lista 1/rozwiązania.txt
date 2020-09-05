@@ -1,0 +1,38 @@
+Zad.1
+IIUwr - 156.17.4.11, admin.cs.uni.wroc.pl
+uj - 149.156.169.67, mailin1b.srv.uj.edu.pl i mailin1a.srv.uj.edu.pl
+Polecenia:
+nslookup www.ii.uni.wroc.pl
+nslookup -querytype=mx www.ii.uni.wroc.pl
+Zad.2
+Lokalizacja pliku hosts:
+c:\Windows\System32\Drivers\etc\
+Co się stało?:
+Po dopisaniu "79.96.11.200 pawel.ii.uni.wroc.pl" w trybie incognito pojawia się "strona w przygotowaniu".
+Po zamianie na "156.17.4.11 pawel.ii.uni.wroc.pl" pojawia się błąd 400("Bad request").
+Dlaczego?: 
+79.96.11.200 : Złe ID sieci.
+156.17.4.11 : Złe ID hosta
+Zad.3
+Bezstanowość protokołu http:
+Ani serwer (ani klient) nie przechowuje informacji o wcześniejszych zapytaniach pomiędzy nimi.
+Powoduje to, że każde zapytanie do serwera traktowane jest jako ‚nowe’,
+z punktu widzenia serwera aplikacji niemożliwe do powiązania z informacjami np. o zalogowanym użytkowniku.
+Część 2:
+Otworzyć narzędzia, kliknąć w link.
+Zad.4
+Postman - Get(google.com)
+Dodanie języków: zmiana pola lang (polski : pl, niemiecki : de - PL, francuski : fr - PL).
+Zad.5
+Post(nazwa skryptu)
+Content-Length- Wielkość w bajtach przesyłanej zawartości.
+Get(nazwa skryptu)
+$_SERVER jest tablicą zawierającą informacje takie jak nagłówki, ścieżki i lokalizacje skryptów. Wpisy w tej tablicy są tworzone przez serwer WWWW. 
+Zad.8
+plik html - text/html
+plik jpg - image/jpeg
+plik png - image/png
+plik xml - text/xml
+plik json - application/json
+Wejść w fiddlera, nacisnąć na request od postmana -> comoposer -> parsed wpisujemy url obrazka, dajmey "POST",
+dopisujemy content-type, naciskamy execute. Potem (chyba) robimy get'a w postmanie. (chyba nic się nie zmienia).
