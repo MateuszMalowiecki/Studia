@@ -1,0 +1,3 @@
+same origin policy - Zgodnie z zasadami przeglądarka internetowa zezwala 
+skryptom zawartym na pierwszej stronie na dostęp do danych na drugiej stronie, 
+ale tylko wtedy, gdy obie strony mają to samo pochodzenie.
