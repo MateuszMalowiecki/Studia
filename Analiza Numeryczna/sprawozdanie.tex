@@ -1,0 +1,315 @@
+\documentclass[a4paper]{article}
+\usepackage[polish]{babel}
+\usepackage{graphicx} 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\author{Mateusz Małowiecki}
+\title{Sprawozdanie do zadania P3.15}
+\begin{document}
+\maketitle
+\section{Wstęp}
+Układy równań zwykle zapisuje się w postaci macierzowej: 
+\begin{equation}
+\label{eq}
+A*x = B
+\end{equation}
+gdzie 
+\begin{equation}
+\label{A}
+A
+\end{equation} to macierz współczynników w kolejnych równaniach, 
+\begin{equation}
+\label{x}
+x
+\end{equation} to wektor zmiennych niewiadomych, natomiast 
+\begin{equation}
+\label{B}
+B
+\end{equation} to wektor wyrazów wolnych. Jeżeli macierz (\ref{A}) 
+jest nieosobliwa, to istnieje
+\begin{equation}
+\label{odwr}
+A^{-1}
+\end{equation}
+Zatem wówczas rozwiązanie układu można przedstawić jako
+\begin{equation}
+\label{solution}
+x = A^{-1}*B
+\end{equation}
+Żeby obliczyć rozwiązanie musimy znać macierz (\ref{odwr}). Jeżeli rozmiar macierzy (\ref{A}) jest niewielki (np. 2 x 2, 3 x 3) to obliczenie macierzy (\ref{odwr}) jest łatwe, problemy się pojawiają przy obliczaniu macierzy odwrotnej do macierzy dużych rozmiarów (np. 10 x 10). W zadaniu tym skupimy się na rozwiązywaniu układów równań (\ref{eq}) dla symetrycznej i dodatnio określonej macierzy (\ref{A}). W tym celu zastosujemy metodę Czebyszewa, sprawdzimy jej skuteczność i stabilność oraz porównamy z innymi metodami rozwiązywania układów równań liniowych. Wszystkie obliczenia wykonamy w języku Julia w arytmetyce 128-bitowej.
+\section{Teoretyczny opis problemu}
+W zadaniu będziemy chcieli skonstruować ciąg 
+\begin{equation}
+\label{row}
+x_i
+\end{equation}
+przybliżający wartość (\ref{solution}) oraz taki, że
+\begin{equation}
+\label{eq1}
+x_i-x=W_i(A)*(x_0-x)
+\end{equation}
+gdzie
+\begin{equation}
+\label{poly}
+W_i(X)\in \prod _i
+\end{equation}
+jest wielomianem, w którym zmienna jest macierzą, a 
+\begin{equation}
+x_0
+\end{equation} jest przybliżeniem początkowym wektora (\ref{x}). Przekształcając (\ref{eq1}) do postaci 
+\begin{equation}
+x_i=W_i(A)*x_0-(W_i(A)-I)*x
+\end{equation}
+zauważamy, że żeby poznać wartości ciągu (\ref{row}) musimy dobrać wielomian (\ref{poly}) tak, żeby móc poznać wartość 
+\begin{equation}
+\label{Poly2}
+(W_i(A)-I)*x
+\end{equation}
+nie znając wartości x. Wartość (\ref{Poly2}) jest równa
+\begin{equation}
+\label{eq2}
+(a_i*A^i+a_{i-1}*A^{i-1}+...+a_1*A+a_0)*x-I*x
+\end{equation}
+gdzie
+\begin{equation}
+a_i
+\end{equation}
+są kolejnymi współczynnikami wielomianu (\ref{poly}). Ponieważ 
+\begin{equation}
+\forall x \in R^n: I*x=1*x
+\end{equation}
+zatem równanie (\ref{eq2}) można zapisać w postaci 
+\begin{equation}
+\label{eq3}
+(a_i*A^i+a_{i-1}*A^{i-1}+...+a_1*A)*x+(a_0-1)*x
+\end{equation}
+Korzystając z równości (\ref{solution}), możemy przekształcić równanie (\ref{eq3}) do postaci
+\begin{equation}
+(a_i*A^{i-1}+a_{i-1}*A^{i-2}+...+a_1)*b+(a_0-1)*x
+\end{equation}
+Zatem jeżeli przyjmiemy, że
+\begin{equation}
+a_0-1=0 \iff a_0=1  \iff W_i(0)=1
+\end{equation}
+to dobierając odpowiedni wielomian (\ref{poly}), będziemy mogli obliczyć wartość (\ref{Poly2}). Będziemy chcieli teraz tak dobrać wielomian (\ref{poly}), żeby wartość drugiej normy
+\begin{equation}
+||x_i-x||_2
+\end{equation}
+była jak najmniejsza.
+Z submultiplikatywności drugiej normy wiemy, że
+\begin{equation}
+\forall A, B \in R^{n \times n} : ||A*B||_2 \le ||A||_2*||B||_2
+\end{equation}
+Korzystając z tego oraz z (\ref{eq1}) możemy podać oszacowanie
+\begin{equation}
+||x_i-x||_2 \le ||W_i(A)||_2 * ||x_0-x||_2
+\end{equation}
+Naszym celem będzie zminimalizowanie lewej strony tej nierówności, co osiągniemy minimalizując prawą stronę tej nierówności. Ponieważ norma
+\begin{equation}
+||x_0-x||_2
+\end{equation}
+jest stała, zatem wystarczy zminimalizować wartość normy
+\begin{equation}
+\label{norma}
+||W_i(A)||_2
+\end{equation}
+Z twierdzenia 3.9 w [1] wiemy że wśród wielomianów ze zbioru
+\begin{equation}
+\{w_i \in \prod_i : w_i(0)=1\}
+\end{equation}
+najmniejszą normę ma wielomian 
+\begin{equation}
+\label{Cheb}
+\frac{1}{T_i(\frac{b+a}{b-a})}*T_i\biggl(\frac{b+a-2*\lambda}{b-a}\biggr)
+\end{equation}
+gdzie wielomiany
+\begin{equation}
+T_i(x)
+\end{equation}
+są wielomianami Czebyszewa.
+Sprawdźmy zatem, czy dobranie takiego wielomianu gwarantuje zbieżność.  Ponieważ (\ref{A}) jest symetryczna więc (\ref{norma}) ma wartość
+\begin{equation}
+max_{x \in X_\lambda(A^2)} \sqrt{W_i(x)}=max_{x \in X_\lambda(A)} |W_i(x)|
+\end{equation}
+gdzie zbiór
+\begin{equation}
+X_\lambda(A)
+\end{equation}
+jest zbiorem wartości własnych macierzy (\ref{A}). Ponieważ zazwyczaj nie znamy wartości własnych macierzy  (\ref{A}), a jedynie przedział
+\begin{equation}
+\label{interv}
+[a, b] : 0 < a < b
+\end{equation} 
+w którym się te wartości znajdują się, zatem możemy oszacować
+\begin{equation}
+||W_i(A)|| \le max_{x \in [a, b]} |W_i(x)|
+\end{equation}
+Ponieważ jawna postać wielomianów Czebyszewa to
+\begin{equation}
+T_i(x)=\frac{(x+\sqrt{x^2-1})^i-(x-\sqrt{x^2-1})^i}{2}
+\end{equation} 
+zatem możemy napisać
+\begin{equation}
+max_{x \in [a, b]} |W_i(x)| = \frac{2}{1+\Bigl(\frac{\sqrt{b}-\sqrt{a}}{\sqrt{b}+\sqrt{a}}\Bigr)^{2*i}}*\Biggl( \frac{\sqrt{b}-\sqrt{a}}{\sqrt{b}+\sqrt{a}} \Biggr)^{i} \le 2*\Biggl( \frac{\sqrt{b}-\sqrt{a}}{\sqrt{b}+\sqrt{a}} \Biggr)^{i}
+\end{equation}
+Stąd mamy oszacowanie błędu 
+\begin{equation}
+||x_i-x|| \le 2*\Biggl( \frac{\sqrt{b}-\sqrt{a}}{\sqrt{b}+\sqrt{a}} \Biggr)^{i}*||x_0-x||
+\end{equation}
+a ponieważ 
+\begin{equation}
+0 < \frac{\sqrt{b}-\sqrt{a}}{\sqrt{b}+\sqrt{a}} < 1
+\end{equation}
+zatem mamy pewność, że dobranie takiego wielomianu gwarantuje zbieżność ciągu (\ref{row}) do (\ref{x}). Zajmijmy się teraz skonstruowaniem ciągu (\ref{row}) w metodzie Czebyszewa. Niech 
+\begin{equation}
+t_i=T_i\biggl(\frac{b+a}{b-a}\biggr)
+\end{equation}
+W ([2], str.69) wyprowadzono jawne wzory na ciąg (\ref{row})
+\begin{equation}
+\label{chebrow}
+\begin{array}{c}
+x_1=x_0-\frac{2}{a+b}*r_0 \\
+x_{i+1}=x_i+\frac{p_{i-1}*(x_i-x_{i-1})-r_i}{q_i}
+\end{array}
+\end{equation}
+gdzie
+\begin{equation}
+\label{formulas}
+\begin{array}{c}
+r_i=A*x_i-B \\
+p_{-1}=0 \\
+p_{i-1}=\frac{b-a}{4}*\frac{t_{i-1}}{t_i} \\
+q_0=\frac{b+a}{2} \\
+q_i=\frac{b-a}{4}*\frac{t_{i+1}}{t_i}
+\end{array}
+\end{equation}
+Mając już wyprowadzone wzory, możemy przejść do testowania metody Czebyszewa.
+\section{Testy metody Czebyszewa}
+Testy polegają na wyliczaniu wektora x przez funkcję $Chebyshev$ dla macierzy (\ref{A}) oraz wektora (\ref{B}) podanych do funkcji jako argument oraz na porównaniu wyliczonego wektora z prawdziwym rozwiązaniem układu równań (\ref{eq}) obliczonym przy pomocy funkcji $\textbackslash$ ze standardowej biblioteki języka Julia, $Linear Algebra$. Funkcja ta oprócz macierzy (\ref{A}) oraz wektora (\ref{B}) funkcja będzie przyjmowała jako argumenty liczbę iteracji $iter$, liczby $a$ i $b$ oznaczające odpowiednio początek i koniec przedziału (\ref{interv}) oraz przybliżenie początkowe $fst$ wektora x, po czym będzie obliczała kolejne elementy ciągu (\ref{row}) przy pomocy wzorów (\ref{chebrow}) oraz (\ref{formulas}). Przyjmujemy w testach, że liczba iteracji wynosi 30, a przybliżenie początkowe jest wektorem zerowym. Oto wyniki testów metody Czebyszewa:
+\begin{figure}[H]
+\begin{tabular}{|l|l|l|l|}
+\hline
+macierz A & wektor B & wynik m. Czebyszewa & prawdziwy wynik \\
+\hline
+1 0 & 1 & 1 & 1 \\
+0 1 & 2 & 2 & 2 \\
+\hline
+1 0 0 0 & 42 & 42 & 42 \\ 
+0 1 0 0 & 36 & 36 & 36 \\
+0 0 1 0 & 77 & 77 & 77 \\
+0 0 0 1 & 89 & 89 & 89 \\
+\hline
+2 1 & 10 & 4 & 1 \\
+1 2 & 17 & 9 & 8 \\
+\hline
+2 1 1 1 & 1 & -1 & -2 \\
+1 2 1 1 & 2 & 0 & -1 \\
+1 1 2 1 & 4 & 1 & 1 \\
+1 1 1 2 & 8 & 4 & 5 \\
+\hline
+3   1.5 & 15 & 4 & 1 \\
+1.5 3 & 25.5 & 8 & 8 \\
+\hline
+\end{tabular}
+\end{figure}
+Jak widzimy z testów, metoda Czebyszewa dobrze sobie poradziła w dwóch pierwszych przypadkach. Oznacza to, że metoda Czebyszewa potrafi rozwiązywać układy równań, w których macierz (\ref{A}) jest macierzą jednostkową. Problemem okazały się jednak obliczenia w pozostałych przypadkach. W trzecim i czwartym przypadku metoda była bliska rozwiązaniu, jednak minimalnie się pomyliła. W piątym zaś przypadku przy operowaniu na liczbach zmiennopozycyjnych widzimy, że metoda Czebyszewa częściowo sobie poradziła z rozwiązaniem układu równań liniowych (zwróciła poprawną drugą współrzędną, jednak pomyliła się przy obliczaniu pierwszej współrzędnej). Oznacza to, że metoda Czebyszewa obarcza rozwiązania układów równań pewnym błędem oraz że nie jest numerycznie poprawna. Zatem metodę Czebyszewa można stosować do rozwiązywania układów równań, jednakże trzeba pamiętać, że metoda ta nie zawsze zwraca dobry wynik. Porównajmy zatem metodę Czebyszewa z dwoma innymi metodami numerycznego rozwiązywania układów równań liniowych.  
+\section{Inne metody}
+Porównamy teraz metodę Czebyszewa z dwoma innymi metodami rozwiązywania układów równań liniowych, czyli z metodą Jacobiego oraz z metodą eliminacji Gaussa. Porównanie to będzie polegało na przetestowaniu tych metod na tych samych danych co metoda Czebyszewa oraz na porównaniu, która metoda zwraca wyniki z najmniejszym błędem. 
+\subsection{Metoda Jacobiego}
+Zacznijmy od metody Jacobiego. Metoda ta polega na podziale macierzy (\ref{A}) na trzy macierze:
+\begin{equation}
+A=L+D+U
+\end{equation}
+gdzie
+\begin{equation}
+\begin{array}{c}
+L=(a_{ij})_{i>j} \\ U=(a_{ij})_{i<j}
+\end{array}
+\end{equation} to macierze odpowiednio dolna i górna trójkątna z zerami na przekątnej, natomiast
+\begin{equation}
+\label{D}
+D=diag(a_{ii})
+\end{equation}
+jest macierzą diagonalną. Wówczas układ równań (\ref{eq}) można zapisać w postaci:
+\begin{equation}
+\label{Jacobi-eq}
+(L+D+U)*x=B \iff D*x=-(L+U)*x+B
+\end{equation}
+Ponieważ (\ref{A}) jest dodatnio określona, więc macierz (\ref{D}) jest nieosobliwa. Zatem układ równań (\ref{Jacobi-eq}) możemy zapisać w postaci
+\begin{equation}
+x=-D^{-1}*(L+U)*x+D^{-1}*B
+\end{equation}
+co daje nam wzór iteracyjny tej metody:
+\begin{equation}
+x_{i+1}=B_J*x_i+c
+\end{equation}
+gdzie
+\begin{equation}
+\begin{array}{c}
+B_J=-D^{-1}*(L+U) \\
+c=D^{-1}*B
+\end{array}
+\end{equation}
+Zatem mając już wzory metody Jacobiego, możemy przejść do testowania metody Jacobiego. Oto wyniki testów:
+\begin{figure}[H]
+\begin{tabular}{|l|l|l|l|}
+\hline
+macierz A & wektor B & wynik m. Jacobiego & prawdziwy wynik \\
+\hline
+1 0 & 1 & 1 & 1 \\
+0 1 & 2 & 2 & 2 \\
+\hline
+2 1 & 10 & 1 & 1 \\
+1 2 & 17 & 8 & 8 \\
+\hline
+2 1 1 1 & 1 & 1 & -2 \\
+1 2 1 1 & 2 & 1 & -1 \\
+1 1 2 1 & 4 & 2 & 1 \\
+1 1 1 2 & 8 & 4 & 5 \\
+\hline
+3 1.5 & 15 & 1 & 1 \\
+1.5 3 & 25.5 & 8 & 8 \\
+\hline
+\end{tabular}
+\end{figure}
+Jak widzimy, metoda Jacobiego poradziła sobie z drugim testem (z którym nie poradziła sobie metoda Czebyszewa) oraz z przypadkiem operowania na liczbach zmiennopozycyjnych,  zatem metoda ta jest lepsza niż metoda Czebyszewa. Jednakże metoda ta nie potrafiła sobie poradzić z trzecim testem, zatem należy pamiętać, że metoda ta również nie zawsze będzie zwracała dokładny wynik. Sprawdzimy teraz, jak z tymi przypadkami poradzi sobie metoda eliminacji Gaussa.
+\subsection{Eliminacja Gaussa}
+Metoda eliminacji Gaussa polega na wykonaniu na macierzy (\ref{A}) operacji elementarnych (t.j. zamiana wierszy miejscami, przemnożenie wiersza przez niezerowy skalar, dodanie do wiersza kombinacji liniowej innych wierszy) w celu sprowadzenia macierzy A do postaci schodkowej. Jednocześnie w celu zachowania zgodności układu równań (\ref{eq}), te same operacje będziemy wykonywać na wektorze b. Wzory w metodzie eliminacji Gaussa wyglądają tak:
+\begin{equation}
+\begin{array}{c}
+a_{ij}^{(k)}=a_{ij}^{(k-1)}-\frac{a_{i, k-1}^{(k-1)}*a_{k-1, j}^{(k-1)}}{a_{k-1, k-1}^{(k-1)}} \\
+b_i^{(k)}=b_i^{(k-1)}-\frac{a_{i, k-1}^{(k-1)}*b_{k-1}^{(k-1)}}{a_{k-1, k-1}^{(k-1)}} \\
+x_k=(b^{(k)}_k-\sum^n_{i=k+1}a_{kj}^{(k)}*x_j)/a_{kk}^{(k)}
+\end{array}
+\end{equation}
+Zatem mając już wzory, możemy przystąpić do testowania metody eliminacji Gaussa. Oto wyniki testów:
+\begin{figure}[H]
+\begin{tabular}{|l|l|l|l|}
+\hline
+macierz A & wektor B & wynik m. eliminacji & prawdziwy wynik \\
+\hline
+1 0 & 1 & 1 & 1 \\
+0 1 & 2 & 2 & 2 \\
+\hline
+2 1 & 10 & 5 & 1 \\
+1 2 & 17 & 8 & 8 \\
+\hline
+2 1 1 1 & 1 & 1 & -2 \\
+1 2 1 1 & 2 & 0 & -1 \\
+1 1 2 1 & 4 & 2 & 1 \\
+1 1 1 2 & 8 & 4 & 5 \\
+\hline
+3 1.5 & 15 & 5 & 1 \\
+1.5 3 & 25.5 & 8 & 8 \\
+\hline
+\end{tabular}
+\end{figure}
+Jak widzimy, metoda eliminacji Gaussa zwraca wyniki podobne do wyników metody Czebyszewa. Oznacza to, że metoda Czebyszewa, mimo że nie jest najlepszą metodą rozwiązywania układu równań (\ref{solution}) to nie jest to też najgorsza metoda służąca rozwiązaniu układów równań liniowych.
+\section{Wnioski}
+Metoda Czebyszewa to metoda, która nie zawsze zwraca poprawne wyniki, ale zwraca wyniki z niewielkim błędem, poza tym nie zwraca dużo gorszych wyników niż metoda eliminacji Gaussa. Zatem jest to metoda, którą można stosować do rozwiązywania układów równań liniowych, jednocześnie pamiętając, że metoda ta nie jest niezawodna.
+\begin{thebibliography}{9}
+\bibitem{Jankowscy1} J. i M. Jankowscy, {\it Przegląd metod i algorytmów numerycznych}, cz. 1, WNT, 1981
+\bibitem{Jankowscy2} M. Dryja, J. i M. Jankowscy, {\it Przegląd metod i algorytmów numerycznych}, cz. 2, WNT, 1988
+\end{thebibliography}
+\end{document}
