@@ -1,0 +1,32 @@
+div.container {
+	width: 500px;
+    height: 500px;
+    background-color: brown;
+    padding: 5%;
+    margin: 5%;
+}
+div.box {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin: 1px;
+}
+div.smallbox {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    margin: 1px;
+    float: inherit;
+}
+div.none {
+    float: none;
+	background-color: grey;
+}
+div.left {
+    float: left;
+    background-color: blue;
+}
+div.right {
+    float: right;
+    background-color: green;
+}

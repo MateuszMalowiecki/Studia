@@ -1,0 +1,49 @@
+header:before {
+	content: "To jest ";
+	font-weight: bold;
+	font-style: italic;
+}
+header:after {
+	content: "artykułu ";
+	font-weight: bold;
+	font-style: italic;
+}
+h2 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+h2:after {
+    display: inline-block;
+    margin: 0 0 8px 20px;
+    content: "";
+    background-color: #999;
+    height: 3px;
+    width: 100px;
+}
+h2:before {
+    display: inline-block;
+    margin: 0 20px 8px 0;
+    content: "";
+    background-color: #999;
+    height: 3px;
+    width: 100px;
+}
+div:after {
+	content: url("C:/Users/cp24/Downloads/zadanie3/obrazki/kot2.jpg");
+	display: block;
+}
+div:before {
+	content: url("C:/Users/cp24/Downloads/zadanie3/obrazki/kot1.jpg");
+	display: block;
+}
+#quote:before {
+	content: '„';
+}
+#quote:after {
+	content: '”';
+}
+/*
+    Zastosowania: krasimirtsonev.com/blog/article/CSS-before-and-after-pseudo-elements-in-practice 
+*/

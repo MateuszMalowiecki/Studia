@@ -1,0 +1,9 @@
+span {
+	background-color: rgb(210, 245, 253);
+	display: flex; 
+	justify-content: center;
+}
+div {
+	background-color: rgb(210, 253, 245);
+	text-align: center;
+}

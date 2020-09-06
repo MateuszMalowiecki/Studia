@@ -1,0 +1,36 @@
+div.item {
+	background-color: grey;
+	border: 4px solid black;
+	height: 250px;
+	margin-top: 5px;
+	padding-left: 15px;
+	position: relative;
+	width: 550px;
+}
+div.item > img {
+	height: 200px;
+	position: absolute;
+	top: 25px;
+	width: 200px;
+}
+div.item > div.name {
+	font-size: 350%;
+	left: 250px;
+	position: absolute;
+	top: 120px;
+}
+div.item > div.item_price {
+	color: green;
+	font-size: 230%;
+	left: 250px;
+	position: absolute;
+	top: 190px;
+}
+div.item > button.add_to_cart {
+	font-size: 150%;
+	height: 80px;
+	left: 250px;
+	position: absolute;
+	top: 25px;
+	width: 250px;
+}
