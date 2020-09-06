@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery AJAX</title>
+<script src="js/jquery-1.6.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$("#log").ajaxStart( function() { $(this).append("AJAX started<br />"); } );
+
+	$("#log").ajaxComplete(
+		function(e, xhr, settings)
+		{
+			if (settings.url == 'replacehtml1.php')
+				$(this).append("AJAX1 completed<br />");
+		}
+	);
+	
+	$("#log").ajaxComplete(
+		function(e, xhr, settings)
+		{
+			if (settings.url == 'replacehtml2.php')
+			{
+				imie = $( xhr.responseXML ).find('imie').first().text();
+				$(this).append("AJAX2 completed: "+imie+"<br />");
+			}
+		}
+	);
+	
+    $("#bt1").click(function() {
+		$("#panel1").load( "replacehtml1.php" );
+	});
+
+	$("#bt2").click(function() {
+		$("#panel2").load( "replacehtml2.php" );
+	});
+});
+</script>
+</head>
+
+<body>
+
+<form name="TheForm1">
+<div id="panel1"></div>
+<input type="button" id="bt1" value="Go"/>
+</form>
+
+<form name="TheForm2">
+<div id="panel2"></div>
+<input type="button" id="bt2" value="Go"/>
+</form>
+
+<div id="log"></div>
+
+</body>
+</html>

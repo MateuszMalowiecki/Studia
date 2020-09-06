@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Dwa AJAXy</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript">
+var XmlHttp1;
+var XmlHttp2;
+
+function handleRequestStateChange1()
+{
+  if(XmlHttp1.readyState==4)
+  {
+    if (XmlHttp1.status==200)
+    {
+      document.getElementById("liczby").innerHTML=XmlHttp1.responseText;
+      XmlHttp1=false;
+   }
+  }
+}
+function handleRequestStateChange2()
+{
+  if(XmlHttp2.readyState==4)
+  {
+    if (XmlHttp2.status==200)
+    {
+      document.getElementById("imie").innerHTML = XmlHttp2.responseXML.documentElement.firstChild.data;
+      XmlHttp2=false;
+   }
+  }
+}
+function process1()
+{
+  XmlHttp1=Ajax();
+  XmlHttp1.onreadystatechange=handleRequestStateChange1;
+  XmlHttp1.open("GET", "replacehtml1.php", true);
+  XmlHttp1.send(null);
+}
+function process2()
+{
+  XmlHttp2=Ajax();
+  XmlHttp2.onreadystatechange=handleRequestStateChange2;
+  XmlHttp2.open("GET", "replacehtml2.php", true);
+  XmlHttp2.send(null);
+}
+</script>
+</head>
+
+<body onload='javascript: window.setInterval("process1()", 1000); window.setInterval("process2()", 1000);'>
+
+<div id="liczby"></div>
+
+<div id="imie"></div>
+
+</body>
+</html>

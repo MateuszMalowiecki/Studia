@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Dodawanie 2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript">
+var XmlHttp;
+
+function handleRequestStateChange()
+{
+  if(XmlHttp.readyState==4)
+  {
+    if (XmlHttp.status==200)
+    {
+      document.getElementById("result").innerHTML=XmlHttp.responseText;
+      XmlHttp=false;
+   }
+  }
+}
+function handleOnClick()
+{
+  XmlHttp=Ajax();
+  XmlHttp.onreadystatechange=handleRequestStateChange;
+  XmlHttp.open("POST", "mathexpressions2.php");
+  XmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  XmlHttp.send("left="+document.getElementById("left").value+"&right="+document.getElementById("right").value);
+}
+</script>
+</head>
+
+<body>
+
+<form name="myForm">
+<input type="text" name="left" id="left" value="0"> +
+<input type="text" name="right" id="right" value="0"> =
+<span id="result">0</span><br>
+<input type="button" onclick="handleOnClick();" value="Oblicz" />
+</form>
+
+</body>
+</html>
