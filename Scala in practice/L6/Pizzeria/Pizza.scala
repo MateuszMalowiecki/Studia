@@ -1,9 +1,9 @@
 package L6.Pizzeria
 
 case class Pizza(pizzaType: PizzaType, size:Size, crust:Crust, extraMeat:Option[Meat], extraTopping:Option[Topping]) {
-  override def toString: String = s"Pizza type: ${pizzaType.name}, size: ${size.sizeType}, crust: ${crust.crustType}, extraMeat: ${extraMeat.map(_.name).getOrElse("no")}, extra Topping: ${extraTopping.map(_.name).getOrElse("no")}"
+  override def toString: String = s"Pizza type: ${pizzaType.name}, size: ${size.sizeType}, crust: ${crust.crustType}, extraMeat: ${extraMeat.fold("no")(_.name)}, extra Topping: ${extraTopping.fold("no")(_.name)}"
   val price:Double = {
-    size.sizeMultiplier*(pizzaType.price + extraMeat.map(_.price).getOrElse(0.0) + extraTopping.map(_.price).getOrElse(0.0))
+    size.sizeMultiplier*(pizzaType.price + extraMeat.fold(0.0)(_.price) + extraTopping.fold(0.0)(_.price))
   }
 }
 case class PizzaType(name:String) {
@@ -17,7 +17,6 @@ case class PizzaType(name:String) {
 case class Size(sizeType:String) {
   require(List("small", "regular", "large").contains(sizeType))
   val sizeMultiplier:Double  = {
-    //toLowerCase for convenience
     sizeType match {
       case "small" => 0.9
       case "regular" => 1
@@ -37,7 +36,7 @@ case class Meat(name:String) {
   val price:Double = 1.0
 }
 case class Drink(name:String) {
-  require(List("lemonade").contains(name))
+  require(name == "lemonade")
   val price:Double = 2
 }
 case class Discount(discountType : String) {
