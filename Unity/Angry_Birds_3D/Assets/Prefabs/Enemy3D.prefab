@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8075236070350271810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 5, z: 197.2}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 65ea51d375cac2d439a9cbcff9e821f9, type: 2}
+  - {fileID: 2100000, guid: 0a95c4d2388523844965767c0ef02ac5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,3 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 4
+  deathEffect: {fileID: 8014074287227349038, guid: 3ea16eede8a86ed4eb289b95dff36299, type: 3}

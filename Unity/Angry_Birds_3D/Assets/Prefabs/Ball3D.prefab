@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7979c48efb45c1e458165eed2fd9f820, type: 2}
+  - {fileID: 2100000, guid: 9f3cb0f488b8bd740bdadb740a4a289e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,4 +152,3 @@ MonoBehaviour:
   rb: {fileID: 7377084383371181479}
   hook: {fileID: 0}
   joint: {fileID: 7377084383371181480}
-  nextBall: {fileID: 0}

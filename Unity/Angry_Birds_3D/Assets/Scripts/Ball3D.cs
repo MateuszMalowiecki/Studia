@@ -6,6 +6,7 @@ public class Ball3D : MonoBehaviour {
     public Rigidbody rb;
     public Rigidbody hook;
     public Joint joint;
+    public GameObject nextBall;
     private float releaseTime=0.3f;
     private float maxDragDistance=30f;
     private bool isPressed=false;
@@ -18,7 +19,7 @@ public class Ball3D : MonoBehaviour {
                 rb.position = hook.position + (mousePos - hook.position).normalized * maxDragDistance;
            }
            else {
-            rb.position=new Vector3(rb.position.x, mousePos.y, mousePos.z);
+                rb.position=new Vector3(rb.position.x, mousePos.y, mousePos.z);
            }
         }
     }
@@ -36,6 +37,12 @@ public class Ball3D : MonoBehaviour {
         Destroy(joint);
         rb.useGravity=true;
         yield return new WaitForSeconds(10f);
-        SceneManager.LoadScene("Lose_menu");
+        if (nextBall != null) {
+            nextBall.SetActive(true);
+        }
+        else {
+            Enemy3D.enemiesAlive=0;
+            SceneManager.LoadScene("Lose_menu");
+        }
     }
 }
