@@ -1,8 +1,4 @@
 #include <iostream>
-#include <algorithm>
-#include <functional>
-#include <deque>
-#include <complex>
 #include <regex>
 
 using namespace std;
