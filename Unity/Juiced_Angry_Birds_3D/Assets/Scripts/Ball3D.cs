@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//TODO: Add jumping(tweening), position change(tweening), bloom effect(add colors to balls and enenmiex)
+//TODO: Points API
 public class Ball3D : MonoBehaviour {
     public Rigidbody rb;
     public Rigidbody hook;
@@ -46,10 +46,8 @@ public class Ball3D : MonoBehaviour {
     }
     void OnCollisionEnter(Collision colInfo) {
        //Instantiate(obstacleBoom, transform.position, Quaternion.identity);
-       //Debug.Log("AAAA");
         FindObjectOfType<Audiomanager>().Play("BallBoom");
         StartCoroutine(cameraShake.shake(0.35f, 0.4f));
-      // Debug.Log("BBBB");
     }
     IEnumerator Release() {
         yield return new WaitForSeconds(releaseTime);
@@ -72,6 +70,7 @@ public class Ball3D : MonoBehaviour {
         }
         else {
             Enemy3D.enemiesAlive=0;
+            Score.points=0;
             SceneManager.LoadScene("Lose_menu");
         }
     }

@@ -20,6 +20,7 @@ public class Enemy3D : MonoBehaviour {
         StartCoroutine(cameraShake.shake(0.35f, 0.4f));
         FindObjectOfType<Audiomanager>().Play("Death");
         enemiesAlive--;
+        Score.points+=50;
         if (enemiesAlive == 0) {
             string sceneToLoad = "Quit_Menu"; 
             switch (GameManager.SceneName) {
@@ -32,6 +33,8 @@ public class Enemy3D : MonoBehaviour {
                     break;
                 }
             }
+            Score.pointSum+=Score.points;
+            Score.points=0;
             SceneManager.LoadScene(sceneToLoad);
         }
     }
