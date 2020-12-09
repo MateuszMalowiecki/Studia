@@ -2,15 +2,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//TODO: Points API
+//TODO: Position change
 public class Ball3D : MonoBehaviour {
     public Rigidbody rb;
     public Rigidbody hook;
     public Joint joint;
     public GameObject nextBall;
     public CameraShake cameraShake;
-    public Audiomanager manager;
-    public GameObject obstacleBoom;
     private float releaseTime=0.2f;
     private float maxDragDistance=30f;
     //private float lerpTime=1.0f;
@@ -45,7 +43,6 @@ public class Ball3D : MonoBehaviour {
         StartCoroutine(Release());
     }
     void OnCollisionEnter(Collision colInfo) {
-       //Instantiate(obstacleBoom, transform.position, Quaternion.identity);
         FindObjectOfType<Audiomanager>().Play("BallBoom");
         StartCoroutine(cameraShake.shake(0.35f, 0.4f));
     }

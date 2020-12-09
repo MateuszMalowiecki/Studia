@@ -17,8 +17,6 @@ public class Audiomanager : MonoBehaviour
 			Debug.LogWarning("Sound: " + sound + " not found!");
 			return;
 		}
-        //s.source.volume = s.volume * (1f + UnityEngine.Random.Range(-s.volumeVariance / 2f, s.volumeVariance / 2f));
-		//s.source.pitch = s.pitch * (1f + UnityEngine.Random.Range(-s.pitchVariance / 2f, s.pitchVariance / 2f));
         s.source.time=s.source.clip.length * .2f;
 		s.source.Play();
     }

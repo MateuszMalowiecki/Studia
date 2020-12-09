@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Block : MonoBehaviour {
     public GameObject blockBoom;
     public CameraShake cameraShake;
     void OnCollisionEnter(Collision colInfo) {
-        if((colInfo.collider.name == "Cube" || colInfo.collider.name == "Ball3D" 
+        if((colInfo.collider.name == "Ground" || colInfo.collider.name == "Ball3D" 
         || colInfo.collider.name == "Ball3D (1)")  
         && colInfo.relativeVelocity.magnitude > 6.0f) {
             Score.points+=30;
