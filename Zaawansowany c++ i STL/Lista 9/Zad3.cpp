@@ -3,11 +3,9 @@
 
 using namespace std;
 
-#define UPPER "([[:upper:]]|Ą|Ć|Ę|Ł|Ń|Ó|Ś|Ź|Ż)"
-#define LOWER "([[:lower:]]|ą|ć|ę|ł|ń|ó|ś|ź|ż)"
 
 bool match_to_city_regex(string& str) {
-    regex c(UPPER LOWER "*(-" UPPER LOWER "*)?([[:space:]]+" UPPER LOWER "*(-" UPPER LOWER "*)?)*");
+    regex c("[[:upper:]][[:lower:]]*(-[[:upper:]][[:lower:]]*)?([[:space:]]+[[:upper:]][[:lower:]]*(-[[:upper:]][[:lower:]]*)?)*");
     return regex_match(str, c);
 }
 
