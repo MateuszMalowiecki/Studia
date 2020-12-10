@@ -5,22 +5,15 @@
 
 using namespace std;
 
-void match_to_href_regex_and_print_matches(string& str) {
-    regex c(R"(<a href=".*"/?>)");
-    regex h(R"(".*")");
+void match_to_href_regex_and_print_matches(string s) {
+    regex c(R"(<a href=(".*")/?>)");
     smatch m;
     smatch m1;
-    string s=str;
     while (regex_search(s, m, c)) {
-        for(unsigned i=0; i<m.size(); i++) {
-            string tmp=m.str(i);
-            regex_search(tmp, m1, h);
-            for (auto hyperlink: m1) {
-                cout << hyperlink << " ";
-            }
-        }
-        cout << endl;
+        string tmp=m[1];
+        cout << tmp << " ";
         s = m.suffix().str();
+        cout << endl;
     }
 }
 
