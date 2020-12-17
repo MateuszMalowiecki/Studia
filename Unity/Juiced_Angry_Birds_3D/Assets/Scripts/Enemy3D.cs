@@ -22,20 +22,14 @@ public class Enemy3D : MonoBehaviour {
         enemiesAlive--;
         Score.points+=50;
         if (enemiesAlive == 0) {
-            string sceneToLoad = "Quit_Menu"; 
-            switch (GameManager.SceneName) {
-                case "3DLevel": {
-                    sceneToLoad="3DLevel2";
-                    break;
-                }
-                case "3DLevel2": {
-                    sceneToLoad="3DLevel3";
-                    break;
-                }
-            }
             Score.pointSum+=Score.points;
             Score.points=0;
-            SceneManager.LoadScene(sceneToLoad);
+            if (GameManager.SceneName == "3DLevel3") {
+                SceneManager.LoadScene("Quit_Menu");
+            }
+            else {
+                SceneManager.LoadScene("Level Win Menu");
+            }
         }
     }
 }

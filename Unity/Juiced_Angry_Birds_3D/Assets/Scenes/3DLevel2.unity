@@ -246,6 +246,14 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 127820315}
+    - target: {fileID: 7377084383371181478, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 8014074287227349038, guid: 1792d2bc58537b84abadd2dd978ffc4e, type: 3}
+    - target: {fileID: 7377084383371181478, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
+      propertyPath: joint
+      value: 
+      objectReference: {fileID: 792294176}
     - target: {fileID: 7377084383371181480, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
       propertyPath: m_ConnectedBody
       value: 
@@ -264,7 +272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7377084383371181481, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -321.51685
+      value: -336.716
       objectReference: {fileID: 0}
     - target: {fileID: 7377084383371181481, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
       propertyPath: m_LocalPosition.z
@@ -308,7 +316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7377084383371181485, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
@@ -714,6 +722,7 @@ GameObject:
   - component: {fileID: 792294173}
   - component: {fileID: 792294172}
   - component: {fileID: 792294171}
+  - component: {fileID: 792294176}
   m_Layer: 0
   m_Name: Hook3D
   m_TagString: Untagged
@@ -813,6 +822,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!145 &792294176
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792294170}
+  m_ConnectedBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.5, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 1.5, y: 20.5, z: 106.6}
+  serializedVersion: 2
+  m_Spring: 10
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &943375422
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,6 +2228,14 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 127820315}
+    - target: {fileID: 7377084383371181478, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 8014074287227349038, guid: 1792d2bc58537b84abadd2dd978ffc4e, type: 3}
+    - target: {fileID: 7377084383371181478, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
+      propertyPath: joint
+      value: 
+      objectReference: {fileID: 792294176}
     - target: {fileID: 7377084383371181480, guid: 2dfaa6056bcf52443a49b8ae7e53f886, type: 3}
       propertyPath: m_ConnectedBody
       value: 

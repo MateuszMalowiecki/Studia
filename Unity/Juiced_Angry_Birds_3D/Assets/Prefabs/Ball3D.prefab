@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7377084383371181483}
   - component: {fileID: 7377084383371181484}
   - component: {fileID: 7377084383371181479}
-  - component: {fileID: 7377084383371181480}
   - component: {fileID: 7377084383371181478}
   - component: {fileID: -1335367337155222571}
   m_Layer: 0
@@ -115,29 +114,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 18
   m_CollisionDetection: 0
---- !u!145 &7377084383371181480
-SpringJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7377084383371181485}
-  m_ConnectedBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.5, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 2.5, z: 0}
-  serializedVersion: 2
-  m_Spring: 50
-  m_Damper: 0.2
-  m_MinDistance: 0
-  m_MaxDistance: 0
-  m_Tolerance: 0.025
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!114 &7377084383371181478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,11 +128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7377084383371181479}
   hook: {fileID: 0}
-  joint: {fileID: 7377084383371181480}
+  joint: {fileID: 0}
   nextBall: {fileID: 0}
+  deathEffect: {fileID: 0}
   cameraShake: {fileID: 0}
-  manager: {fileID: 0}
-  obstacleBoom: {fileID: 280750608645991654, guid: a5dc73d1d826e404a96cea7fdf92d9f0, type: 3}
 --- !u!96 &-1335367337155222571
 TrailRenderer:
   serializedVersion: 2

@@ -2,22 +2,23 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//TODO: Position change
 public class Ball3D : MonoBehaviour {
     public Rigidbody rb;
     public Rigidbody hook;
-    public Joint joint;
+    public SpringJoint joint;
     public GameObject nextBall;
+    public GameObject deathEffect;
     public CameraShake cameraShake;
     private float releaseTime=0.2f;
     private float maxDragDistance=30f;
-    //private float lerpTime=1.0f;
+    private float lerpTime=1.0f;
     private bool isPressed=false;
-    //private bool jumping=true;
+    private bool flag=false;
     void Update() {
-        /*if (jumping && rb.position != hook.position) {
-            StartCoroutine(Jump());
-        }*/
+        if(!flag && rb.position == hook.position) {
+            flag=true;
+            joint.connectedBody=rb;
+        }
         if(isPressed) {
            Camera camera=Camera.main;
            Vector3 mousePos=camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
@@ -31,8 +32,8 @@ public class Ball3D : MonoBehaviour {
         }
     }
     void OnMouseDown() {
-       //jumping = false;
        isPressed=true;
+       
        rb.isKinematic=true;
        FindObjectOfType<Audiomanager>().Play("BallClick");
     }
@@ -42,17 +43,22 @@ public class Ball3D : MonoBehaviour {
         FindObjectOfType<Audiomanager>().Play("Flying");
         StartCoroutine(Release());
     }
-    void OnCollisionEnter(Collision colInfo) {
-        FindObjectOfType<Audiomanager>().Play("BallBoom");
-        StartCoroutine(cameraShake.shake(0.35f, 0.4f));
+    IEnumerator OnCollisionEnter(Collision colInfo) {
+        if (colInfo.collider.name != "Ground") {
+            FindObjectOfType<Audiomanager>().Play("BallBoom");
+            StartCoroutine(cameraShake.shake(0.35f, 0.4f));
+            transform.localScale = new Vector3(transform.localScale.x * 1.5f, transform.localScale.y*1.5f,  transform.localScale.z*1.5f);
+            yield return new WaitForSeconds(0.01f);
+            transform.localScale = new Vector3(transform.localScale.x / 1.5f, transform.localScale.y/1.5f,  transform.localScale.z/1.5f);
+        }
     }
     IEnumerator Release() {
         yield return new WaitForSeconds(releaseTime);
-        Destroy(joint);
+        this.enabled=false;
+        joint.connectedBody=null;
         rb.useGravity=true;
         yield return new WaitForSeconds(10f);
         if (nextBall != null) {
-            /*
             nextBall.GetComponent<Rigidbody>().isKinematic=true;
             float elapsedTime=0f;
             Vector3 currentPosition =  nextBall.GetComponent<Rigidbody>().position;
@@ -62,8 +68,11 @@ public class Ball3D : MonoBehaviour {
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            nextBall.GetComponent<Rigidbody>().position=endPosition;*/
-            nextBall.SetActive(true);
+            nextBall.GetComponent<Rigidbody>().position=endPosition;
+            nextBall.GetComponent<Rigidbody>().isKinematic=false;
+            Destroy(gameObject);
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+            FindObjectOfType<Audiomanager>().Play("BallBoom");
         }
         else {
             Enemy3D.enemiesAlive=0;
@@ -71,23 +80,4 @@ public class Ball3D : MonoBehaviour {
             SceneManager.LoadScene("Lose_menu");
         }
     }
-    /*IEnumerator Jump() {
-        nextBall.GetComponent<Rigidbody>().isKinematic=true;
-        float elapsedTime=0f;
-        Vector3 currentPosition =  rb.position;
-        Vector3 endPosition = currentPosition + Vector3.up;
-        while(elapsedTime < lerpTime) {
-            rb.position=Vector3.Lerp(currentPosition, endPosition, elapsedTime/lerpTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        rb.position=endPosition;
-        while(elapsedTime < lerpTime) {
-            rb.position=Vector3.Lerp(endPosition, currentPosition, elapsedTime/lerpTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        rb.position=currentPosition;
-        //nextBall.GetComponent<Rigidbody>().isKinematic=false;        
-    }*/
 }
