@@ -9,7 +9,7 @@ public class Ball3D : MonoBehaviour {
     public GameObject nextBall;
     public GameObject deathEffect;
     public CameraShake cameraShake;
-    private float releaseTime=0.2f;
+    private float releaseTime=0.3f;
     private float maxDragDistance=30f;
     private float lerpTime=1.0f;
     private bool isPressed=false;
@@ -59,7 +59,7 @@ public class Ball3D : MonoBehaviour {
         rb.useGravity=true;
         yield return new WaitForSeconds(10f);
         if (nextBall != null) {
-            nextBall.GetComponent<Rigidbody>().isKinematic=true;
+             nextBall.GetComponent<Rigidbody>().isKinematic=true;
             float elapsedTime=0f;
             Vector3 currentPosition =  nextBall.GetComponent<Rigidbody>().position;
             Vector3 endPosition = hook.position;
