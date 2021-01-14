@@ -13,14 +13,18 @@ public class ball : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (Input.GetKeyDown("space") && !ballInPlay) {
             transform.parent=null;
             ballInPlay = true;
             rb.isKinematic=false;
-            //rb.useGravity=true;
             rb.AddForce(new Vector3(ballInitialVelocity, ballInitialVelocity, 0));
+        }
+        if (ballInPlay && rb.velocity.x == 0) {
+            rb.AddForce(new Vector3(10.0f, 0, 0));
+        }
+        if (ballInPlay && rb.velocity.y == 0) {
+            rb.AddForce(new Vector3(0, -10.0f, 0));
         }
     }
 }

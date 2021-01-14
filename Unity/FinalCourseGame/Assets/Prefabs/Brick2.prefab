@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3523395317955973093}
   - component: {fileID: 3523395317955973090}
   - component: {fileID: 3523395317955973091}
-  - component: {fileID: -1238921795640775521}
+  - component: {fileID: -6561248950639020783}
   m_Layer: 0
-  m_Name: Brick
+  m_Name: Brick2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2636a77f2c5e514cb276c0d5b94fb9a, type: 2}
+  - {fileID: 2100000, guid: d0fe494aa35634840a16625492c706ac, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1238921795640775521
+--- !u!114 &-6561248950639020783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,5 +109,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brickParticle: {fileID: 5422030511740831702, guid: 4ff251c9c7a6f304f8f362655fce9cc3, type: 3}
-  nextBrick: {fileID: 0}
-  hitPoints: 1
+  nextBrick: {fileID: 3523395317955973088, guid: ddbae5414e13a8341baf9919bc19e56b, type: 3}
+  hitPoints: 2

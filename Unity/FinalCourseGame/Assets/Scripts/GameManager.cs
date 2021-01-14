@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     public int lives;
     public int bricks;
     public float resetDelay;
@@ -52,16 +51,12 @@ public class GameManager : MonoBehaviour
         }
     }
     void WinLevel() {
-        string SceneToLoad="Win";
-        switch(SceneName) {
-            case "Level1":
-                SceneToLoad="Level2";
-                break;
-            case "Level2":
-                SceneToLoad="Level3";
-                break;
+        if (SceneName == "Level3") {
+            SceneManager.LoadScene("Win");
         }
-        SceneManager.LoadScene(SceneToLoad);
+        else {
+            SceneManager.LoadScene("LevelWonMenu");
+        }
     }
     void LoseLevel() {
         SceneManager.LoadScene("GameOver");

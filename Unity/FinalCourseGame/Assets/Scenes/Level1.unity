@@ -574,7 +574,7 @@ MonoBehaviour:
   gameOver: {fileID: 399451850}
   youWon: {fileID: 21125924}
   brickPrefab: {fileID: 8554604925504863086, guid: ef6017961dbb87e4ba4eb00cb439866d, type: 3}
-  paddle: {fileID: 1825049250701550188, guid: c4f15d8205732a047add98b92da4153a, type: 3}
+  paddle: {fileID: 6659287320584467001, guid: ca2e6e5a8b0660747a90cc77833146e9, type: 3}
   deathParticles: {fileID: 5422030511740831702, guid: 1271fb34a20be1d42bd8b448136c4647, type: 3}
   SceneName: 
 --- !u!4 &739485052
@@ -728,7 +728,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.8113208, g: 0.28702387, b: 0.5242654, a: 1}
+  m_BackGroundColor: {r: 0.84705883, g: 1, b: 0.80784315, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
