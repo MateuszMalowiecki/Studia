@@ -114,3 +114,4 @@ MonoBehaviour:
   go_up: 0
   go_down: 0
   moved: 0
+  winPosition: {x: 0, y: 0, z: 0}

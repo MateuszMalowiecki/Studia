@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 192948505}
   - component: {fileID: 192948504}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,8 +239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00010681, y: 117}
-  m_SizeDelta: {x: 799.9998, y: 40}
+  m_AnchoredPosition: {x: 0.00010681, y: 102.3}
+  m_SizeDelta: {x: 799.9998, y: 69.4998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &192948504
 MonoBehaviour:
@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 568559228}
   - component: {fileID: 568559227}
   - component: {fileID: 568559226}
+  - component: {fileID: 568559229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -562,6 +563,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &568559229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568559225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c2ed3c86b27064c8e0a3c2bd4174f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 192948504}
+  gameManager: {fileID: 0}
 --- !u!1 &669458564
 GameObject:
   m_ObjectHideFlags: 0

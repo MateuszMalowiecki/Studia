@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Piece : MonoBehaviour
-{
+public class Piece : MonoBehaviour {
     [HideInInspector]
     public bool clicked=false;
     [HideInInspector]
@@ -18,15 +16,15 @@ public class Piece : MonoBehaviour
     public bool moved;
     [HideInInspector]
     public Vector3 winPosition;
+    [HideInInspector]
+    private Vector3 currentPosition, endPosition;
+    private float lerpTime=0.1f;
     // Start is called before the first frame update
-    void Start()
-    {
-        winPosition=transform.position;
+    void Start() {
+        winPosition=transform.localPosition;
     }
-
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         movePuzzle();
     }
     private void OnMouseDown() {
@@ -38,24 +36,41 @@ public class Piece : MonoBehaviour
     }
     void movePuzzle() {
         if (go_right) {
-            transform.position += 6*Vector3.right;
+            currentPosition=transform.localPosition;
+            endPosition= currentPosition + 6*Vector3.right;
+            StartCoroutine(Move());
             go_right = false;
-            moved=true;
+            moved = true;
         }
         if (go_left) {
-            transform.position += 6*Vector3.left;
+            currentPosition=transform.localPosition;
+            endPosition= currentPosition + 6*Vector3.left;
+            StartCoroutine(Move());
             go_left = false;
-            moved=true;
+            moved = true;
         }
         if (go_up) {
-            transform.position += 6*Vector3.forward;
+            currentPosition=transform.localPosition;
+            endPosition= currentPosition + 6*Vector3.forward;
+            StartCoroutine(Move());
             go_up = false;
-            moved=true;
+            moved = true;
         }
         if (go_down) {
-            transform.position += 6*Vector3.back;
+            currentPosition=transform.localPosition;
+            endPosition= currentPosition + 6*Vector3.back;
+            StartCoroutine(Move());
             go_down = false;
-            moved=true;
+            moved = true;
         }
+    }
+    IEnumerator Move() {
+        float elapsedTime=0f;
+        while(elapsedTime < lerpTime) {
+            transform.localPosition=Vector3.Lerp(currentPosition, endPosition, elapsedTime/lerpTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.localPosition=endPosition;
     }
 }
