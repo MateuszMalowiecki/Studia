@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
         }
         resetDelay=1f;
         clonePaddle = Instantiate(paddle, transform.position, Quaternion.identity) as GameObject;
-        Instantiate(brickPrefab, transform.position, Quaternion.identity);
+        Instantiate(brickPrefab, transform.position + 2*Vector3.up, Quaternion.identity);
     }
     void CheckGameOver() {
         if (bricks < 1) {

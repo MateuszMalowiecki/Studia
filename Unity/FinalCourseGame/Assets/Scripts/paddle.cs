@@ -11,5 +11,4 @@ public class paddle : MonoBehaviour
        playerPos=new Vector3(Mathf.Clamp(xPos, -8.5f, 8.5f), -1f, 0);
        transform.position = playerPos;
     }
-
 }
