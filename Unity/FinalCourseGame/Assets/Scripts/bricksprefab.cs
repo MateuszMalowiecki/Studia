@@ -12,7 +12,7 @@ public class bricksprefab : MonoBehaviour
         float elapsedTime=0f;
         while(elapsedTime < lerpTime) {
             transform.position=Vector3.Lerp(currentPosition, endPosition, elapsedTime/lerpTime);
-            Debug.Log(Vector3.Lerp(currentPosition, endPosition, elapsedTime/lerpTime));
+            //Debug.Log(Vector3.Lerp(currentPosition, endPosition, elapsedTime/lerpTime));
             elapsedTime += Time.deltaTime;
             yield return null;
         }

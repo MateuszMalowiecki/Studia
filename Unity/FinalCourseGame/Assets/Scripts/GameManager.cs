@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
     public int lives;
     public int bricks;
+    public int pointsFromLevel;
+    public static int pointsFromAllLevels;
     public float resetDelay;
     public Text livesText;
     public GameObject gameOver;
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour {
     public string SceneName;
     // Start is called before the first frame update
     void Start() {
+        pointsFromLevel = 0;
         if (instance == null) {
             instance = this;
         }
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour {
         }
     }
     void WinLevel() {
+        pointsFromAllLevels += pointsFromLevel * lives;
         if (SceneName == "Level3") {
             SceneManager.LoadScene("Win");
         }
@@ -63,11 +67,14 @@ public class GameManager : MonoBehaviour {
     }
     public void LoseLife() {
         lives--;
-        livesText.text = "Lives: " + lives;
+        setText();
         Instantiate(deathParticles, clonePaddle.transform.position, Quaternion.identity);
         Destroy(clonePaddle);
         Invoke("SetupPaddle", resetDelay);
         CheckGameOver();
+    }
+    public void setText() {
+        livesText.text = "Lives: " + lives + ", Points: " + pointsFromLevel;
     }
     void SetupPaddle() {
         clonePaddle = Instantiate(paddle, transform.position, Quaternion.identity) as GameObject;

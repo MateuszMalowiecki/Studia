@@ -5,6 +5,8 @@ using UnityEngine;
 public class DeadZone : MonoBehaviour
 {
     void OnTriggerEnter(Collider other) {
-        GameManager.instance.LoseLife();
+        if (other.name=="Ball") {
+            GameManager.instance.LoseLife();
+        }
     }
 }
