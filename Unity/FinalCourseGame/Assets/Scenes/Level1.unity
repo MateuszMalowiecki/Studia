@@ -266,13 +266,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Lives: 3'
+  m_Text: 'Lives: 3, Points:0'
 --- !u!222 &218575124
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -298,6 +298,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8c167ad6188cd4aa80bb8defa34052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &372295560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 372295562}
+  - component: {fileID: 372295561}
+  m_Layer: 0
+  m_Name: CollectableManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &372295561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372295560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db712229bd484d74fb8f21567ddc8251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AvailableBuffs:
+  - {fileID: 2848524907712523678, guid: 9ad4ed44f75a0a340a076665bb685d01, type: 3}
+  AvailableDebuffs: []
+  BuffChance: 20
+  DebuffChance: 50
+--- !u!4 &372295562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 372295560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 551.43585, y: 180.73726, z: 293.9469}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &399451850
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,6 +775,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lives: 0
   bricks: 0
+  pointsFromLevel: 0
+  pointsFromAllLevels: 0
   resetDelay: 0
   livesText: {fileID: 218575123}
   gameOver: {fileID: 399451850}
