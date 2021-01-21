@@ -13,6 +13,7 @@ public class ball : MonoBehaviour {
         rend.enabled=true;
         rb = GetComponent<Rigidbody>();
         ballInitialVelocity = 300.0f;
+        //BallManager.instance.balls.Add(this);
     }
 
     // Update is called once per frame

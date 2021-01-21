@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     public GameObject brickPrefab;
     public GameObject paddle;
     public GameObject deathParticles;
-    public static GameManager instance =null;
+    public static GameManager instance = null;
     private GameObject clonePaddle;
     public string SceneName;
     // Start is called before the first frame update

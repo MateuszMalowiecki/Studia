@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableManager : MonoBehaviour
-{
+public class CollectableManager : MonoBehaviour {
     public static CollectableManager instance;
 
     private void Start() {
