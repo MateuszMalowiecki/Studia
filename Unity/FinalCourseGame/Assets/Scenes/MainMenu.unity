@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 1124525461}
   - component: {fileID: 1124525460}
   - component: {fileID: 1124525459}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -561,7 +561,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 90dbf9f4573ee7246882a7b51fff83c9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectableManager : MonoBehaviour {
@@ -15,11 +14,7 @@ public class CollectableManager : MonoBehaviour {
     }
 
     public List<Collectables> AvailableBuffs;
-    public List<Collectables> AvailableDebuffs;
 
     [Range(0, 100)]
     public float BuffChance;
-
-    [Range(0, 100)]
-    public float DebuffChance;
 }

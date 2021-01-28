@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +9,7 @@ public class GameManager : MonoBehaviour {
     public static int pointsFromAllLevels;
     public float resetDelay;
     public Text livesText;
-    public GameObject gameOver;
-    public GameObject youWon;
+    public Text pointsText;
     public GameObject brickPrefab;
     public GameObject paddle;
     public GameObject deathParticles;
@@ -67,14 +65,17 @@ public class GameManager : MonoBehaviour {
     }
     public void LoseLife() {
         lives--;
-        setText();
+        setLivesText();
         Instantiate(deathParticles, clonePaddle.transform.position, Quaternion.identity);
         Destroy(clonePaddle);
         Invoke("SetupPaddle", resetDelay);
         CheckGameOver();
     }
-    public void setText() {
-        livesText.text = "Lives: " + lives + ", Points: " + pointsFromLevel;
+    public void setLivesText() {
+        livesText.text = "Lives: " + lives;
+    }
+    public void setPointsText() {
+        pointsText.text = "Points: " + pointsFromLevel;
     }
     void SetupPaddle() {
         clonePaddle = Instantiate(paddle, transform.position, Quaternion.identity) as GameObject;
