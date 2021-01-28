@@ -1,0 +1,10 @@
+@(students: List[models.Student])
+
+@main("Students") {
+<h2> Students: </h2>
+<ul>
+    @for(student <- students) {
+    <li> @student.name </li>
+    }
+</ul>
+}
