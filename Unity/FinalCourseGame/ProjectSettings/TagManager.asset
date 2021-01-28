@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Postprocessing
   - 
   - 
   - 
@@ -38,12 +38,6 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 3155627803
-    locked: 0
-  - name: Paddle
-    uniqueID: 2848752015
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
