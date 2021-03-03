@@ -1,0 +1,23 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\title{Streszczenie stron 20-22(fragment sekcji "Scaling techniques") z pierwszego rozdziału książki "Distributed systems"}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Wstęp}
+Sekcja "scaling techniques" zaczyna się od krótkiego wstępu. We wstępie tym autor na początku zastanawia się, w jaki sposób można rozwiązać problemy związane ze skalowalnością. Autor rozważa problem skalowalności jako problem wydajnościowy i podaje jako rozwiązanie technikę zwaną "skalowanie w górę" (ang. scaling up - zwiększenie pojemności zasobów systemowych). Następnie autor rozważa problem "skalowania w poziomie" (ang. scaling out - rozszerzanie systemu rozproszonego poprzez wdrażanie większej liczby maszyn) i podaje trzy techniki na rozwiązanie tego problemu: ukrywanie opóźnień komunikacji(ang. hiding communication latencies), dystrybucja pracy(ang. distribution of work) i replikacja(ang. replication). My opiszemy w tym streszczeniu dwie pierwsze techniki(trzecią technikę opisze następna osoba z systemu zapisów).
+\section*{Ukrywanie opóźnień komunikacji}
+Na początku tej sekcji, autor podaje podstawową ideę techniki "ukrywania opóźnień komunikacji", która brzmi: "staraj się unikać czekania na odpowiedzi na żądania usług zdalnych". Następnie autor podaje w jaki sposób można wykorzystać asynchroniczną komunikację do unikania czekania na odpowiedź. Opisowi temu autor poświęca jeden akapit. Potem autor zauważa, że nie wszystkie systemy mogą wykorzystywać asynchroniczną komunikację i jako przykład podaje aplikacje interaktywne. Podaje też rozwiązanie, które jest lepsze w tym przypadku: ograniczenie ogólnej komunikacji, oraz przypadek wykorzystania tego rozwiązania: dostęp do bazy danych za pomocą formularza. Na koniec tej sekcji, autor opisuje dwa sposoby na wypełnienie formularza: 
+\begin{itemize}
+\item wysyłanie oddzielnej wiadomości dla każdego pola 
+\item wysłanie kodu do wypełnienia formularza
+\end{itemize}
+Sposoby te zostały przedstawione na rysunkach 1.4(a) oraz 1.4(b).
+\section*{Dystrybucja pracy}
+Sekcję tą autor zaczyna od przedstawienia czym jest metoda dystrybucji pracy oraz podania przykładu jej wykorzystania (system DNS). Następnie autor pobieżnie opisuje działanie systemu DNS. Na koniec autor podaje i opisuje drugi przykład dystrybucji pracy(sieć internetowa World Wide Web).
+\end{document}
