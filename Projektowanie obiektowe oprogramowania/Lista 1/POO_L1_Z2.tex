@@ -1,0 +1,63 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\title{Rozwiązanie zadania 2 z zestawu 1 z "Projektowania obiektowego oprogramowania"}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Polecenie}
+Zdokumentować dwa przypadki użycia wybranego przez siebie przykładowego problemu (gra w brydża, zakupy w sklepie internetowym, inne). Co najmniej jeden opisać w
+formie skróconej (brief) i jeden w formie pełnej (fully dressed).
+\section*{Rozwiązanie}
+\subsection*{Wybrany problem}
+Użycie konta
+\subsection*{Przypadek 1(forma skrócona)}
+\textit{Wypłać pieniądze} - klient staje przed bankomatem, a następnie wkłada kartę do czytnika. Bankomat pyta klienta o język interfejsu. Klient wybiera język. Bankomat prosi o podanie numeru PIN. Klient wpisuje numer PIN. Bankomat weryfikuje numer PIN i podaje możliwe opcje. Klient wybiera opcję wypłaty gotówki. Bankomat prosi klienta o podanie kwoty. Klient wpisuje kwotę. Bankomat dokonuje transakcji. Bankomat wysuwa kartę i prosi klienta o jej zabranie. Klient zabiera kartę. Bankomat wydaje kwotę, którą podał klient i prosi o zabranie pieniędzy. Klient zabiera pieniądze. 
+\subsection*{Przypadek 2(forma pełna)}
+\textit{Sprawdzanie stanu konta}
+\subsubsection*{Nazwa:}
+Sprawdzanie stanu konta
+\subsubsection*{Poziom ważności:}
+Wysoki
+\subsubsection*{Aktor główny:} 
+Klient
+\subsubsection*{Interesariusze i ich cele:}
+Klient banku - chce sprawdzić stan konta \\
+Bankomat - chce zapewnić, że operacji na koncie dokonuje autoryzowany użytkownik \\
+Bank: chce satysfakcji klienta. \\
+\subsubsection*{Warunki początkowe}
+Klient stoi przed bankomatem. Bankomat jest czynny.
+\subsubsection*{Warunki końcowe}
+Uwierzytelnienie kończy się sukcesem. Użytkownik wie jaką kwotę ma na koncie.
+\subsubsection*{Główny scenariusz sukcesu}
+1. Klient staje przed bankomatem. \\
+2. Klient wkłada kartę do czytnika. \\
+3. Bankomat pyta klienta o język interfejsu. \\ 
+4. Klient wybiera język. \\
+5. Bankomat prosi o podanie numeru PIN. \\
+6. Klient wpisuje numer PIN. \\
+7. Bankomat weryfikuje poprawność numeru PIN. \\ 
+8. Bankomat podaje możliwe opcje. \\
+9. Klient wybiera opcję sprawdzenia stanu konta. \\ 
+10. Bankomat podaje kwotę znajdującą się na koncie klienta. \\
+11. Klient kończy sprawdzanie stanu konta. \\
+12. Bankomat wysuwa kartę i prosi klienta o jej zabranie. \\ 
+13. Klient zabiera kartę. \\
+\subsubsection*{Rozszerzenia}
+2a. Klient wkłada kartę złą stroną: \\ 2a.1. bankomat wysuwa kartę i wyświetla informację, że karta została włożona złą stroną. \\ \\
+2b. Bankomat nie rozpoznał karty: \\ 2b.1. Bankomat wysuwa kartę i wyświetla informację, że karta nie została rozpoznana. \\ \\
+4a. Klient wybrał zły język interfejsu: \\4a.1. Klient wraca do ekranu z wyborem języka, za pomocą przycisku w lewym dolnym rogu ekranu. \\ 4a.2. Klient wybiera poprawny język \\ \\
+7a. Klient podał błędny numer PIN: \\ 7a.1. Bankomat prosi klienta o ponowną próbę \\ 7a.2. Klient wpisuje PIN ponownie  \\ 7a.2a. Klient podał błędny numer PIN trzykrotnie: \\ 7a.2a.1. Bankomat wysuwa kartę \\ 7a.2a.2. Bankomat informuje klienta o zablokowaniu karty i konieczności skontaktowania się z bankiem. \\
+\subsubsection*{Dodatkowe wymagania}
+- Możliwość wyboru polskiego i angielskiego języka interfejsu \\
+- Możliwość wypłacenia 100, 200, 500, 1000, 2000 lub 3000 PLN \\
+- Czas uwierzytelnienia nie dłuższy niż 10 sekund
+\subsection*{Technologia}
+2 - czytnik karty \\
+5 - Klawiatura do wprowadzenia numeru PIN \\
+3, 9 - Przyciski do wyboru opcji w menu \\
+\end{document}
