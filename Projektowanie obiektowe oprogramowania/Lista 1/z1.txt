@@ -1,0 +1,78 @@
+Znaleziony dokument:
+https://www.cez.gov.pl/fileadmin/user_upload/1_zalacznik_nr_1_do_siwz_opz_new_5bc78d1ea82ed.pdf
+
+FURPS:
+Functonality:
+1. System będzie umożliwiał tworzenie definicji procesów biznesowych
+bez użycia interfejsu programistycznego. Będzie dostarczony edytor
+graficzny przeznaczony do projektowania procesów zgodny z notacją
+BPMN.
+
+2. System będzie umożliwiał przechowywanie wielu wersji definicji
+procesu i oznaczenie, która wersja jest aktualna, tzn. przeznaczona do
+wykonywania.
+
+3. Procesy biznesowe będą powiązane z dokumentami elektronicznymi.
+Dokument elektroniczny będzie rozumiany jako zestaw danych (lub
+obiekt danych) na formularzu widoczny podczas pracy w procesie.
+
+Usability:
+4. Będzie możliwe korzystanie z systemu przez użytkowników
+następujących kategorii:
+- Pracownik
+- Kierownik
+- Administrator biznesowy
+- Administrator techniczny
+- Projektant procesów
+Każda z tych kategorii będzie miała uprawnienia ograniczające
+dostęp do danych i funkcji systemu. Dodatkowo będzie możliwość
+definiowania ról występujących w procesie zgodnie z wymaganiem
+opisanym w definiowaniu procesów.
+
+5. Wszystkie rodzaje dokumentacji (podręczniki użytkowników i
+administratora) będą opisywać aktualną produkcyjną wersję systemu
+
+6. Podręcznik administratora będzie zawierał między innymi wszelkie
+informacje na temat sposobu monitorowania i utrzymania systemu.
+
+Reliability:
+7. System będzie dostępny 7 dni w tygodniu przez 24 godziny za 
+wyjątkiem przerw serwisowych koniecznych do instalacji nowych wersji
+systemu.
+
+Performance:
+8. System umożliwi obsługę następującej ilości instancji procesów:
+- Średnio w roku ok. 250 wniosków o zamówienie publiczne
+- Średnio w roku ok. 200 umów z wykonawcami/dostawcami
+- Średnio w roku ok. 1500 faktur
+
+Supportability
+
+9. Integracja z systemem kancelaryjnym EZD TIMSI e-kancelaria - 
+  System musi umożliwić powiązanie typu procesu z wybraną kategorią 
+sprawy lub typem pisma. Będzie zapewnione mapowanie kategorii
+spraw systemu kancelaryjnego na typy procesów biznesowych w
+systemie workflow.
+
+
+SMART:
+
+Simple:
+ad. 3. Zestawem jakich danych jest dokument elektroniczny?
+
+Measurable:
+ad. 2. Jak wielu wersji definicji?
+
+Achievable:
+ad. 2. W jaki sposób będą definicje przechowywane?
+ad. 3. W jaki sposób powiązane?
+ad. 9. W jaki sposób typ procesu będzie powiązany z kategorią?
+
+Relevant:
+ad.2. Czy konieczne jest przechowywanie definicji procesu, która nie jest przeznaczona do wykonania?
+
+Time-bound:
+ok
+
+Pytanie do zamawiającego:
+Zestawem jakich danych jest dokument elektroniczny?
