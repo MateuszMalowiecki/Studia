@@ -1,0 +1,28 @@
+ 
+ 
+Krzysztof Juszczyk
+
+Opracowane zadanie 20 z listy 1.
+
+IIUWr, SR21, 21-03-05
+ 
+# Streszczenie fragmentu MvS&AST dotyczącego warstwy pośredniej (s. 5-6)
+
+System rozproszony oferuje oddzielną warstwę oprogramowania, zwanego oprogramowaniem pośrednim, które umożliwia integrację i komunikację aplikacji rozproszonych wchodzących w skład całego systemu rozproszonego. Zastosowanie warstwy pośredniej pozwala, w miarę możliwości, na ukrycie różnic w zastosowanym sprzęcie i systemie operacyjnym każdej aplikacji. Oprócz wydajnym zarządzaniem zasobami, zadaniami warstwy pośredniej są:
+- udogodnienia w ramach komunikacji między aplikacjami
+- usługi zapewniające bezpieczeństwo
+- zarządzanie kontami w systemie
+- maskowanie i naprawa awarii systemu
+
+Należy zaznaczyć, że warstwa pośrednia jest realizowana w środowisku sieciowym, a także oferuje zestawy powszechnych komponentów i funkcji, które nie muszą już być implementowane osobno przez aplikacje. Kilka przykładów typowych usług oprogramowania pośredniego:
+
+Komunikacja - Powszechną usługą komunikacyjną zdalne wywoływanie procedur (RPC - ang. Remote Procedure Call). Umożliwia aplikacji wywołanie funkcji, która jest zaimplementowana i wykonywana na komputerze zdalnym, tak jakby była dostępna lokalnie.
+
+Transakcje - aplikacje korzystają z wielu usług, które mogą być rozproszone pomiędzy wieloma komputerami. Udostępnia się tutaj obsługę wykonywania takich usług w sposób transakcyjny (atomowo). W takim przypadku, twórca aplikacji definiuje jakie usługi ma zamiar wywołać, a oprogramowanie pośredniczące upewnia się, że każda usługa albo zostanie wywołana i wykonana z sukcesem lub żadna z nich nie dojdzie do skutku.
+
+Kompozycje usług - wiele mniejszych usług może zostać połączonych ze sobą oferując jedną, większą usługę.
+
+Niezawodność - zestaw narzędzi Horus pozwala programiście zbudować aplikację jako grupę procesów, tak że każda wiadomość wysłana przez jeden proces ma gwarancję, że zostanie odebrana przez wszystkie lub żadne inne procesy. Takie gwarancje mogą uprościć tworzenie aplikacji rozproszonych i zazwyczaj są wdrażane jako część oprogramowania pośredniego.
+
+Na podstawie "Distributed Systems Third edition", M. van Steen, A.S. 
+Tanenbaum, s. 5-6.

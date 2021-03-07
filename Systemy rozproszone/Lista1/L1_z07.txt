@@ -1,0 +1,19 @@
+
+Krzysztof Juszczyk
+
+Opracowane zadanie 7 z listy 1.
+
+IIUWr, SR21, 21-03-05
+
+# Co się rozumie przez systemy otwarte? Czy to jest to samo co systemy o otwartym kodzie? Co to jest otwarty system rozproszony i jakie korzyści wynikają z otwartości?
+ 
+Poprzez systemy otwarte rozumiemy oprogramowanie, które cechuje się:
+- interoperacyjnością (zdolnością do współdziałania), czyli oprogramowanie oferuje interfejsy współpracujące z innymi programami lub systemami, nawet tymi które dopiero powstaną w przyszłości.
+- przenośnością na inne platformy, braku przywiązania do konkretnej warstwy sprzętowej lub konkretnego systemu operacyjnego.
+- otwartym standardem, którego specyfikacja jest publicznie dostępna.
+
+Systemy o otwartym kodzie to rodzaj oprogramowania, w którym kod źródłowy jest wydany w ramach licencji wolnego oprogramowania, na mocy której właściciel praw autorskich zezwala na jego modyfikację i rozpowrzechnianie.
+
+Otwartość systemu rozproszonego oznacza, że jego składowe powinny być zgodne ze standardowymi zasadami, które opisują składnię i semantykę. Na ogół usługi w systemach rozproszonych są definiowane za pomocą interfejsów, które zazwyczaj opisuje się językiem opisu interfejsu (ang. IDL - Interface Definition Language), za pomocą którego prawie zawsze definiuje sie wyłącznie składnię usług.
+
+Otwarty system rozproszony to inaczej system elastyczny, czyli taki, który można łatwo konfigurować i rozbudowywać. Elastyczność pozwala na jego łatwą konfigurację z różnych składowych, które być może pochodzą od różnych producentów. Dodatkowo wdrażanie nowych komponentów, lub ich wymiana, również powinna odbywać się łatwo i bez naruszania istniejących składowych systemu. Jeśli system cechuje się zdolością do współdziałania to znaczy, że implementacje systemu wydane przez różnych wydawców są w stanie ze sobą współpracować w ramach wspólnego standardu. Przenośność charakteryzuje stopień, do jakiego z aplikacji opracowanej dla systemu rozproszonego A można skorzystać bez zmian w systemie rozproszonym B, który realizuje te same interfejsy co A.

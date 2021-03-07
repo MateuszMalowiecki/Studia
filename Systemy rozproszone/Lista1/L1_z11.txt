@@ -1,0 +1,10 @@
+ 
+Krzysztof Juszczyk
+
+Opracowane zadanie 11 z listy 1.
+
+IIUWr, SR21, 21-03-05
+
+# Wieloprocesor z 256 jednostkami centralnymi jest zorganizowany w układzie kraty o wymiarach 16 na 16. Ile wynosi najgorsze opóźnienie (w przeskokach), na jakie jest narażony komunikat?
+
+W takim przypadku najgorsze opóźnienie jakie może wystąpić to 31 przeskoków.

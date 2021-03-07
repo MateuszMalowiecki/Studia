@@ -1,0 +1,10 @@
+ 
+Krzysztof Juszczyk
+
+Opracowane zadanie 20 z listy 1.
+
+IIUWr, SR21, 21-03-05
+
+# Wykonywanie transakcji zagnieżdżonych wymaga jakiejś koordynacji. Wyjaśnij, co faktycznie powinien robić koordynator.
+
+Głównym zadaniem koordynatora jest umożliwienie aplikacji dostępu do wielu serwerów/baz danych w systemie rozproszonym poprzez zaoferowanie jej transakcyjnego modelu oprogramowania. Zasadniczo koordynartor nadzoruje zatwierdzanie transakcji podrzędnych zgodnie ze standardowym protokołem znanym jako zatwierdzanie rozproszone. Dodatkowo zastosowanie koordynatora odciąża twórców aplikacji od wdrażania technik koordynacji dla transakcji zagnieżdżonych.
