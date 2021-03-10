@@ -1,0 +1,6 @@
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\bin\Debug\Zad.2 lista8.exe
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\bin\Debug\Zad.2 lista8.pdb
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\obj\Debug\Zad.2 lista8.csprojAssemblyReference.cache
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\obj\Debug\Zad.2 lista8.csproj.CoreCompileInputs.cache
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\obj\Debug\Zad.2 lista8.exe
+C:\Users\cp24\source\repos\Zad.2 lista8\Zad.2 lista8\obj\Debug\Zad.2 lista8.pdb
