@@ -1,0 +1,9 @@
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad.1 lista6.csprojAssemblyReference.cache
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad._1_lista6.Form1.resources
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad._1_lista6.Properties.Resources.resources
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad.1 lista6.csproj.GenerateResource.cache
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad.1 lista6.csproj.CoreCompileInputs.cache
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\bin\Debug\Zad.1 lista6.exe
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\bin\Debug\Zad.1 lista6.pdb
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad.1 lista6.exe
+C:\Users\cp24\source\repos\Zad.1 lista6\Zad.1 lista6\obj\Debug\Zad.1 lista6.pdb

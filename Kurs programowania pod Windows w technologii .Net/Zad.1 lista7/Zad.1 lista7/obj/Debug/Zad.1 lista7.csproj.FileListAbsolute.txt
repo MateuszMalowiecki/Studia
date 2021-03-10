@@ -1,0 +1,14 @@
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\bin\Debug\Zad.1 lista7.exe
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\bin\Debug\Zad.1 lista7.pdb
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.csprojAssemblyReference.cache
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\MainWindow.g.cs
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\App.g.cs
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7_MarkupCompile.cache
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7_MarkupCompile.lref
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\MainWindow.baml
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.g.resources
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad._1_lista7.Properties.Resources.resources
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.csproj.GenerateResource.cache
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.csproj.CoreCompileInputs.cache
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.exe
+C:\Users\cp24\source\repos\Zad.1 lista7\Zad.1 lista7\obj\Debug\Zad.1 lista7.pdb

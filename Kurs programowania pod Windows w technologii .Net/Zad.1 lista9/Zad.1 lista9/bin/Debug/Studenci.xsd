@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Registry">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="2" maxOccurs="unbounded" name="Student">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="2" maxOccurs="unbounded" name="Address">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="Number" type="xs:integer" use="required" />
+											<xs:attribute name="Street" type="xs:string" use="required" />
+											<xs:attribute name="City" type="xs:string" use="required" />
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="list">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="3" maxOccurs="unbounded" name="element">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Classes">
+														<xs:complexType>
+															<xs:simpleContent>
+																<xs:extension base="xs:string">
+																	<xs:attribute name="Name" type="xs:string" use="required" />
+																	<xs:attribute name="Grade" type="xs:decimal" use="required" />
+																</xs:extension>
+															</xs:simpleContent>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="Name" type="xs:string" use="required" />
+						<xs:attribute name="Surname" type="xs:string" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

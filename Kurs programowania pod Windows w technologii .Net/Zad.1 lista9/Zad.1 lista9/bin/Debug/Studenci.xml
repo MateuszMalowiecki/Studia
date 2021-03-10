@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Registry>
+	<Student Name="Adrian" Surname="Malinowski">
+		<Address Status="Temporary" Number="69" Street="Grunwaldzka" City="Wroclaw"> </Address>
+		<Address Status="Constant" Number="26" Street="Bronowicka" City="Kraków"> </Address>
+		<list>
+			<element>
+				<Classes Name="Kurs programowania pod Windows" Grade="5"> </Classes>
+			</element>
+			<element>
+				<Classes Name="Algorytmy i Struktury Danych" Grade="3"> </Classes>
+			</element>
+			<element>
+				<Classes Name="Języki formalne i złożoność obliczeniowa" Grade="2"> </Classes>
+			</element>
+		</list>
+	</Student>
+	<Student Name="Tomasz" Surname="Kowalski">
+		<Address Status="Temporary" Number="35" Street="Kamienna" City="Wroclaw"> </Address>
+		<Address Status="Constant" Number="51" Street="Chopina" City="Szczecin"> </Address>
+		<list>
+			<element>
+				<Classes Name="Kurs programowania pod Windows" Grade="4.5"> </Classes>
+			</element>
+			<element>
+				<Classes Name="Metody Programowania" Grade="3.5"> </Classes>
+			</element>
+			<element>
+				<Classes Name="Architektury systemów komputerowych" Grade="3"> </Classes>
+			</element>
+		</list>
+	</Student>
+</Registry>
