@@ -1,0 +1,17 @@
+Wojciech Pawlik
+SR 2021
+
+lista 1
+zadanie 10
+Czy wieloprocesory z pamięcią dzieloną są systemami rozproszonymi?
+
+W wieloprocesorach ze wspólną pamięcią, wszystkie procesory mogą korzystać z całej przestrzeni adresowej pamięci operacyjnej systemu.
+Elementy tej przestrzeni są zazwyczaj ulokowane w odrębnych modułach pamięciowych i wyposażone w odrębne dekodery adresu.
+Komunikacja między procesorami odbywa się za pomocą rozkazów dostępu do zmiennych dzielonych w pamięci.
+Pobieranie rozkazów do wykonania w procesorach również odbywa się ze wspólnej pamięci.
+Efektywność dostępu do modułów pamięci zależy od budowy i własności sieci łączącej.
+
+Myśląc o procesorach jak o aplikacjach udostępnianych użytkownikom, o pamięci jak o rozproszonym zasobie ulokowanym w odrębnych modułach oraz o sieci łączącej, która umożliwia komunikację i dostęp do przestrzeni adresowej za pomocą wspólnego interfejsu (rozkazy dostępu do zmiennych), jak o warstwie pośredniej, możemy nazwać wieloprocesory ze wspólną pamięcią systemem rozproszonym.
+
+
+na podstawie https://edux.pjwstk.edu.pl/mat/198/lec/main118.html

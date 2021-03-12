@@ -1,0 +1,33 @@
+Piotr Słowik rozwiązania listy 1 z systemów rozproszonych.
+
+5. Dlaczego czasami tak trudno jest ukryć w systemie rozproszonym występowanie awarii
+i usuwanie ich skutków (rekonstrukcję, uzdrawianie [systemu], ang. recovery)?
+
+Trudno jest sprawdzić czy to serwer jest faktycznie wyłączony
+czy po prostu wolno odpowiada na żądania klienta.
+W takim wypadku system może złożyć raport że nie ma dostępu
+do usługi, a w rzeczywistości serwer jest wolny.
+
+
+19. Mówi się, że w przypadku zaniechania transakcji świat powraca do poprzedniego stanu,
+tak jak gdyby transakcja nigdy nie wystąpiła. Nie jest to w pełni prawdziwe. Podaj przykład,
+w którym odtworzenie poprzedniego stanu świata jest niemożliwe.
+
+W każdym wypadku gdy wykonano fizyczną operację wejścia/wyjścia.
+Załóżmy, że wyryliśmy coś w drewnie, nie możemy przywrócić
+kawałka drewna do stanu poprzedniego. W systemie, który nadzoruje
+procesy przemysłowe zwykle nie da się wrócić do poprzedniego stanu świata.
+
+25. Sprawdzian wiedzy pomocniczej. Co to jest jednostka centralna (CPU)? Co jest procesor?
+Czy terminy CPU i procesor oznaczają to samo?
+
+Jednostka centralna (CPU) to układ elektroniczny, który wykonuje instrukcję
+zawierające się w programie. Wykonuje działania arytmetyczne, przetwarza 
+logikę i operację wejścia/wyjścia.
+
+Procesor to urządzenie cyfrowe, które pobiera dane z pamięci
+a następnie je wykonuje.
+
+Określenia CPU i procesor używane są naprzemiennie, ale w komputerze
+mamy również GPU (graphics processing unit) oraz inne urządzenia, które
+wykonują cześć procesowania niezależnie więc też zawierają procesory.

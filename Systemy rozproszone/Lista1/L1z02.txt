@@ -1,0 +1,20 @@
+Wojciech Pawlik
+SR 2021
+
+lista 1
+zadanie 2
+Jaką rolę w systemie rozproszonym odgrywa oprogramowanie warstwy pośredniej?
+
+Głównym zadaniem warstwy pośredniej jest integracji systemów, które ze swojej strony są autonomiczne.
+
+Lokalny system operacyjny jest odpowiedzialny za zarządzanie lokalnymi zasobami.
+Warstwa pośrednia tworzy nad nimi nowe usługi.
+Powinna ona ukrywać fakt, że systemy składowe mogą być zróżnicowane.
+Robi to definiująć nowe interfejsy komunikacyjne - niezależne od interfejsów lokalnych.
+Tworzy w ten sposób nową abstrakcję dla aplikacji rozproszonych, które nie powinny korzystać bezpośrednio z usług udostępnianych przez lokalne systemy operacyjne.
+
+Zadaniem warstwy pośredniej jest zatem to, aby system rozproszony wyglądał na jednolity.
+
+
+
+na podstawie http://osilek.mimuw.edu.pl/index.php?title=Sr-1-wyk-1.0-toc

@@ -1,0 +1,29 @@
+Piotr Słowik
+Streszczenie fragmentu o zagnieżdżonych transakcjach z
+podręcznika "Distributed Systems. Third edition", MvS&AST.
+
+W systemach rozproszonych transakcje są zbudowane z podtranskacji
+tworząc zagnieżdżoną transakcję. Transakcja wyższego poziomu może się
+rozwidlić i zlecić część zadania synowi, aby zyskać wydajność lub
+uprościć programowanie.
+
+Podtransakcje zwracają uwagę na problem wielu równorzędnych podtransakcji.
+Rodzic może anulować obliczenia dzieci i cofnąć stan do czasu sprzed
+wykonania transakcji ,więc trwałość transakcji dotyczy tylko transakcji wyższego poziomu.
+
+Transkacje mogą być zagniężdżone dowolnie głęboko stąd potrzebny jest
+dobry system administrowania nimi. 
+Jeśli transkacja wyższego poziomu zostanie przerwana, jej dzieci również zostaną.
+Jeśli dziecko zatwierdzi transakcję to zmienia ono świat rodzica na swój po otrzymaniu wyniku.
+Jeśli transakcję zostały zlecone w tym samym momencie to wynik jest taki jakby wykonały się
+w pewnym losowym porządku.
+
+Transakcje zagnieżdżone są bardzo ważne w systemach rozproszonych. Zachowują
+one logiczny podział pracy orginalnej transakcji. 
+Komponentem, który odpowiadał za pracę rozproszonych lub zagnieżdżonych transakcji
+był monitor procesujący transakcję (transaction-processing monitor). Jego zadaniem
+jest pozwolić aplikacji uzyskać dostęp do wielu zasobów. Monitor ten zatwierdzał podtransakcję
+w kolejności protokołu rozproszonego zatwierdzenia.
+Dzięki temu aplikacja nie musi samodzielnie koordynować subtransakcji aby stworzyła jedną.
+
+Na podstawie "Distributed Systems. Third edition", M. van Steen, A.S Tanenbaum s.36-37

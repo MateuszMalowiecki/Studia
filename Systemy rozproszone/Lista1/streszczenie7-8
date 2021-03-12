@@ -1,0 +1,15 @@
+Streszczenie stron 7-8
+Adam Kuczaj
+
+Główne cechy systemu rozproszonego:
+- łatwa dostępność przechowywanych zasobów,
+- ukrycie rozproszenia zasobów na różne urządzenia,
+- otwartość,
+- skalowalność.
+
+Druga cecha dotyczy w szczególności ukrywania:
+- reprezentacji, umiejscowienia i sposobu dostępu do zasobów,
+- potencjalnych zmian lokalizacji zasobów (nawet w trakcie ich użytkowania),
+- kopiowania zasobów,
+- współdzielenia zasobów przez wielu użytkowników,
+- zaistnienia oraz zażegnania błędów i uszkodzeń zasobów.

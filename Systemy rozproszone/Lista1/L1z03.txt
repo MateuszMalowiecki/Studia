@@ -1,0 +1,12 @@
+Wojciech Pawlik
+SR 2021
+
+lista 1
+zadanie 3
+Wiele systemów sieciowych jest zorganizowanych na zasadzie zaplecza biurowego (ang. back office) i kantoru przyjęć (ang. front office).
+W jaki sposób przedsiębiorstwa (organizacje) osiągają jednolity (koherentny) widok, którego oczekujemy od systemu rozproszonego?
+
+W praktyce systemy rozproszone nie muszą być udostępniane w obrębie całej organizacji.
+Błędne jest założenie, że dany system musi działać w obrębie każdej jednostki należacej do przedsiębiorstwa.
+Możemy zatem mieć oddzielne systemy dla zaplecza biurowego oraz kantoru przyjęć.
+Nie ma powodów, aby całość była w pełni transparentna i działała w obrębie jednego systemu rozproszonego.

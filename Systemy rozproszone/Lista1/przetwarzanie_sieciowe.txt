@@ -1,0 +1,49 @@
+Wojciech Pawlik
+SR 2021
+
+Streszczenie fragmentu kiążki MvS&AST dotyczącego przetwarzania sieciowego (str. 28-30)
+
+grid computing - w języku polskim "przetwarzanie sieciowe" lub "przetwarzanie siatkowe"
+
+Cechą charakterystyczną klastrów komputerowych jest ich homogeniczność.
+W większości przypadków komputery w klastrze są takie same.
+Pojawiła się jednak tendencja ku rozwiązaniom hybrydowym, w których każdy element specjalizuje się w konkretnych zadaniach i w których nie nakłada się założeń dotyczących np. użycia tego samego systemu operacyjnego.
+Taka różnorodność jest rozpowszechniona w systemach siatkowych.
+
+Współdzielenie zasobów w systemach siatkowych jest realizowane w formie wirtualnej instytucji.
+Procesy należące do jednej wirtualnej instytucji mają prawa dostępu do zasobów udostępnianych przez daną instytucję np. baz danych.
+
+Większość oprogramowania używanego do realizacji przetwarzania sieciowego rozwija się wokół zapewniania dostępu do zasobów należących do różnych domen, ale tylko tym użytkownikom, którzy należą do jednej wirtualnej organizacji.
+Z tego powodu uwaga skupiona jest głównie na zagadnieniach związanych z architekturą.
+Propozycja przedstawiona przez Fostera i innych twórców nadal jest podstawą dla wielu systemów przetwarzania siatkowego.
+Składa się z następujących wartstw:
+
+- fabric layer (najniższa warstwa): Dostarcza interfejsów do zasobów.
+- connectivity layer: Tworzą ją protokoły, które wspierają operacje obejmujące wiele zasobów.
+  Dodatkowo, warstwa ta zawiera protokoły bezpieczeństwa służące do autentykacji użytkowników i zasobów (więcej szczegółów na ten temat zawiera rozdział 9).
+- resource layer: Odpowiada za zarządzanie pojedynczym zasobem.
+  Używa funkcji i interfejsów udostępnianych przez dwie wartstwy opisane powyżej.
+  Jest odpowiedzialna za kontrolę dostępu.
+- collective layer: Obsługuje dostęp do zasobów poprzez np. planowanie zadań.
+  W przeciwieństwie do niższych warstw, które specjalizują się w małej liczbie protokołów, w tej wartstwie może ich być bardzo dużo i mogą oferować szerokie spektrum usług.
+- application layer (najwyższa warstwa): Składa się z aplikacji, które działają w obrębie wirtualnej organizacji.
+
+Collective, connectivity i resource layer często są nazywane warstwą pośrednią siatki (z ang. grid middleware layer).
+
+          applications
+               ||
+               \/
+         collective layer
+          ||        ||
+          \/        \/
+  connectivity---resource
+        layer      layer
+          ||        ||
+          \/        \/
+          fabric layer
+
+  MvS&AST, str. 29, rys. 1.8
+
+
+Architektury, które oferują dostęp do wielu wartstw poprzed zbiór usług, nazywamy architekturami zorientowanymi na usługi (z ang. service-oriented architecture, SOA). 
+Ta idea prowadzi do alternatywnej architektury znanej jako Open Grid Services Architecture (OGSA).

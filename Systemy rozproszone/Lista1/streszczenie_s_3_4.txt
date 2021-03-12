@@ -1,0 +1,35 @@
+
+  Bartłomiej Grochowski
+    Streszczenie stron 3 i 4 podręcznika
+	'Distributed Systems' v3.03
+
+
+ Użyta w książce definicja systemów rozproszonych wyróżnia ich dwie cechy:
+
+ 1. Jest to zbiór niezależnych elementów obliczeniowych
+
+  Systemy rozproszone zwykle składają się z wielu jednostek - tzw. węzłów (ang. node).
+  Głównym zamysłem jest, by działały niezależnie, ale komunikowały się ze sobą
+  w celu osiągnięcia wspólnego celu. Ta niezależność skutkuje potrzebą synchronizacji.
+  Możliwe jest również zarządzanie uprawnieniami dla poszczególnych węzłów.
+  Zwykle systemy rozproszone są zorganizowane jako powłoka sieciowa
+  (ang. overlay network). Węzeł jest wyposażony w listę innych węzłów,
+  do których może wysyłać bezpośrednio wiadomości. Zorganizowanie powłoki
+  może występować jako uporządkowane (ang. structured), w którym zbiór
+  sąsiadów jest ustalony albo nieuporządkowane (ang. unstructured),
+  gdzie węzły, do których wysyłane są wiadomości, są wybierane w sposób losowy.
+  W obu przypadkach zawsze powinno istnieć połączenie pomiędzy każdymi dwoma
+  węzłami - sieć P2P (ang. peer-to-peer networks).
+
+ 2. Jest to jeden spójny system
+
+  System rozproszony na zewnątrz widoczny jest jako jeden system,
+  to znaczy użytkownik nie powinien zorientować się, że pod spodem
+  działa tak naprawdę sieć współgrających węzłów. Nie powinno być wiadome,
+  na którym węźle proces aktualnie działa. System może również replikować
+  dane i przechowywać je w różnych miejscach w celu zwiększenia wydajności.
+  Skoro jest to jeden wielki system złożony z wielu połączonych węzłów,
+  to może się zdarzyć, że któreś z nich zawodzą. Wówczas działanie całego
+  systemu może i tak zakończyć się sukcesem, ale często częściowe awarie
+  psują działanie systemu i mogą być szczególnie trudne do ukrycia.
+
