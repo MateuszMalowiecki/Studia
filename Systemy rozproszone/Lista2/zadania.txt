@@ -1,0 +1,55 @@
+Rozwiązania wybranych zadań z listy 2. z Systemów rozprosoznych
+1. Jeśli klient i serwer znajdują się w odległych od siebie miejscach, zauważamy, że opóźnienie
+sieciowe ma zasadniczy wpływ na wydajność. Jak można temu zaradzić?
+
+Odpowiedź: 
+Można wybrać kilka komputerów połączonych z serwerem, które korzystają z tych samych usług i potraktować je jako pośredników w komunikacji.
+
+2. Co to takiego trzywarstwowa architektura klient-serwer?
+
+Odpowiedź:
+Trzywarstwowa architektura klient-serwer to architektura składająca się z trzech komponentów: klient, serwer aplikacji(application server), serwer bazy danych(database server).
+W architekturze tej klient wysyła zapytania do serwera aplikacji, a serwer aplikacji wysyła zapytania do serwera bazy danych.
+
+3. W czym zawiera się różnica między rozproszeniem pionowym a poziomym?
+
+Odpowiedź:
+W pionowym rozproszeniu różne warstwy systemu komunikują się ze sobą, a w poziomym każda warstwa działa na swojej własnej części zestawu danych.
+
+4. Rozważmy łańcuch procesów P1, P2, ..., Pn realizujących wielopiętrową architekturę klient–serwer. 
+Proces P_i jest klientem procesu P_(i + 1), jak również zwraca odpowiedź procesowi
+P_(i – 1), lecz dopiero po otrzymaniu odpowiedzi od P_(i + 1). Na czym polegają główne trudności
+w tej organizacji, biorąc pod uwagę wydajność cyklu zamówienie-odpowiedź w procesie P_1?
+
+Odpowiedź:
+Główne trudności polegają na tym, że w oczekiwaniu na odpowiedź proces P_1 musi poczekać aż wszystkie procesy po drodze zwrócą odpowiedź.
+
+5. W strukturalnej sieci nakładkowej trasy komunikatów są wytyczane zgodnie z topologią
+nakładki. Co w tym podejściu stanowi istotną niedogodność?
+
+Odpowiedź:
+Niedogodność w tym podejściu stanowi stworzenie tej topologii(lokalizacja węzłów, konfiguracja łączy itp.).
+
+6. Rozważmy sieć CAN (zob. plansza 32 w materiałach do wykładu 2 w SKOS-ie). Jak można
+by wytyczyć trasę komunikatu z węzła o współrzędnych (0.2, 0.3) do węzła o współrzędnych
+(0.9, 0.6)?
+
+Odpowiedź:
+Można wytyczyć trasę przez węzeł o współrzędnych (0.7, 0.2) lub przez węzeł o współrzędnych (0.6, 0.7).
+
+7. Biorąc pod uwagę, że węzeł w CAN zna współrzędne swoich bezpośrednich sąsiadów,
+rozsądną metodą trasowania mogłoby być przekazanie komunikatu do najbliższego węzła
+w kierunku docelowym. Skomentuj użyteczność tej metody.
+
+Odpowiedź:
+Metoda wydaje się być użyteczna, ponieważ metoda ta będzię (prawie?) zawsze znajdować najkrótszą trasę do węzła docelowego.
+Wynika to z tego, że przestrzeń zajmowana przez każdy węzeł jest w kształcie prostokąta. Co więcej metoda ta jest stosowana w CAN(por. https://en.wikipedia.org/wiki/Content_addressable_network#Routing)
+
+15. Współczesne samochody są napakowane elektroniką. Podaj kilka przykładów systemów
+samochodowych działających na zasadzie sprzężeń zwrotnych.
+
+Odpowiedź:
+Przykłady systemów samochodowych działających na zasadzie sprzężeń zwrotnych:
+- tempomat
+- sterowanie temperaturą
+- wspomaganie kierownicy
