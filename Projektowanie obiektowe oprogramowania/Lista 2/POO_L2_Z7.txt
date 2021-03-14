@@ -1,0 +1,34 @@
+Pseudokod:
+public class Student {
+    public Course[] getCourses() {
+       return null;
+    }
+}
+
+public class UsosWebPage {
+    GradeController g;
+    PageLayout pageLayout;
+    public void show() {
+        pageLayout = g.getStudentsGradeInfo();
+    }
+}
+public class GradeController {
+    Student student;
+    public PageLayout getStudentsGradeInfo() {
+        Course[] courses=student.getCourses();
+        foreach(course in courses) {
+            Mark mark=course.getMark(student);
+        }
+    }
+} 
+public class Course {
+    public Mark getMark() {
+        return getValue();
+    }
+    public Mark getValue() {}
+}
+
+Pytanie:
+Czy na podstawie diagramu można napisać jednoznaczny i precyzyjny kod?
+Odpowiedź:
+Nie, ponieważ diagramy nie specyfikują implementacji oraz zwracanych typów wywołanych funkcji.

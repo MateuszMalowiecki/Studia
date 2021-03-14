@@ -1,0 +1,4 @@
+Pytanie:
+Czy na podstawie kodu można narysować jednoznaczny i precyzyjny diagram?
+Odpowiedź:
+Tak, ponieważ w kodzie opisane są wszystkie informacje, pozwalające określić działanie programu
