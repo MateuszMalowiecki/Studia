@@ -45,6 +45,36 @@ Odpowiedź:
 Metoda wydaje się być użyteczna, ponieważ metoda ta będzię (prawie?) zawsze znajdować najkrótszą trasę do węzła docelowego.
 Wynika to z tego, że przestrzeń zajmowana przez każdy węzeł jest w kształcie prostokąta. Co więcej metoda ta jest stosowana w CAN(por. https://en.wikipedia.org/wiki/Content_addressable_network#Routing)
 
+8. Rozważ niestrukturalną sieć nakładkową, w której każdy węzeł losowo wybiera c sąsiadów.
+Jeśli P i Q są sąsiadami R, jakie jest prawdopodobieństwo, że sąsiadują ze sobą?
+
+Odpowiedź(???):
+Ponieważ P i Q wybrały już jednego sąsiada, to prawdopodobieństwo, że sąsiadują ze sobą jest równe prawdopodobieństwu, że jeden z nich wybierze jako sąsiada tego drugiego w którymś z kolejnych kroków. 
+A zatem jest ono równe 1/n-1 + 1/n-2 + ... + 1/n-c+1
+
+9. Rozważmy jeszcze raz niestrukturalną sieć nakładkową, w której każdy węzeł losowo
+wybiera c sąsiadów. Aby odnaleźć plik, węzeł rozsyła zamówienie do sąsiadów i prosi ich,
+aby rozesłali to zamówienie jeszcze raz. Ile węzłów zostanie osiągniętych?
+
+Odpowiedź:
+Co najwyżej c*c różnych węzłów(wliczając początkowy węzłów), ponieważ pierwszy węzeł roześle zamówienie do c węzłów, a następnie każdy z nich roześle do c-1 swoich sąsiadów(wszystkich swoich sąsiadów, z wyjątkiem tego od którego dostali zamówienie).
+Sumaryczna liczba węzłów jest więc równa c + (c-1)*c = c*c.
+
+10. Nie każdy węzeł w sieci partnerskiej powinien być superpartnerem. Jakie rozsądne
+wymagania powinien spełniać superpartner?
+
+Odpowiedź:
+Te wymagania to:
+-skalowanie (wielu partnerów może mieć dostęp do pojedynczego super partnera, w wyniku czego super partner może stać się wąskim gardłem)
+-naprawialność (jeśli dana sieć P2P  się zepsuje i po naprawie partnerzy będą próbowali połączyć się ponownie z danym super partnerem, to może to doprowadzić do obciążenia super partnerów.) 
+-bezpieczeństwo (Dzięki blokowaniu i obserwowaniu kilku węzłów super-peer, możliwe jest blokowanie i obserwowanie całej sieci)
+więcej na stronie: "https://www.quora.com/Not-every-node-in-a-peer-to-peer-network-should-become-superpeer-What-are-reasonable-requirements-that-a-superpeer-should-meet"
+
+14. Do jakiego stopnia przechwytywacze zależą od warstwy pośredniej, w której są rozlokowywane?
+
+Odpowiedź:
+Do takiego, że przechwytywacze są połączone z warstwą pośrednią.
+
 15. Współczesne samochody są napakowane elektroniką. Podaj kilka przykładów systemów
 samochodowych działających na zasadzie sprzężeń zwrotnych.
 
