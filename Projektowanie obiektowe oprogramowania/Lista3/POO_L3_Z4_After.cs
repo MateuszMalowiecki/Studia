@@ -23,14 +23,4 @@ namespace POO_L3_Z4_After {
             return s.CalculateArea();
         }
     }
-    public class Test {
-        public static void Main() {
-            int w = 4, h = 5, s = 7;
-            Rectangle rect = new Rectangle() { Width = w, Height = h };
-            Square sqr = new Square() {Side= s};
-            AreaCalculator calc = AreaCalculator();
-            Console.WriteLine("prostokąt o wymiarach {0} na {1} ma pole {2}", w, h, calc.CalculateArea(rect));
-            Console.WriteLine("kwadrat o wymiarze boku {0} ma pole {1}", s, calc.CalculateArea(sqr));
-        }
-    }
 }

@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{float}
-\title{Rozwiązanie zadania 3 z zestawu 3 z "Projektowania obiektowego oprogramowania"}
+\title{Rozwiązanie zadania 4 z zestawu 3 z "Projektowania obiektowego oprogramowania"}
 \author{Mateusz Małowiecki}
 \begin{document}
 \maketitle
@@ -46,6 +46,8 @@ zilustrować działającym kodem.
 \section*{Rozwiązanie}
 \subsection*{Co można powiedzieć o spełnianiu przez taką hierarchię zasady LSP w kontekście kodu klienckiego?}
 Hierarchia ta łamie zasadę LSP. Powodem jest to, że prostokąty nie mogą być reprezentowane jako kwadraty, gdyż settery kwadratów zachowują się w nieoczekiwany sposób (podstawienie Width = w, Height = h, może spowodować, że pole figury będzie inne niż w*h).
-\subsection*{Jak należałoby zmodyfikować przedstawioną hierarchię klas, żeby zachować zgodność z LSP w kontekście takich wymagań? Jak potraktować klasy Rectangle i Square? Odpowiedź zilustrować działającym kodem}
+\subsection*{Jak należałoby zmodyfikować przedstawioną hierarchię klas, żeby zachować zgodność z LSP w kontekście takich wymagań? Jak potraktować klasy Rectangle i Square?}
 Ponieważ Square nie rozszerza Rectangle to moglibyśmy usunąć relację dziedziczenia między Rectangle a Square. Dodatkowo ponieważ dla obu tych figur chcielibyśmy móc policzyć ich pola, to, żeby nie musieć obsługiwać osobno dwóch typów, moglibyśmy stworzyć abstrakcyjną klasę Shape, która będzie miała metodę GetArea, obliczającą pole danej figury. Takie rozwiązanie pozwala na zachowanie zasady LSP, ponieważ w dowolnym kontekście klasę Shape możemy zastąpić obiektami podklas Rectangle i Square.
+\subsection*{Odpowiedź zilustrować działającym kodem}
+Kod znajduje się w plikach "POO\_L3\_Z4\_After.cs" i "POO\_L3\_Z4\_Before.cs". W pliku "POO\_L3\_Z4\_Test.cs" znajdują się testy.
 \end{document}

@@ -1,9 +1,20 @@
 using System;
 
-namespace POO_L3_Z2_After {
+namespace POO_L3_Z7 {
     public class ReportPrinterAfter {
-        public void PrintReport(DocumentFormatter df, DataGetter dg) {
+        public void PrintReport(ReportComposer rc) {
             Console.Writeline("Zawartość dokumentu:");
+            rc.FormatDocument();
+        }
+    }
+    public class ReportComposer {
+        private DataGetter dg;
+        private DocumentFormatter df;
+        public ReportComposer(DataGetter dg, DocumentFormatter df) {
+            this.dg=dg;
+            this.df=df;
+        }
+        public void FormatDocument() {
             df.FormatDocument(dg);
         }
     }

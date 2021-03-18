@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.1.14)  17 MAR 2021 17:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.1.14)  18 MAR 2021 19:32
 entering extended mode
 **./POO_L3_Z3.tex
 (POO_L3_Z3.tex
@@ -139,7 +139,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks18
 \@floatcapt=\box28
 )
-No file POO_L3_Z3.aux.
+(POO_L3_Z3.aux)
 \openout1 = `POO_L3_Z3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
@@ -263,60 +263,65 @@ LaTeX Font Info:    Try loading font information for OT4+cmtt on input line 18.
 ("C:\Users\cp24\AppData\Local\Programs\MiKTeX 2.9\tex/latex/polski\ot4cmtt.fd"
 File: ot4cmtt.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-Overfull \hbox (11.99689pt too wide) in paragraph at lines 42--42
+Overfull \hbox (11.99689pt too wide) in paragraph at lines 43--43
 []           \OT4/cmtt/m/n/10 _price += itemPrice + taxCalc.CalculateTax( item.
 Price );[] 
  []
 
 
-Overfull \hbox (284.9945pt too wide) in paragraph at lines 42--42
-[]   \OT4/cmtt/m/n/10 Console.WriteLine( "towar {0} : cena {1} + podatek {2}", 
-item.Name, item.Price, taxCalc.CalculateTax( item.Price ) );[] 
+Overfull \hbox (106.49606pt too wide) in paragraph at lines 43--43
+[]       \OT4/cmtt/m/n/10 Console.WriteLine( "towar {0} : cena {1} + podatek {2
+}", item.Name, item.Price,[] 
+ []
+
+
+Overfull \hbox (4.38948pt too wide) in paragraph at lines 46--47
+\OT4/cmr/m/n/10 paragonów jest za-im-ple-men-towane bezpo±red-nio w klasie Cash
+Reg-is-ter, w wyniku
  []
 
 [1
 
 {C:/Users/cp24/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<Before_diagram.png, id=10, 237.88875pt x 147.55125pt>
-File: Before_diagram.png Graphic file (type png)
-<use Before_diagram.png>
-Package pdftex.def Info: Before_diagram.png  used on input line 61.
-(pdftex.def)             Requested size: 237.88815pt x 147.55087pt.
-<After_diagram.png, id=12, 132.495pt x 323.70938pt>
-File: After_diagram.png Graphic file (type png)
-<use After_diagram.png>
-Package pdftex.def Info: After_diagram.png  used on input line 65.
-(pdftex.def)             Requested size: 132.49466pt x 323.70859pt.
- [2 <./Before_diagram.png>]
-Overfull \hbox (19.30626pt too wide) in paragraph at lines 70--71
-\OT4/cmr/m/n/10 Docelowo pow-stan¡ trzy klasy, gdy» klasa pocz¡tkowa mi-aªa trz
-y ró»ne odpowiedzial-
+<Diagram_before.png, id=10, 380.17032pt x 220.57407pt>
+File: Diagram_before.png Graphic file (type png)
+<use Diagram_before.png>
+Package pdftex.def Info: Diagram_before.png  used on input line 56.
+(pdftex.def)             Requested size: 380.16939pt x 220.57352pt.
+
+Overfull \hbox (35.16939pt too wide) in paragraph at lines 56--57
+[][] 
  []
 
+[2]
+<Diagram_after.png, id=15, 396.7322pt x 192.72pt>
+File: Diagram_after.png Graphic file (type png)
+<use Diagram_after.png>
+Package pdftex.def Info: Diagram_after.png  used on input line 60.
+(pdftex.def)             Requested size: 396.73122pt x 192.71951pt.
 
-Overfull \hbox (13.13956pt too wide) in paragraph at lines 70--71
-\OT4/cmr/m/n/10 Metody zwi¡zane z jedn¡ odpowiedzial-no±-ci¡ nie powinny by¢ ro
-zdzielane pomi¦dzy
+Overfull \hbox (51.73122pt too wide) in paragraph at lines 60--61
+[][] 
  []
 
-[3 <./After_diagram.png>] (POO_L3_Z3.aux) ) 
+[3 <./Diagram_before.png> <./Diagram_after.png>] (POO_L3_Z3.aux) ) 
 Here is how much of TeX's memory you used:
- 2280 strings out of 492946
- 33753 string characters out of 3126710
+ 2282 strings out of 492946
+ 33821 string characters out of 3126710
  105293 words of memory out of 3000000
  6135 multiletter control sequences out of 15000+200000
  10120 words of font info for 30 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,378b,207s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/cp24/AppData/Local/Program
-s/MiKTeX 2.9/fonts/enc/dvips/pl/pltt.enc}{C:/Users/cp24/AppData/Local/Programs/
-MiKTeX 2.9/fonts/enc/dvips/pl/plrm.enc}<C:/Users/cp24/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/pl/plbx12.pfb><C:/Users/cp24/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/pl/plr10.pfb><C:/Users/cp24/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/cp24/AppData/Local/Prog
-rams/MiKTeX 2.9/fonts/type1/public/pl/plr17.pfb><C:/Users/cp24/AppData/Local/Pr
-ograms/MiKTeX 2.9/fonts/type1/public/pl/pltt10.pfb>
-Output written on POO_L3_Z3.pdf (3 pages, 67145 bytes).
+ 41i,6n,25p,566b,207s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/cp2
+4/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/pl/pltt.enc}{C:/Users/cp24/
+AppData/Local/Programs/MiKTeX 2.9/fonts/enc/dvips/pl/plrm.enc}<C:/Users/cp24/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/pl/plbx12.pfb><C:/Users/cp24
+/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/pl/plr10.pfb><C:/Users/cp
+24/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/
+cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/pl/plr17.pfb><C:/User
+s/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/pl/pltt10.pfb>
+Output written on POO_L3_Z3.pdf (3 pages, 74855 bytes).
 PDF statistics:
  39 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

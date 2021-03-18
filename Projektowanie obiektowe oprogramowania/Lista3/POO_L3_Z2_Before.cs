@@ -10,7 +10,7 @@ namespace POO_L3_Z2_Before {
             Console.Writeline(s);
         }
         public void PrintReport() {
-            Console.Writeline("Contents of document:");
+            Console.Writeline("Zawarość dokumentu:");
             FormatDocument();
         }
     }

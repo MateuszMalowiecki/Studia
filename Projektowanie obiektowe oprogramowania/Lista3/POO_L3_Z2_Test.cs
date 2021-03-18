@@ -6,10 +6,10 @@ namespace POO_L3_Z2_Test {
             var before_printer=new POO_L3_Z2_Before.ReportPrinter();
             var after_printer=new POO_L3_Z2_After.ReportPrinterAfter();
 
-            Console.Writeline("Before: ");
+            Console.Writeline("Przed: ");
             before_printer.PrintReport();
 
-            Console.Writeline("After: ");
+            Console.Writeline("Po: ");
             after_printer.PrintReport();
         }
     }

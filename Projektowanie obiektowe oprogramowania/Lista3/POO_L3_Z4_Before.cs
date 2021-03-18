@@ -22,12 +22,4 @@ namespace POO_L3_Z4_Before {
             return rect.Width * rect.Height;
         }
     }
-    public class Test {
-        public static void Main() {
-            int w = 4, h = 5;
-            Rectangle rect = new Square() { Width = w, Height = h };
-            AreaCalculator calc = AreaCalculator();
-            Console.WriteLine( "prostokąt o wymiarach {0} na {1} ma pole {2}", w, h, calc.CalculateArea( rect ) );
-        }
-    }
 }

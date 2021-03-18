@@ -35,37 +35,30 @@ public class CashRegister {
        return _price;
 }
 public string PrintBill( Item[] Items ) {
-   foreach ( var item in Items )
-   Console.WriteLine( "towar {0} : cena {1} + podatek {2}", item.Name, item.Price, taxCalc.CalculateTax( item.Price ) );
+   foreach ( var item in Items ) {
+       Console.WriteLine( "towar {0} : cena {1} + podatek {2}", item.Name, item.Price, 
+       taxCalc.CalculateTax( item.Price ) );
    }
 }
 \end{verbatim}
-Ile klas docelowo powstanie z takiej jednej klasy? Dlaczego akurat tyle? Czy refaktoryzacja klasy naruszającej SRP oznacza automatycznie, że każda metoda powinna trafić do
-osobnej klasy?
-
 \section*{Rozwiązanie}
-\subsection*{Dokonać analizy projektu obiektowego pod
-katem zgodności z zasadą SRP}
-Korzystamy z testu odpowiedzialności:
-\begin{verbatim}
-+ReportPrinter drukuje raport sam
-?ReportPrinter formatuje dokument sam
-?ReportPrinter pobiera dane sam
-\end{verbatim}
-Widzimy teraz, że o ile drukowanie raportu jest odpowiednią odpowiedzialnością dla klasy ReportPrinter, to dwa pozostałe zadania nie są związane z drukowaniem. Jest to zatem naruszenie zasady SRP (klasa ReportPrinter ma wiele niepowiązanych ze sobą odpowiedzialności).
-\subsection*{Zaproponować zmiany}
-Rozdzielamy klasę ReportPrinter na klasy z pojedynczymi odpowiedzialnościami.
+\subsection*{Dokonać analizy projektu obiektowego pod katem zgodności klasy CashRegister z zasadą OCP.}
+Klasa CashRegister łamie zasadę OCP, ponieważ nie jest otwarta na rozszerzenia. Korzysta ona z konkretnej implementacji TaxCalculator i nie ma możliwości, żeby mogła ona wyliczać podatek w inny sposób. Dodatkowo drukowanie paragonów jest zaimplementowane bezpośrednio w klasie CashRegister, w wyniku czego nie mamy wymienności implementacji drukowania. Jeszcze jednym problemem jest to, że klient jest uzależniony od konkretnej implementacji klasy Item, a powinien mieć możliwość dodać własną implementację tej klasy.
+\subsection*{Zaproponować takie zmiany, które uczynią ją niezmienną a równocześnie rozszerzalną jeśli chodzi o możliwość implementowania różnych taryf podatkowych oraz drukowania paragonów z uwzględnieniem różnego porządkowania towarów (alfabetycznie, według kategorii itp.)}
+Proponowane zmiany: \\
+1. Dodanie nowego interfejsu ITaxCalc z metodą CalculateTax (abstrakcja klasy TaxCalculator). \\
+2. Dodanie nowego interfejsu IItem z polami Price i Name (abstrakcja klasy Item). \\
+3. Dodanie interfejsu IItemSort odpowiedzialnego za sortowanie elementów. \\
+4. W konstruktorze klasy CashRegister inicjujemy taxCalc obiektem klasy implementującej interfejs ITaxCalc.
 \subsection*{Narysować diagramy klas przed i po zmianach.}
 Diagram przed:
 \begin{figure}[H]
-\includegraphics{Before_diagram}
+\includegraphics{Diagram_before}
 \end{figure}
 Diagram po:
 \begin{figure}[H]
-\includegraphics{After_diagram}
+\includegraphics{Diagram_after}
 \end{figure}
-\subsection*{Zaimplementować działający kod dla przykładu przed i po zmianach.}
-Kod znajduje się w plikach "POO\_L3\_Z2\_After.cs" i "POO\_L3\_Z2\_Before.cs". W pliku "POO\_L3\_Z2\_Test.cs" znajdują się testy.
-\subsection*{Ile klas docelowo powstanie z takiej jednej klasy? Dlaczego akurat tyle? Czy refaktoryzacja klasy naruszającej SRP oznacza automatycznie, że każda metoda powinna trafić do osobnej klasy?}
-Docelowo powstaną trzy klasy, gdyż klasa początkowa miała trzy różne odpowiedzialności. Refaktoryzacja klasy nie oznacza, że każda metoda trafi do osobnej klasy, tylko że każda odpowiedzialność powinna zostać przypisana pojedynczej klasie. Metody związane z jedną odpowiedzialnością nie powinny być rozdzielane pomiędzy wiele klas.
+\subsection*{Zaimplementować działający kod dla przykładu przed i po zmianach demonstrując kilka różnych rozszerzeń.}
+Kod znajduje się w plikach "POO\_L3\_Z3\_After.cs" i "POO\_L3\_Z3\_Before.cs". W pliku "POO\_L3\_Z3\_Test.cs" znajdują się testy.
 \end{document}
