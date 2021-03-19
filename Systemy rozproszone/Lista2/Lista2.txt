@@ -1,0 +1,61 @@
+Mateusz Małowiecki
+
+Opracowanie wybranych zadań z listy 2.
+
+IIUWr, SR21, 21-03-19
+
+2. Co to takiego trzywarstwowa architektura klient-serwer?
+
+Odpowiedź:
+Jest to architektura składająca się z trzech komponentów:
+- klient,
+- serwer aplikacji (ang. application server),
+- serwer bazy danych (ang. database server).
+W architekturze tej klient wysyła zapytania do serwera aplikacji,
+a serwer aplikacji wysyła zapytania do serwera bazy danych.
+
+5. W strukturalnej sieci nakładowej trasy komunikatów są wytyczane 
+zgodnie z topologią nakładki. Co w tym podejściu stanowi istotną niedogodność?
+
+Odpowiedź:
+Niedogodność w tym podejściu stanowi to, że 
+sąsiednie węzły A i B mogą się fizycznie znajdować bardzo daleko od siebie.
+W wyniku tego logicznie krótka ścieżka między A i B 
+może wymagać wysłania komunikatu wzdłuż bardzo długiej ścieżki fizycznej.
+
+6. Rozważmy sieć CAN (zob. plansza 32 w materiałach do wykładu 2 w SKOS-ie). 
+Jak można by wytyczyć trasę komunikatu z węzła o współrzędnych (0.2, 0.3)
+do węzła o współrzędnych (0.9, 0.6)?
+
+Odpowiedź:
+Można wytyczyć trasę przez węzeł o współrzędnych (0.7, 0.2) 
+lub przez węzeł o współrzędnych (0.6, 0.7).
+
+9. Rozważmy jeszcze raz niestrukturalną sieć nakładkową, 
+w której każdy węzeł losowo wybiera c sąsiadów.
+Aby odnaleźć plik, węzeł rozsyła zamówienie do sąsiadów i prosi ich,
+aby rozesłali to zamówienie jeszcze raz. 
+Ile węzłów zostanie osiągniętych?
+
+Odpowiedź:
+Co najwyżej (c-1)*c różnych węzłów, ponieważ pierwszy węzeł roześle zamówienie do c węzłów,
+a następnie każdy z nich roześle do c-1 swoich sąsiadów 
+(wszystkich swoich sąsiadów, z wyjątkiem tego, od którego dostał zamówienie).
+
+13. Podaliśmy dwa przykłady przechwytywaczy w adaptacyjnej warstwie pośredniej
+(zob. plansza 48 w materiałach do wykładu 2 w SKOS-ie).
+Wymyśl jakieś inne przykłady.
+
+Odpowiedź:
+-przechwytywacz do wspierania mobilności,
+-przechwytywacz do szyfrowania komunikatów,
+-przechwytywacz do rejestrowania określonych zdarzeń, w systemach wymagających logowania się.
+
+14. Do jakiego stopnia przechwytywacze zależą od warstwy pośredniej,
+w której są rozlokowywane?
+
+Odpowiedź:
+Przechwytywacze zależą w dużym stopniu od warstwy pośredniej.
+Można to zaobserwować na planszy 48, 
+gdzie m.in. przechwytywacze z poziomu komunikatu są zależne od interakcji
+między oprogramowaniem pośrednim a lokalnym systemem operacyjnym.

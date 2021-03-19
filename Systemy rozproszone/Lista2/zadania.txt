@@ -8,7 +8,7 @@ Można wybrać kilka komputerów połączonych z serwerem, które korzystają z 
 2. Co to takiego trzywarstwowa architektura klient-serwer?
 
 Odpowiedź:
-Trzywarstwowa architektura klient-serwer to architektura składająca się z trzech komponentów: klient, serwer aplikacji(application server), serwer bazy danych(database server).
+Trzywarstwowa architektura klient-serwer to architektura składająca się z trzech komponentów: klient, serwer aplikacji (ang. application server), serwer bazy danych (database server).
 W architekturze tej klient wysyła zapytania do serwera aplikacji, a serwer aplikacji wysyła zapytania do serwera bazy danych.
 
 3. W czym zawiera się różnica między rozproszeniem pionowym a poziomym?
@@ -57,8 +57,8 @@ wybiera c sąsiadów. Aby odnaleźć plik, węzeł rozsyła zamówienie do sąsi
 aby rozesłali to zamówienie jeszcze raz. Ile węzłów zostanie osiągniętych?
 
 Odpowiedź:
-Co najwyżej c*c różnych węzłów(wliczając początkowy węzłów), ponieważ pierwszy węzeł roześle zamówienie do c węzłów, a następnie każdy z nich roześle do c-1 swoich sąsiadów(wszystkich swoich sąsiadów, z wyjątkiem tego od którego dostali zamówienie).
-Sumaryczna liczba węzłów jest więc równa c + (c-1)*c = c*c.
+Co najwyżej (c-1)*c różnych węzłów(wliczając początkowy węzłów), ponieważ pierwszy węzeł roześle zamówienie do c węzłów, 
+a następnie każdy z nich roześle do c-1 swoich sąsiadów(wszystkich swoich sąsiadów, z wyjątkiem tego od którego dostali zamówienie).
 
 10. Nie każdy węzeł w sieci partnerskiej powinien być superpartnerem. Jakie rozsądne
 wymagania powinien spełniać superpartner?
@@ -83,3 +83,7 @@ Przykłady systemów samochodowych działających na zasadzie sprzężeń zwrotn
 - tempomat
 - sterowanie temperaturą
 - wspomaganie kierownicy
+
+Uwagi do opracowania:
+- Nazewnictwo (flooding, random walks)
+- Nazwy rozdziałów(Wstęp, obliczenia, ...)
