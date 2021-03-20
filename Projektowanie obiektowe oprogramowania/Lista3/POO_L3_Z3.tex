@@ -7,6 +7,7 @@
 \usepackage{float}
 \title{Rozwiązanie zadania 3 z zestawu 3 z "Projektowania obiektowego oprogramowania"}
 \author{Mateusz Małowiecki}
+\date{20 marca 2021}
 \begin{document}
 \maketitle
 \section*{Polecenie}
@@ -17,28 +18,29 @@ towarów (alfabetycznie, według kategorii itp.)
 Narysować diagramy klas przed i po zmianach. Zaimplementować działający kod dla przykładu przed i po zmianach demonstrując kilka różnych rozszerzeń.
 \begin{verbatim}
 public class TaxCalculator {
-   public Decimal CalculateTax( Decimal Price ){
-       return Price * 0.22 
-   }
+    public Decimal CalculateTax( Decimal Price ){
+        return Price * 0.22 
+    }
 }
 public class Item {
-   public Decimal Price { get { ... } }
-   public string Name { get { ... } }
+    public Decimal Price { get { ... } }
+    public string Name { get { ... } }
 }
 public class CashRegister {
-   public TaxCalculator taxCalc = new TaxCalculator();
-   public Decimal CalculatePrice( Item[] Items ) {
-       Decimal _price = 0;
-       foreach ( Item item in Items ) {
-           _price += itemPrice + taxCalc.CalculateTax( item.Price );
-       }
-       return _price;
-}
-public string PrintBill( Item[] Items ) {
-   foreach ( var item in Items ) {
-       Console.WriteLine( "towar {0} : cena {1} + podatek {2}", item.Name, item.Price, 
-       taxCalc.CalculateTax( item.Price ) );
-   }
+    public TaxCalculator taxCalc = new TaxCalculator();
+    public Decimal CalculatePrice( Item[] Items ) {
+        Decimal _price = 0;
+        foreach ( Item item in Items ) {
+            _price += item.Price + taxCalc.CalculateTax( item.Price );
+        }
+        return _price;
+    }
+    public string PrintBill( Item[] Items ) {
+        foreach ( var item in Items ) {
+            Console.WriteLine( "towar {0} : cena {1} + podatek {2}", 
+            item.Name, item.Price, taxCalc.CalculateTax( item.Price ) );
+        }
+    }
 }
 \end{verbatim}
 \section*{Rozwiązanie}
@@ -48,7 +50,7 @@ Klasa CashRegister łamie zasadę OCP, ponieważ nie jest otwarta na rozszerzeni
 Proponowane zmiany: \\
 1. Dodanie nowego interfejsu ITaxCalc z metodą CalculateTax (abstrakcja klasy TaxCalculator). \\
 2. Dodanie nowego interfejsu IItem z polami Price i Name (abstrakcja klasy Item). \\
-3. Dodanie interfejsu IItemSort odpowiedzialnego za sortowanie elementów. \\
+3. Dodanie interfejsu IItemSort odpowiedzialnego za sortowanie elementów względem zadanego kryterium. \\
 4. W konstruktorze klasy CashRegister inicjujemy taxCalc obiektem klasy implementującej interfejs ITaxCalc.
 \subsection*{Narysować diagramy klas przed i po zmianach.}
 Diagram przed:

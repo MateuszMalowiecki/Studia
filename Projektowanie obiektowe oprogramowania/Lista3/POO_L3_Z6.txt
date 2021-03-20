@@ -2,4 +2,4 @@ SRP oznacza, że żadna klasa nie może być modyfikowana z więcej niż jednego
 
 ISP oznacza, że interfejs nie powinien posidać metod których nie używa klient. Oznacza to, że klient nie powinien być zmuszany do implementowania zbędnych mu metod, tylko po to, żeby móc korzystać z innych funkcjonalności.
 
-Zatem SRP skupia się bardziej na perspektywie projektanta systemu, a ISP na perspektywie klienta.
+Zatem główna różnica między nimi jest taka, że SRP skupia się bardziej na perspektywie projektanta systemu, a ISP na perspektywie klienta.
