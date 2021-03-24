@@ -1,0 +1,63 @@
+Julia Majkowska
+Rozwiązania wybranych zadań z listy 2 z Systemów Rozproszonych
+
+Zadanie 1
+Jeśli klient i serwer znajdują się w odległych od siebie miejscach, zauważamy, że opóźnienie
+sieciowe ma zasadniczy wpływ na wydajność. Jak można temu zaradzić?
+
+Gdy klient i serwer komunikują się w sposób synchroniczny, klient czeka bezczynnie na 
+odpowiedź. Dopiero po otrzymaniu jej może kontynuować działanie. W przypadku, gdy 
+klient i serwer są oddalone od siebie, czas oczekiwania klienta na odpowiedź może być 
+długi. 
+
+Jednym ze sposobów radzenia sobie z tym problemem jest komunikacja asynchroniczna. 
+Klient po wysłaniu zapytania do serwera może wykonywać inne operacje oczekując na 
+odpowiedź. Możne to być zaimplementowane przez stworzenie odrębnego wątku do obsługi 
+zapytania oczekującego na odpowiedź od serwera. Alternatywnie można stworzyć specjalną 
+procedurę obsługi (ang. handler), która w momencie otrzymania odpowiedzi przerwie inne 
+działania klienta, aby dokończyć obsługę zapytania. 
+
+Mogą się jednak zdarzyć systemy, których klient nie ma nic do roboty w czasie oczekiwania 
+na odpowiedź. W takiej sytuacji dobrą strategią jest minimalizacja komunikacji między 
+klientem a serwerem. Można to zrobić przykładowo przez przeniesienie do kodu klienta, 
+części procedury przetwarzania zapytania. Przykładem, kiedy taka strategia jest skuteczna, 
+są zapytania do bazy danych przy pomocy formularzy. Zapytanie można wykonać poprzez 
+wysłanie do serwera formularza pole po polu za każdym razem czekając na potwierdzenie. 
+Przy dużych opóźnieniach komunikacyjnych lepsza strategią jest stworzenie i zweryfikowanie 
+poprawności formularza po stronie klienta i wysłanie go na raz. 
+
+
+Zadanie 7
+Biorąc pod uwagę, że węzeł w CAN zna współrzędne swoich bezpośrednich sąsiadów,
+rozsądną metodą trasowania mogłoby być przekazanie komunikatu do najbliższego węzła
+w kierunku docelowym. Skomentuj użyteczność tej metody.
+
+Metoda trasowania polegająca na przekazaniu komunikatu do najbliższego węzła będzie 
+skuteczna dla węzła CAN znającego współrzędne swoich sąsiadów. Jest to analogiczna 
+metoda do metody wymienionej w MvS&AST na stronie 82 w której przestrzeń adresowa naszych 
+maszyn była n-wymiarową hiperkostką. Dla CAN metoda ta może być jednak nie efektywna jeśli 
+węzły będą gęsto rozmieszczone na trasie do węzła docelowego. W przykładzie z podręcznika
+liczba węzłów była stała a węzły były rozmieszczone w sposób jednolity po przestrzeni
+adresowej. CAN dopuszcza dodawanie węzłów do sieci ponadto wybiera współrzędne nowego węzła w 
+sposób losowy przez co nawet jeśli cała sieć nie będzie miała bardzo wielu węzłów lokalnie
+mogą powstać bardzo gęsto zapełnione obszary sieci adresowej, na których trasowanie będzie 
+bardzo nieefektywne. 
+
+Zadanie 11
+Rozważ system BitTorrent, w którym każdy węzeł na łącze wychodzące o przepustowości
+B_wy i łącze dochodzące o przepustowości B_we. Niektóre z tych węzłów (nazywane
+zalążkami) dobrowolnie udostępniają innym pliki do pobierania. Ile wyniesie maksymalna
+zdolność pobierania w wypadku klienta BitTorrent, o którym założymy, że w danej chwili
+może się kontaktować najwyżej z jednym zalążkiem? (Pomijamy w tych rozważaniach kwestię
+legalności rozpowszechniania treści za pomocą usługi BitTorrent).
+
+Odpowiedź na to pytanie zależy od stosunku wartości B_wy i B_we. Zakładając, że nasz węzeł
+znajduje się w fazie handlu (ang. trading), B_we >= 2*Bwy, ma cały czas dostęp do węzłów, 
+z którymi może wymieniać się fragmentami pliku oraz zakładając oraz że zalążek połączony 
+z naszym węzłem posiada cały plik i jest połączony tylko z naszym węzłem, zdolność 
+pobierania wyniesie w przybliżeniu 2*B_wy. To będzie odpowiadało sumie zdolności przesyłania 
+zalążka i naszego węzła, ponieważ nasz węzeł otrzyma od innych węzłów dokładnie tyle pakietów
+ile sam udostępni. W takim samym scenariuszu, jeśli B_we < 2*B_wy to B_we będzie ograniczało
+zdolność pobierania. Realistycznie jednak mogą wystąpić dodatkowe ograniczenia, jak 
+rozdzielenie przepustowości zalążka pomiędzy inne połączone węzły lub konieczność oczekiwania
+na połączenie z węzłem posiadającym brakujące bloki pliku. 
