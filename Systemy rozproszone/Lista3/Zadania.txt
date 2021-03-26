@@ -1,13 +1,14 @@
 1. W tym zadaniu należy porównać czytanie pliku za pomocą jednowątkowego serwera
 plików i serwera wielowątkowego. Otrzymanie zamówienia na pracę, skierowanie go do
 wykonania i uporanie się z resztą niezbędnego przetwarzania zajmuje 15 ms, pod warunkiem
-że potrzebne dane są w pamięci podręcznej utrzymywanej w pamięci operacyjnej. Jeżeli
+że potrzebne dane są w pamięci podręcznej utrzymywanej w pamięci  glównej (operacyjnej).Jeżeli
 powstaje konieczność wykonania operacji dyskowej, co stanowi jedną trzecią ogółu zamówień,
 trzeba dodatkowych 75 ms, podczas których wątek jest uśpiony. Ile zamówień na sekundę
-może obsłużyć serwer jednowątkowy? A serwer wielowątkowy? (Zanim podasz odpowiedź
-liczbową przedstaw rozwiązanie).
+może obsłużyć serwer jednowątkowy? A serwer wielowątkowy? Zanim podasz odpowiedź
+liczbową przedstaw rozwiązanie.
 
 Odpowiedź:
+
 W przypadku serwera jednowątkowego czas przetwarzania pojedynczego zamówienia zajmuje 
 15 sek. (jeżeli wszystkie potrzebne dane są w Cache'u), lub 90 sek. (w przeciwnym przypadku).
 Średnia ważona wynosi więc 2/3 * 15 + 1/3 * 90 = 10 + 30 = 40 ms. Więc taki serwer jest w stanie
@@ -18,6 +19,7 @@ a więc serwer jest w stanie obsłużyć 66 2/3 zamówienia na sekundę.
 2. Czy dałoby się uzasadnić ograniczenie liczby wątków w procesie serwera?
 
 Odpowiedź:
+
 Tak z dwóch powodów:
 a) Wątki potrzebują pamięci do zainicjowania własnego stosu.
 b) Niezależne wątki działają w sposób chaotyczny w systemie operacyjnym.
@@ -30,35 +32,42 @@ okazać się lepszy? Jeśli tak, to podaj przykład. Jeżeli nie, to uzasadnij, 
 Odpowiedź:
 Tak. Na przykład jeśli serwer jest całkowicie związany z procesorem.
 
-4.Statyczne przypisanie tylko jednego wątku do procesu lekkiego nie jest zbyt dobrym pomysłem. Dlaczego? (Co to jest proces lekki? Wskazówka: poczytaj o systemie Solaris).
+4.Statyczne przypisanie tylko jednego wątku do procesu lekkiego nie jest zbyt dobrym pomysłem. Dlaczego? 
+(Co to jest proces lekki? Wskazówka: poczytaj o systemie Solaris).
 
 Odpowiedź:
+
 Proces lekki(ang. light-weight process - LWP) - proces działający w przestrzeni jądra, w kontekście pojedynczego (ciężkiego) procesu.
 Na dany proces ciężki może się składać kilka LWP.
 Statyczne przypisanie jednego wątku do procesu lekkiego nie jest zbyt dobrym pomysłem, 
 ponieważ w ten sposób ograniczamy się do posiadania wątków tylko na poziomie jądra.
+
 5. Posiadanie tylko jednego procesu lekkiego w procesie również nie jest zbyt dobrym pomysłem. Dlaczego?
 
 Odpowiedź:
+
 W tym przypadku z kolei mamy wątki tylko na poziomie użytkownika, więc każde blokujące wywołanie sytemowe spowoduje blokadę całego procesu.
 
 6. Opisz prosty schemat, w którym istnieje tyle procesów lekkich co wątków wykonywalnych.
 
 Odpowiedź:
+
 Zaczynamy z pojedynczym LWP i szukamy działającego wątku do wykonania. 
 Jeśli znajdziemy taki wątek, to tworzymy nowe LWP i szukamy następnego wątku do wykonania.
-Jeśli nie znajdziemy takiego wątku to LWP niszczy siebie.
+Jeśli nie znajdziemy takiego wątku to LWP samo niszczy siebie.
 
 7. W systemie X określa się terminal użytkownika jako serwer goszczący, natomiast o aplikacji
 mówi się, że jest klientem. Czy to ma sens?
 
 Odpowiedź:
+
 Tak, to ma sens. Główna idea jest taka, że serwer kontroluje sprzęt,
 a aplikacja może manipulować tym sprzętem, poprzez wysyłanie żądań manipulacji.
 
 8. Protokołowi X dolegają problemy skalowalności. Jak można by sobie z nimi poradzić?
 
 Odpowiedź:
+
 Zasadniczo mamy dwa rodzaje problemów ze skalowalnością:
 
 a) Skalowalność numeryczna (zbyt duża przepustowość jest wymagana):
@@ -67,10 +76,97 @@ W tym przypadku najlepiej zastosować techniki kompresji przepustowości.
 b) Skalowalność geograficzna (aplikacja i interfejs wymagają zbyt dużej synchronizacji):
 W tym przypadku najlepiej użyć technik buforowania (stan interfejsu utrzymywany jest po stronie aplikacji).
 
-12. Jak zapobiec, aby aplikacja nie obchodziła zarządcy okien, wskutek czego mogłaby spowodować całkowity bałagan na ekranie?
+9. Pośrednicy (ang. proxies) mogą wspomagać przezroczystość zwielokrotniania przez
+wywoływanie każdej kopii, jak wyjaśniono w podręczniku. Czy obiekt (jego część po stronie
+serwera) może być przedmiotem wywołania zwielokrotnionego?
 
 Odpowiedź:
+
+Tak. Przykładowo jeśli zwielokrotniony obiekt A wywoła niezwielkrotniony obiekt B, 
+to wtedy każda część (ang. replica) obiektu A wywoła obiekt B. 
+Aczkolwiek standardowe wywołanie obiektu B nastąpi tylko raz, 
+więc do takich wywołań zwielokrotnionych potrzebne są specjalne środki.
+
+10. Wyjaśnij, czym jest adapter obiektu
+
+Odpowiedź:
+
+Jest to mechanizm grupowania obiektów według pewnej ściśle określonej polityki.
+
+12. Budowanie serwera współbieżnego na zasadzie namnażania procesów ma pewne zalety
+i wady w porównaniu z serwerami wielowątkowymi. Wymień kilka.
+
+Odpowiedź:
+
+Zalety:
+- Procesy korzystają z różnych przestrzeni adresowych
+- Procesy działają niezależnie od siebie
+
+Wady:
+- Tworzenie procesów jest bardziej kosztowne
+- Komunikacja międzyprocesowa jest trudniejsza do zrealizowania
+
+13. Naszkicuj projekt serwera wielowątkowego, który umożliwia stosowanie wielu protokołów
+z użyciem gniazd jako interfejsu poziomu transportu do usytuowanego w niższej wartswie
+systemu operacyjnego. Co to są gniazda? 
+
+Odpowiedź:
+
+Gniazdo jest dwukierunkowym punktem końcowym połączenia.
+
+Projekt serwera:
+Mamy pojedynczy wątek T, oczekujący na przychodzące wiadomości (ang.  incoming transport messages (TPDUs)).
+Następnie wątek bierze zawartość (ang. payload) wiadomości 
+i przekazuje go do modułu określonego w header'ze TPDU.
+Każdy taki moduł ma oddzielny wątek oczekujący na payload.
+Po zakończeniu przekazywania payload'u, T dostaje wiadomość zwrotną,
+którą opakowuje w wiadomość na poziomie transportu i wysyła do odpowiedniej lokalizacji.
+
+14. Jak zapobiec, aby aplikacja nie obchodziła zarządcy okien, wskutek czego mogłaby spowodować całkowity bałagan na ekranie?
+
+Odpowiedź:
+
 Można na przykład skorzystać z podejścia opartego na mikrojądrze,
 w którym zarządca okien jest uruchamiany w taki sposób, 
 że wszystkie operacje okna przechodzą przez jądro.
 Jest to istota przeniesienia modelu klient-serwer na pojedynczy komputer.
+
+15. Czy serwer utrzymujący z klientem połączenie TCP/IP jest pełnostanowy, czy bezstanowy?
+
+Odpowiedź:
+
+Serwer jest bezstanowy, ponieważ nie przechowuje żadnych informacji o kliencie.
+Należy jednak pamiętać, że stan klienta musi być utrzymywany przez warstwę transportową.
+
+16. Rozważ serwer Sieci, który działa na tablicy z odwzorowanymi adresami IP ostatnio
+odwiedzanych przez klienta stron WWW. Gdy klient łączy się z takim serwerem, ten poszukuje
+klienta w swojej tablicy i jeśli go znajdzie, to zwraca mu zarejestrowaną stronę. Czy serwer
+taki jest pełnostanowy, czy bezstanowy?
+
+Odpowiedź:
+
+Taki serwer jest bezstanowy, ponieważ ewentualna utrata tablicy 
+nie wpływa negatywnie na interakcję między klientem a serwerem
+(interakcja ta może być dalej utrzymywana).
+
+17. Silną przenośność w systemach uniksowych można by osiągnąć przez umożliwienie
+procesowi rozwidlania się ze skutkiem w postaci potomka na innej maszynie. Wyjaśnij, jak
+mogłoby to działać.
+
+Odpowiedź:
+
+Mogłoby to działać podobnie jak wywołanie "fork" w systemach Uniksowych.
+Nie wchodząc w szczegóły takie rozwidelnie można osiągnąć poprzez
+wpierw zarezerwowanie zasobów i utworzenie procesu oraz mapy pamięci
+w docelowym systemie, a następnie skopiowanie obrazu pamięci rodzica.
+
+19. Rozważ proces P, który wymaga dostępu do pliku F, osiągalnego lokalnie na maszynie,
+w której P jest aktualnie wykonywany. Proces P po przeniesieniu do innej maszyny nadal
+potrzebuje dostępu do F. Jak można by zrealizować ogólnosystemowe odniesienie do F, jeśli
+wiązanie maszyny z plikiem jest stałe?
+
+Odpowiedź:
+
+Można by to zrobić na przykład poprzez utworzenie nowego procesu Q 
+(serwera plików), który obsługiwałby zdalne żądania do pliku F.
+Proces P miałby wtedy ten sam interfejs co poprzednio (np. w postaci proxy).
