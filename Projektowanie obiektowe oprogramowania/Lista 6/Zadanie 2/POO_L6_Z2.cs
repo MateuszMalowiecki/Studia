@@ -78,9 +78,10 @@ namespace POO_L6_Z2{
             Context ctx = new Context();
             ctx.SetValue( "x", false );
             ctx.SetValue( "y", true );
+            // jakieś wyrażenie logiczne ze stałymi i zmiennymi
             AbstractExpression exp = new AndExpression(
                 new OrExpression(new ConstExpression(true), new VarExpression("y")),
-                new NotExpression(new VarExpression("x"))); // jakieś wyrażenie logiczne ze stałymi i zmiennymi
+                new NotExpression(new VarExpression("x")));
             bool Value = exp.Interpret( ctx );
             Console.WriteLine("Value of expression: {0}", Value);
         }

@@ -11,6 +11,7 @@ namespace POO_L6_Z1 {
     public class NoneLogger : ILogger {
         public void Log(string Message) {}
     } 
+    
     public class ConsoleLogger : ILogger {       
         public void Log(string Message) {
             Console.WriteLine(Message);
@@ -21,8 +22,8 @@ namespace POO_L6_Z1 {
         public FileLogger(string path) {
             this.filePath = path;
         }
-        public async void Log(string Message) {
-            await File.WriteAllTextAsync(filePath, Message);
+        public void Log(string Message) {
+            File.WriteAllText(filePath, Message);
         }
     } 
     

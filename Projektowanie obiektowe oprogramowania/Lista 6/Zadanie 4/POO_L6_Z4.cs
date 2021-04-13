@@ -5,24 +5,29 @@ using System.Linq.Expressions;
 namespace POO_L6_Z4 {
     public class PrintExpressionVisitor : ExpressionVisitor{
         protected override Expression VisitBinary( BinaryExpression expression ) {
-            Console.WriteLine("{0} {1} {2}", expression.Left, expression.NodeType, expression.Right);
+            Console.WriteLine("Binary: {0} {1} {2}", expression.Left, expression.NodeType, expression.Right);
             return base.VisitBinary(expression);
         }
+        
+        protected override Expression VisitLambda<T>( Expression<T> expression ) {
+            Console.WriteLine("Lambda: {0} -> {1}", expression.Parameters.Aggregate(string.Empty, (a, e) => a += e), expression.Body );
+            return base.VisitLambda<T>( expression );
+        }
+
+        //moje rozszerzenia
         protected override Expression VisitUnary( UnaryExpression expression ) {
-            Console.WriteLine("{0} {1}", expression.NodeType, expression.Operand);
+            Console.WriteLine("Unary: {0} {1}", expression.NodeType, expression.Operand);
             return base.VisitUnary(expression);
         } 
         protected override Expression VisitConstant( ConstantExpression expression ) {
-            Console.WriteLine(expression.Value);
+            Console.WriteLine("Constant: {0}", expression.Value);
             return base.VisitConstant(expression);
-        } 
-        protected override Expression VisitTry( TryExpression expression ) {
-            Console.WriteLine(expression.Body);
-            return base.VisitTry(expression);
         }
-        protected override Expression VisitLambda<T>( Expression<T> expression ) {
-            Console.WriteLine("{0} -> {1}", expression.Parameters.Aggregate(string.Empty, (a, e) => a += e), expression.Body );
-            return base.VisitLambda<T>( expression );
+        protected override Expression VisitTry( TryExpression expression ) {
+            foreach(var h in expression.Handlers) {  
+                Console.WriteLine("Try-Catch: {0} {1}", h.Test, h.Body);
+            }
+            return base.VisitTry(expression);
         }
     }
     class Program {
