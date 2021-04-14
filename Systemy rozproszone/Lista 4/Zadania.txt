@@ -1,0 +1,217 @@
+1. W wielu protokołach warstwowych każda warstwa ma własny nagłówek. Z pewnością
+bardziej efektywne od używania wszystkich tych osobnych nagłówków byłoby poprzedzenie
+komunikatu jednym nagłówkiem, zawierającym całość informacji sterującej. Dlaczego się tego
+nie robi?
+
+Odpowiedź:
+
+Ponieważ każda warstwa w protokole jest niezależna od pozostałych warstw.
+Posiadanie dużego pojedynczego nagłówka mogłoby więc spowodować, że
+zmiany w protokole dokonane przez jedną z warstw byłyby widoczne 
+dla innych warstw.
+ 
+2. Dlaczego usługi komunikacyjne warstwy transportu są często nieodpowiednie do budowania
+aplikacji rozproszonych?
+
+Odpowiedź:
+
+Ponieważ one rzadko oferują przezroczystość rozproszenia, 
+więc programista musi zwrócić szczególną uwagę na implementację komunikacji.
+W efekcie rozproszone aplikacje są trudne do przeniesienia 
+i współdziałania z innymi aplikacjami.
+
+3. Usługa niezawodnego rozsyłania umożliwia nadawcy niezawodne przekazywanie komunikatów grupie odbiorców. 
+Czy taka usługa powinna należeć do oprogramowania warstwy pośredniej, czy też powinna być częścią niższej warstwy?
+
+Odpowiedź:
+
+Zasadniczo taka usługa może być częścią warstwy transportu lub warstwy sieciowej.
+Aczkolwiek ponieważ takie usługi nie są obecnie łatwo dostępne,
+to są one zaimplementowane przy użyciu usług z poziomu transportu, 
+co umieszcza je automatycznie w oprogramowaniu warstwy pośredniej.
+
+4. Rozważ procedurę zwiększ z dwoma liczbami całkowitymi jako parametrami. Procedura
+dodaje liczbę 1 do każdego parametru. Załóżmy teraz, że wywołano ją z tą samą zmienną
+w obu parametrach, np. zwiększ(i, i). Przyjmując, że zmienna i ma na początku wartość 0,
+określ, ile wyniesie jej wartość, jeśli zastosuje się przekazywanie przez odniesienie? 
+A co się stanie, gdy parametry będą przekazywane przez kopiowanie-odtwarzanie?
+
+Odpowiedź:
+
+Jeśli zastosuje się przekazywanie przez odniesienie to do procedury 
+zostanie przekazany wskaźnik na i. Zostanie on zwiększony dwukrotnie, 
+więc ostateczna wartość i wyniesie 2.
+W przypadku przekazywania przez kopiowanie-odtwarzanie 
+i zostanie przekazane przez wartość dwukrotnie, 
+każda wartość początkowo 0.
+Obie wartości zostaną zwiększone do jedynki. 
+Następnie druga kopia nadpisze pierwszą, 
+więc ostateczna wartość i to 2 a nie 1.
+
+5. Język C ma konstrukcję zwaną unią, w której pole rekordu 
+(nazywanego w języku C strukturą) może wyrażać jedną z kilku możliwości. 
+Podczas wykonywania programu nie ma gwarantowanego sposobu określenia,
+którą z nich takie pole zawiera. 
+Czy ta cecha języka C ma jakiś wpływ na zdalne wywoływanie procedur? 
+Wyjaśnij swoją odpowiedź.
+
+Odpowiedź:
+
+Jeśli system wykonawczy nie może stwierdzić, jaki typ ma wartość w danym polu,
+to nie może jej poprawnie zorganizować. Zatem żeby unie były tolerowane,
+musi istnieć znacznik, który jednoznacznie mówi, co zawiera dane pole.
+
+6. Jeden ze sposobów konwersji parametrów w systemach RPC polega na wysyłaniu
+przez każdą z maszyn parametrów w naturalnej dla niej reprezentacji 
+i dokonywaniu ich tłumaczenie po drugiej stronie, jeśli zajdzie taka potrzeba. 
+Rodzaj źródłowego systemu można by zakodować w pierwszym bajcie słowa. 
+Ponieważ jednak zlokalizowanie pierwszego bajta w pierwszym słowie jest samo w sobie problemem, 
+czy jest możliwe, aby to zadziałało?
+
+Odpowiedź:
+
+Przede wszystkim, jeśli jeden komputer wysyła dane w bajcie 0,
+to on dane te dotrą do komputera docelowego w bajcie 0, więc
+docelowy komputer może po prostu uzyskać dostęp do bajtu 0 
+i kod będzie się w nim znajdował.
+
+7. Załóżmy, że klient wzywa zdalny serwer za pomocą asynchronicznego wywołania RPC,
+po czym czeka na zwrócenie przez serwer wyniku, 
+używając innego asynchronicznego wywołania RPC. 
+Czy jest to taka sama metoda jak pozwolenie klientowi
+na wykonanie zwykłego wywołania RPC? Co się stanie, 
+jeśli zastąpimy asynchroniczne wywołania RPC jednokierunkowymi wywołaniami RPC?
+
+Odpowiedź:
+
+Asynchroniczne wywołanie RPC nie jest taką samą metodą, 
+co zwykłe wywołanie RPC, 
+gdyż asynchroniczne wywołanie wymaga wysłania 
+potwierdzenia odbioru przez serwer do klienta.
+Podobnie serwer musi dostać potwierdzenie od klienta.
+Jednokierunkowe wywołania RPC mogą działać podobnie, 
+pod warunkiem, że niezawodna komunikacja jest gwarantowana.
+
+8. Zamiast pozwalać serwerowi na rejestrowanie się za pomocą demona, jak to się dzieje
+w systemie DCE, moglibyśmy też wybrać przypisywanie go zawsze do tego samego punktu
+końcowego. Ten punkt końcowy mógłby być potem używany w odniesieniach do obiektów
+w przestrzeni adresowej serwera. Jaka jest główna wada tego schematu?
+
+Odpowiedź:
+
+Główna wada tego schematu jest taka, że jest znacznie trudniej 
+dynamicznie przydzielać obiekty do serwerów.
+Ponadto wiele punktów końcowych musi być ustalonych, 
+a nie tylko jeden.
+W przypadku maszyn, które mogą mieć dużą liczbę serwerów, 
+statyczne przypisywanie punktów końcowych nie jest dobrym pomysłem.
+
+9. Czy warto dokonać jeszcze podziału wywołań RPC na statyczne i dynamiczne? Uzasadnij.
+
+Odpowiedź:
+
+Tak, ponieważ daje to większą elastyczność. 
+Wadą tego jest jednak to, że przezroczystość jest tracona
+
+13. Załóżmy, że możesz używać tylko operacji do przejściowej komunikacji synchronicznej.
+Czy potrafisz zrealizować elementarne operacje przejściowej komunikacji asynchronicznej?
+W jaki sposób?
+
+Odpowiedź:
+
+Asynchroniczne wysyłanie można zrobić poprzez 
+dołączenie przez obiekt wywołujący komunikatu do bufora, 
+który jest współużytkowany z procesem, który obsługuje rzeczywisty transfer komunikatów.
+Odbieranie jest zaimplementowane w podobny sposób, za pomocą bufora, 
+który może być sprawdzany przez aplikację pod kątem nadchodzących komunikatów.
+
+15. W tekście podaliśmy, że w celu automatycznego rozpoczynania 
+procesu pobierania komunikatów z kolejki wejściowej często używa się demona, 
+który dogląda kolejki wejściowej. 
+Podaj alternatywną implementację, bez użycia demona.
+
+Odpowiedź:
+
+Pozwolenie procesowi po stronie odbiorcy sprawdzać 
+wszelkie przychodzące komunikaty za każdym razem, 
+gdy proces ten umieści komunikat w swojej własnej kolejce.
+
+16. Tablice tras w systemie WebSphere (d. MQSeries) firmy IBM i w wielu innych systemach
+kolejkowania komunikatów są konfigurowane ręcznie. Opisz prosty sposób automatyzacji tej
+czynności.
+
+Odpowiedź:
+Przykładowo możemy mieć scentralizowany komponent utrzymujący topologię sieci.
+Komponent ten wylicza najlepsze trasy pomiędzy każdą parą menedżerów kolejek
+i generuje tablicę routingu dla każdego menadżera. 
+Tablice te mogą być pobierane oddzielnie przez każdego menedżera.
+
+Innym rozwiązaniem jest decentralizacja algorytmu routingu, 
+poprzez nakazanie każdemu menedżerowi kolejek wykrycia topologii sieci 
+i obliczenia własnej tablicy routingu.
+
+17. W komunikacji trwałej odbiorca zazwyczaj ma własny bufor, 
+w którym można przechowywać komunikaty wówczas, gdy odbiorca nie działa. 
+Do utworzenia takiego bufora może być potrzebny jego rozmiar. 
+Podaj argument uzasadniający, że jest to wskazane, oraz taki, który 
+przemawia przeciw określaniu rozmiaru.
+
+Odpowiedź:
+
+Za:
+Łatwiej zaimplementować bufor
+
+Przeciw:
+Jeśli bufor się zapełni, to komunikaty będą stracone.
+
+19. Podaj przykład na rzecz przydatności rozsyłania także w strumieniach danych dyskretnych
+
+Odpowiedź:
+Przekazywanie dużego pliku wielu użytkownikom
+(np. podczas aktualizowania witryn lustrzanych 
+dla usług sieci Web lub dystrybucji oprogramowania.)
+
+20. Załóżmy, że w sieci sensorowej mierzone temperatury nie są opatrywane znacznikami
+czasu przez czujnik, lecz natychmiast posyłane do operatora. Czy wystarczyłoby tu tylko
+zagwarantować maksymalne opóźnienie między punktami końcowymi?
+
+Odpowiedź:
+Nie, jeśli operator potrzebowałby wiedzieć kiedy pomiar miał miejsce.
+W takim przypadku można dołączyć sygnaturę czasową po otrzymaniu pomiaru, 
+ale powinniśmy mieć wtedy gwarancje minimalnych opóźnień między końcami.
+
+Dodatek: W jaki sposób zagwarantujesz maksymalne opóźnienie między punktami końcowymi, gdy
+zbiór komputerów jest zorganizowany w pierścień (logiczny lub fizyczny)?
+
+Odpowiedź:
+Pozwoliliśmy, aby żeton krążył po pierścieniu.
+Każdy komputer może wysyłać dane wzdłuż pierścienia pod warunkiem,
+że trzyma żeton. Co więcej każdy komputer może trzymać żeton jedynie
+przez określony czas (T sekund).
+W rzeczywistości, jeśli założymy, 
+że komunikacja między dwoma sąsiednimi komputerami jest ograniczona, 
+to token będzie miał maksymalny czas obiegu, 
+który odpowiada maksymalnemu opóźnieniu między punktami końcowym.
+
+21. W jaki sposób zagwarantujesz minimalne opóźnienie między punktami końcowymi, gdy
+zbiór komputerów jest zorganizowany w pierścień (logiczny lub fizyczny)?
+
+Odpowiedź:
+Najlepszym rozwiązaniem jest buforowanie pakietów tak długo, jak to konieczne.
+Buforowanie danych będzie u odbiorcy 
+ponieważ w tym momencie nie ma już nieprzewidzianych przeszkód, 
+które mogą opóźnić dostarczenie danych.
+
+24. Podczas poszukiwania plików w niestrukturalnym systemie partnerskim pomocne może
+się okazać ograniczanie poszukiwań do węzłów, w którym występują pliki podobne do Twoich.
+Wyjaśnij, w jaki sposób do znajdywania tych węzłów może się przydać plotkowanie.
+
+Odpowiedź:
+Pomysł jest prosty:
+jeśli podcas plotkowania węzły wymieniają informację o należeniu do sytemu,
+to każdy węzeł pozna wszystkie inne węzły w systemie.
+Za każdym razem, gdy dany węzeł odkrywa nowy węzeł, 
+może on ocenić go pod kątem jego podobieństwa, 
+na przykład przez zliczenie liczby wspólnych plików.
+Następnie semantycznie najbliższe węzły są wybierane 
+do przesłania zapytania wyszukiwania.
