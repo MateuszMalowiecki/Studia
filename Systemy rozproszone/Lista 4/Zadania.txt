@@ -113,6 +113,30 @@ Odpowiedź:
 Tak, ponieważ daje to większą elastyczność. 
 Wadą tego jest jednak to, że przezroczystość jest tracona
 
+10. Opisz, jak odbywa się komunikacja bezpołączeniowa między klientem a serwerem przy
+użyciu gniazd. Omów ogólnie interfejs gniazd z Berkeley.
+
+Odpowiedź:
+Klient i serwer tworzą gniazda, ale tylko serwer wiąże gniazdo 
+z lokalnym punktem końcowym. 
+Serwer może następnie wykonać blokujące wywołanie "read",
+w którym oczekuje na dane przychodzące od dowolnego klienta.
+Podobnie klient wykonuje blokujące wywołanie w celu zapisania danych
+do serwera. Nie ma potrzeby, żeby zamykać połączenie.
+
+12. Przypuśćmy, że możesz używać tylko operacji do przejściowej komunikacji asynchronicznej. 
+Jak poradzisz sobie z realizacją elementarnych operacji przejściowej komunikacji synchronicznej?
+
+Odpowiedź:
+Można na przykład wysyłać wiadomości z użyciem komunikacji asynchronicznej,
+a następnie pozwolić klientowi na ciągłe sprawdzanie 
+przychodzącego potwierdzenia lub odpowiedzi z serwera.
+Jeśli dodatkowo założymy, że lokalny system operacyjny
+przechowuje przychodzące wiadomości w buforze
+to możemy też zablokować klienta do momentu odebrania
+sygnału że wiadomość dotarła, po którym możemy wykonać 
+asynchroniczny odbiór.
+
 13. Załóżmy, że możesz używać tylko operacji do przejściowej komunikacji synchronicznej.
 Czy potrafisz zrealizować elementarne operacje przejściowej komunikacji asynchronicznej?
 W jaki sposób?
@@ -121,9 +145,26 @@ Odpowiedź:
 
 Asynchroniczne wysyłanie można zrobić poprzez 
 dołączenie przez obiekt wywołujący komunikatu do bufora, 
-który jest współużytkowany z procesem, który obsługuje rzeczywisty transfer komunikatów.
+który jest współużytkowany z procesem, 
+który obsługuje rzeczywisty transfer komunikatów.
+Za każdym razem gdy klient dołącza wiadomość do bufora,
+budzi proces wysyłania, który usuwa wiadomość z bufora 
+i za pomocą wywołania blokującego, wysyła jej adres docelowy 
+do serwera docelowego.
 Odbieranie jest zaimplementowane w podobny sposób, za pomocą bufora, 
 który może być sprawdzany przez aplikację pod kątem nadchodzących komunikatów.
+
+14. Czy jest sensowne realizowanie trwałej komunikacji asynchronicznej za pomocą wywołań 
+RPC? Uzasadniuj odpowiedź.
+
+Odpowiedź:
+
+Tak ale pod warunkiem, że proces zarządzający kolejką 
+przekazuje komunikat do następnego menedżera kolejek za pomocą RPC.
+Usługą oferowaną przez menadżera kolejek jest w tym przypadku
+przechowywanie wiadomości.
+Wywołujący menadżer kolejek dostaje proxy interfejsu do zdalnej kolejki, 
+otrzymując status wskazujący na powodzenie lub niepowodzenie każdej operacji.
 
 15. W tekście podaliśmy, że w celu automatycznego rozpoczynania 
 procesu pobierania komunikatów z kolejki wejściowej często używa się demona, 
@@ -201,6 +242,29 @@ Najlepszym rozwiązaniem jest buforowanie pakietów tak długo, jak to konieczne
 Buforowanie danych będzie u odbiorcy 
 ponieważ w tym momencie nie ma już nieprzewidzianych przeszkód, 
 które mogą opóźnić dostarczenie danych.
+
+22. Choć rozsyłanie jest technicznie możliwe, niewiele jest środków w Internecie do jego
+realizacji. Problem jest prozaiczny: nikt w istocie nie wie, jak na rozsyłaniu zarabiać. Czy
+potrafisz wymyślić jakiś schemat?
+
+Odpowiedź:
+Problem jest spowodowany głównie przez dostawców usług internetowych,
+ponieważ nie widzą powodu, aby oszczędzać na przepustowości.(nic na tym nie stracą)
+Aczkolwiek może to się zmienić w przypadku, gdy klient płaci za 
+określoną jakość usług, zgodnie z obietnicą różnych dostawców usług internetowych.
+W tym przypadku dostawcy mogą odnotować spadek dochodów i mieć motywację
+do wdrażania rozsyłania, ponieważ mogą oferować lepszą jakość usług.
+
+23. Drzewa rozsyłania na poziomie zastosowań są zazwyczaj optymalizowane pod kątem
+rozciągłości (ang. stretch) mierzonej opóźnieniem lub liczbą przeskoków. 
+Podaj przykład, w którym ta miara może skutkować tworzeniem bardzo kiepskich drzew.
+
+Odpowiedź:
+Główną ideą rozciągłości jest żeby opóźnienia w komunikacji
+dominowały wydajność. 
+Aczkolwiek w przypadku np. transmisji wideo liczy się dostępność,
+więc drzewa powinny w tym przypadku maksymalizować koszty 
+(czyli maksymalizować wydajność).
 
 24. Podczas poszukiwania plików w niestrukturalnym systemie partnerskim pomocne może
 się okazać ograniczanie poszukiwań do węzłów, w którym występują pliki podobne do Twoich.
