@@ -1,0 +1,131 @@
+1. Podaj przykład, w którym dostęp do jednostki E wymaga dalszego tłumaczenia jej adresu na
+inny adres.
+
+Odpowiedź:
+
+Takim przykładem są adresy IP. Są one używane do adresowania 
+hostów w internecie. Aczkolwiek żeby uzskać dalszy dostęp do 
+jednostki, jej adres musi być przetłumaczony na adres Ethernetowy.
+
+2. Czy uważasz, że lokalizator URL w rodzaju http://www.acme.org/index.html jest niezależny
+od położenia? Co powiesz o lokalizatorze http://www.acme.nl/index.html?
+
+Odpowiedź:
+
+Pierwszy lokalizator jest na pewno niezależny od położenia 
+(ponieważ zawiera końcówkę ".org").
+Drugi lokalizator zawiera zaś końcówkę ".nl", więc można podejrzewać, 
+że jest on zależny od położenia.
+
+3. Podaj kilka przykładów prawdziwych identyfikatorów
+
+Odpowiedź:
+
+Przykładowo:
+numery pracowników w firmie
+numery ISBN w książkach
+numery sal w szkołach
+
+4. Czy w identyfikatorze wolno zamieszczać informacje o jednostce, do której się on odnosi?
+
+Odpowiedź:
+
+Tak. Należy jednak uważać, gdyż zmiana tej informacji spowoduje
+zmianę wartości identyfikatora, co jest niedozowolone
+(każda jednostka ma tylko jeden identyfikator).
+
+5. Naszkicuj wydajną implementację identyfikatorów globalnie jednoznacznych.
+
+Odpowiedź:
+
+Można to zrobić konkatenując ze sobą trzy wartości:
+- adres sieciowy maszyny generującej identyfikator
+- czas lokalny w momencie generowania identyfikatora
+- pseudolosowa liczba wygenerowana podzas generowania adresu.
+
+6. Specjalna odmiana lokalizowania jednostki nosi nazwę anycasting (nadawanie wybiórcze) 
+i polega na identyfikowaniu usługi za pomocą adresu IP. Wysłanie zamówienia pod adres nadawania
+wybiórczego (anycast address) powoduje zwrócenie odpowiedzi przez serwer realizujący
+usługę identyfikowaną przez ten adres. Naszkicuj realizację usługi nadawania wybiórczego
+opartą na hierarchicznych usługach lokalizacji.
+
+Odpowiedź:
+Każda usługa ma unikalny identyfikator.
+Każdy serwer implementujący tą usługę wstawia swój adres
+do usługi lokalizacji do węzła katalogu domeny, 
+w której znajduje się serwer.
+Zapytania wyszukiwania używają tego identyfikatora 
+i automatycznie zwrócą najbliższy serwer implementujący tą usługę.
+
+7. Gdzie jest korzeń w wypadku dwupiętrowego podejścia opartego na siedzibie, traktowanego
+jako specjalizacja hierarchicznych usług lokalizacji?
+9
+Odpowiedź:
+Korzeń jest tworzony przez siedziby, ale jest też podzielony tak,
+że każda jednostka ma swój własny serwer główny.
+
+10. Rozważmy jednostkę, która przenosi się z miejsca A do B, przechodząc po drodze przez
+kilka miejsc pośrednich, w których pozostaje dość krótko. Po nadejściu do B sadowi się tam na
+pewien czas. Zmiana adresu w hierarchicznych usługach lokalizacji może zawsze trwać dość
+długo, przeto należy unikać jej wykonywania przy wizytowaniu miejsc pośrednich. Jak można
+zlokalizować jednostkę w miejscu pośrednim?
+
+Odpowiedź:
+
+Można do tego użyć wskaźników przekierowania (ang. forwarding pointers),
+tzn. przy każdym ruchem jednostka zostawia w A odwołanie 
+do swojej nowej lokalizacji.
+Po dotarciu do B jednostka wstawia swój adres w 
+hierarchicznej usłudze lokalizacji, a łańcuch wskaźników jest usuwany.
+
+15. Rozważmy oparty na DHT (rozproszonej tablicy haszowania) system Chord, 
+w którym k bitów m-bitowej przestrzeni identyfikatorów zarezerwowano do przydzielania superpartnerom.
+Jeśli identyfikatory są przydzielane losowo, to ilu superpartnerów można się spodziewać w
+systemie z N węzłami?
+
+Odpowiedź:
+min(2^(k-m) * N, 2^k).
+Dlaczego:
+2^(k-m) * N - ponieważ mamy N węzłów, każdy może mieć co najwyżej 2^(k-m) różnych superpartnerów.
+2^k - ponieważ mamy k bitów na zapisanie superpartnerów,
+więc co najwyżej tylu superpartnerów możemy zakodować.
+
+13. Wyjaśnij różnicę między dowiązaniem twardym i miękkim w systemach uniksowych.
+
+Odpowiedź:
+
+Dowiązania twarde (w przeciwieństwie do miękkich) nie będą łączyć 
+ścieżek w różnych systemach plików.
+Dodatkowo dowiązania twarde zawsze się odnoszą do istniejącego pliku,
+a miękkie mogą zawierać ścieżkę która się do niczego nie odnosi.
+
+16. Czy podczas wstawiania węzła do systemu Chord wszystkie tablice wskazówek musimy
+uaktualniać natychmiast?
+
+Odpowiedź:
+Nie, ponieważ inne węzły wiedzą o pojawieniu się nowego węzła
+i mogą przekierować zapytania do nich na nowy węzeł.
+
+17. Co stanowi poważną wadę w poszukiwaniu rekurencyjnym podczas rozwiązywania klucza
+w systemie opartym na DHT?
+
+Odpowiedź:
+Jeśli wiadomość zginęła gdzieś po drodze, to klient nie będzie wiedział 
+dlaczego nie została ona mu zwrócona (który węzeł "zawiódł").
+
+20. Jak odbywa się poszukiwanie punktu montowanego w większości systemów uniksowych?
+ 
+Odpowiedź:
+Punkt montowany w większości systemów Uniksowych 
+to katalog główny przestrzeni adresowej.
+
+24. Czy przy przekazywaniu zdalnego odniesienia od procesu P1 do P2
+w rozproszonym zliczaniu odniesień mogłoby pomóc pozwolenie 
+na zwiększanie licznika procesowi P1, a nie P2?
+
+Odpowiedź:
+Nie, ponieważ proces P2 może usunąć to odwołanie, zanim P1 zwiększy licznik
+co w sytuacji gdy tylko P1 odwoływał się do tegóż obiektu może doprowadzić
+do jego nieprawidłowego usunięcia.
+
+

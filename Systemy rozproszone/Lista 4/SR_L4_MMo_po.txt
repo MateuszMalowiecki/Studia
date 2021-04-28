@@ -1,0 +1,102 @@
+Mikołaj Motak
+Opracowanie wyznaczonych zadań z listy 4.
+IIUWr, SR21, 21-04-25
+=====================================================================
+10. Opisz, jak odbywa się komunikacja bezpołączeniowa między klientem
+a serwerem przy użyciu gniazd. Omów ogólnie interfejs gniazd z Berke-
+ley.
+=====================================================================
+Zarówno klienci jak i serwer zaczynają od stworzenia gniazda, jednak
+              ^i,                         ^^^^^^zdefiniowa  
+tylko serwer wiąże gniazdo z lokalnym punktem końcowym. Następnie
+serwer zablokuje się przy użyciu wywołania odczytu, podczas którego
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^blokuje
+                              się w wywołaniu odczytu, co skutkuje tym, że  
+będzie nasłuchiwał (oczekiwał) jakichkolwiek danych przychodzących
+od klientów. Analogicznie klient po utworzeniu gniazda zablokuje się,
+aby przesłać dane serwerowi przy użyciu wywołań zapisu. Wszystko to
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^przesyłając dane
+                                         serwerowi w wywołaniu pisania
+odbywa się bez potrzeby przerywania (zamykania) połączenia.
+
+Wszystkie nowoczesne systemy operacyjne implementują wersję interfej-
+su gniazd z Berkeley. Sam interfejs API gniazda Berkeley zazwyczaj
+udostępnia następujące funkcje:
+- socket(), która tworzy nowe gniazdo.
+                                     ^;   
+- send(), recv(), sendto(), recvfrom(), które są używane do wysyłania
+  i odbierania danych; można też użyć standardowych write() i read().
+                                                                    ^;
+- close(), która powoduje, że system zwalnia zasoby przydzielone do
+  gniazda.
+         ^;   
+- gethostbyname(), gethostbyaddr(), używane do rozwiązywania nazw
+  i adresów hostów (tylko w standardzie IPv4).
+                                             ^;
+- select(), służąca do wstrzymywania, aż co najmniej jedna z podanych
+  list gniazd będzie z błędami lub będzie gotowa do odczytu/zapisu.
+                                             u lub zapisu;^^^^^^^^^ 
+- poll(), służąca do sprawdzania stanu gniazda w zestawie gniazd.
+                                                                ^;
+- getsockopt(), setsockopt(), używane do pobierania oraz ustawiania
+  określonej opji gniazda dla określonego gniazda.
+              ^pc       ^^^^^^^a o   
+
+Interfejs udostępnia również funkcje najczęściej używane po stronie
+serwera takie jak:
+      ^a, 
+- bind(), która wiąże gniazdo z określonym lokalnym adresem IP 
+  i numerem portu.
+                 ^ ;  
+- listen(), powodująca przejście gniazda TCP w stan nasłuchiwania.
+                                                                 ^;
+- accept(), która akceptuje próbę utworzenia nowego połączenia TCP 
+  od klienta zdalnego i tworzy nowe gniazdo skojarzone z parą adresów
+     ^^^^^^^^^^^^^^^^zdalnego klienta
+  gniazda tego połączenia.
+                                                     
+Oraz udostępnia funkcję używaną po stronie klienta:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^Poz tym jest
+             dostępna funkcja connect() używana po stronie klienta,
+- connect(), która przypisuje wolny numer portu lokalnego do gniazda.
+^^^^^^^^^^^^<NIC>                                                   ^,
+  A w przypadku gniazda TCP powoduje próbę nawiązania nowego połącze-
+  ^a
+  nia TCP.
+                                               OK, uwagi technicze,
+                                               zadanie uznane.                                               
+
+=====================================================================
+12. Przypuśćmy, że możesz używać tylko operacji do przejściowej komu-
+nikacji asynchronicznej. Jak poradzisz sobie z realizacją elementar-
+nych operacji przejściowej komunikacji synchronicznej?
+=====================================================================
+Rozważmy podstawową operację wysyłania synchronicznego - jej prostą
+implementacją będzie wysłanie wiadomości do serwera za pomocą komuni-
+kacji asynchronicznej, a następnie umożliwienie klientowi wykonywanie
+                                                                    ^a
+nieprzerwanych zapytań o odpowiedź lub potwierdzenie ze strony serwe-
+   ^^^^^^^ustan
+ra. Alternatywnie, jeżeli założylibyśmy, że lokalny system operacyjny
+                   ^^^^^^^^^^^^^^^^^^^^gdybyśmy założyli
+przechowuje przychodzące wiadomości w buforze - wówczas implementacją
+                                            ^^^^^e, w                                         
+rozwiązującą nasz problem będzie blokowanie klienta, dopóki ten nie
+                          ^^^^^^byłoby  <- zgodność trybów gram. 
+dostanie sygnału o tym, że wiadomość dotarła. Po otrzymaniu tego po-
+twierdzenia - klient będzie mógł wykonać operację odbierania asyn-
+chronicznego.                                     ^^^^^^^^^^odbioru 
+
+=====================================================================
+23. Drzewa rozsyłania na poziomie zastosowań są zazwyczaj optymalizo-
+wane pod kątem rozciągłości (ang. stretch) mierzonej opóźnieniem lub 
+liczbą przeskoków. Podaj przykład, w którym ta miara może skutkować 
+tworzeniem bardzo kiepskich drzew.
+=====================================================================
+Założeniem podstawowym tych drzew jest to, że opóźnienia w komunika-
+cji przeważają nad wydajnością. Jednakże np. w przypadku transmisji
+wideo, chcielibyśmy otrzymać jak najlepszą wydajność, co niestety
+nie jest możliwe ze względu na to, że otrzymać możemy jedynie taką
+wydajność jaka jest dostępna (zostaną stworzone drzewa "kiepskie" dla
+podanego przykładu). W takim przypadku chcielibyśmy zbudować drzewa,
+które zmaksymalizują koszty (mierzone w kategoriach przepustowości).
