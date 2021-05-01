@@ -59,7 +59,7 @@ i automatycznie zwrócą najbliższy serwer implementujący tą usługę.
 
 7. Gdzie jest korzeń w wypadku dwupiętrowego podejścia opartego na siedzibie, traktowanego
 jako specjalizacja hierarchicznych usług lokalizacji?
-9
+
 Odpowiedź:
 Korzeń jest tworzony przez siedziby, ale jest też podzielony tak,
 że każda jednostka ma swój własny serwer główny.
@@ -78,6 +78,15 @@ do swojej nowej lokalizacji.
 Po dotarciu do B jednostka wstawia swój adres w 
 hierarchicznej usłudze lokalizacji, a łańcuch wskaźników jest usuwany.
 
+13. Wyjaśnij różnicę między dowiązaniem twardym i miękkim w systemach uniksowych.
+
+Odpowiedź:
+
+Dowiązania twarde (w przeciwieństwie do miękkich) nie będą łączyć 
+ścieżek w różnych systemach plików.
+Dodatkowo dowiązania twarde zawsze się odnoszą do istniejącego pliku,
+a miękkie mogą zawierać ścieżkę która się do niczego nie odnosi.
+
 15. Rozważmy oparty na DHT (rozproszonej tablicy haszowania) system Chord, 
 w którym k bitów m-bitowej przestrzeni identyfikatorów zarezerwowano do przydzielania superpartnerom.
 Jeśli identyfikatory są przydzielane losowo, to ilu superpartnerów można się spodziewać w
@@ -89,15 +98,6 @@ Dlaczego:
 2^(k-m) * N - ponieważ mamy N węzłów, każdy może mieć co najwyżej 2^(k-m) różnych superpartnerów.
 2^k - ponieważ mamy k bitów na zapisanie superpartnerów,
 więc co najwyżej tylu superpartnerów możemy zakodować.
-
-13. Wyjaśnij różnicę między dowiązaniem twardym i miękkim w systemach uniksowych.
-
-Odpowiedź:
-
-Dowiązania twarde (w przeciwieństwie do miękkich) nie będą łączyć 
-ścieżek w różnych systemach plików.
-Dodatkowo dowiązania twarde zawsze się odnoszą do istniejącego pliku,
-a miękkie mogą zawierać ścieżkę która się do niczego nie odnosi.
 
 16. Czy podczas wstawiania węzła do systemu Chord wszystkie tablice wskazówek musimy
 uaktualniać natychmiast?
@@ -119,6 +119,30 @@ Odpowiedź:
 Punkt montowany w większości systemów Uniksowych 
 to katalog główny przestrzeni adresowej.
 
+21. Rozważmy rozproszony system plików, w którym używa się przestrzeni nazw dla każdego
+użytkownika oddzielnie. Mówiąc inaczej, każdy użytkownik ma własną, prywatną przestrzeń
+nazw. Czy nazwy z takiej przestrzeni nazw mogą być używane do dzielenia zasobów przez
+dwóch różnych użytkowników?
+
+Odpowiedź:
+
+Tak, ponieważ możemy używać nazw z globalnej współdzielonej przestrzeni nazw
+do odwoływania się do współdzielonych zasobów. Nazwy te możemy zaś 
+przetłumaczyć na odpowiadające nazwy z prywatnych przestrzeni nazw użytkowników.
+
+22. Rozważmy system DNS. Aby odnieś się do węzła N w poddomenie zrealizowanej w innej
+niż bieżąca domena strefie, należy określić serwer nazw tamtej strefy. 
+Czy zawsze jest niezbędne załączanie rekordu zasobu z adresem tego serwera, 
+czy może czasami wystarczy podać tylko nazwę jego domeny?
+
+Odpowiedź:
+Jeśli węzeł N znajduje się w innej domenie, 
+to wystarczy podać tylko nazwę domeny, gdyż jeśli ją (nazwę) znamy,
+to możemy łatwo znaleźć węzeł N, za pomocą pojedynczego zapytania do DNS.
+W przypadku zaś, gdy węzeł N leży w tej samej domenie, 
+może zajść konieczność skontaktowania się z serwerem nazw, 
+w celu znalezienia adresu węzła N.
+
 24. Czy przy przekazywaniu zdalnego odniesienia od procesu P1 do P2
 w rozproszonym zliczaniu odniesień mogłoby pomóc pozwolenie 
 na zwiększanie licznika procesowi P1, a nie P2?
@@ -129,3 +153,10 @@ co w sytuacji gdy tylko P1 odwoływał się do tegóż obiektu może doprowadzi�
 do jego nieprawidłowego usunięcia.
 
 
+26. Czy w pokoleniowym zliczaniu odniesień jest możliwe, żeby obiekt uznano za śmieć,
+mimo że istnieją wciąż odniesienia, lecz należące do generacji, o której obiektowi nie wiadomo?
+
+Odpowiedź:
+Nie, ponieważ po usunięciu odniesień pokolenia k, 
+obiekt jest informowany o wszystkich odniesieniach pokolenia k+1, 
+które stają się mu znane w momencie usunięcia odniesienia.
