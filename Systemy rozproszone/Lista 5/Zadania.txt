@@ -143,6 +143,14 @@ W przypadku zaś, gdy węzeł N leży w tej samej domenie,
 może zajść konieczność skontaktowania się z serwerem nazw, 
 w celu znalezienia adresu węzła N.
 
+23. Zliczanie typowych plików jest cokolwiek naiwnym sposobem definiowania sąsiedztwa semantycznego.
+Załóżmy, że masz zbudować semantyczne sieci nakładkowe oparte na dokumentach tekstowych. 
+Jaka inna funkcja sąsiedztwa semantycznego przychodzi Ci na myśl?
+
+Odpowiedź:
+
+Zliczanie połączeń między dwoma węzłami w danej sieci nakładkowej.
+
 24. Czy przy przekazywaniu zdalnego odniesienia od procesu P1 do P2
 w rozproszonym zliczaniu odniesień mogłoby pomóc pozwolenie 
 na zwiększanie licznika procesowi P1, a nie P2?

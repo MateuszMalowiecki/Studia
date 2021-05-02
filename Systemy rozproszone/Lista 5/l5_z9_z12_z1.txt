@@ -1,0 +1,51 @@
+
+  Bartłomiej Grochowski
+    Rozwiązania zadań 9, 12, 1 z listy 5 (nazewnictwo)
+
+
+ -----------------------------------------------------------------------------
+ 9. Ile (najwyżej) rekordów położenia trzeba uaktualnić, gdy jednostka ruchoma
+    zmienia położenie w hierarchicznych usługach lokalizacji o głębokości k?
+
+  (MvS&AST str. 254)
+  Zmiana położenia jednostki odpowiada jej usunięciu i wstawieniu w inne miejsce.
+  Wstawianie może wymagać uaktualnienia k+1 rekordów (liścia i każdego rodzica
+  na ścieżce do korzenia). Operacja usuwania analogicznie - maksymalnie k+1 rekordów.
+  Jednak korzeń, to ten sam rekord, więc żeby nie liczyć go dwa razy, odejmujemy 1.
+  
+    Razem: (k+1) + (k+1) - 1 = 2k+1 rekordów
+
+
+ -------------------------------------------------------------
+ 12. Podaj przykład wyjaśniający, na czym polegałoby działanie
+     mechanizmu domknięcia w odniesieniu do lokalizatora URL.
+
+  Dla przypomnienia: domknięcie (ang. closure) jest to znajomość sposobu i miejsca
+  rozpoczęcia tłumaczenia nazwy. W podręczniku (MvS&AST) autorzy ilustrują sytuację
+  następującym przykładem: Napis '00312059837784' nic nie znaczy, chyba że wiemy,
+  że jest to numer telefonu.
+
+  Mając dany adres URL: http://www.wikipedia.org/wiki/URL
+  system najpierw odczytuje protokół (w tym wypadku 'http'). Następnie sprawdzany
+  jest adres hosta i zmapowany na adres IP przy użyciu serwera nazw DNS.
+  Ostatnia część adresu URL odpowiada za ścieżkę do pliku.
+
+  http://www.wikipedia.org/wiki/URL
+  \__/   \_______________/\_______/
+   |            |             |
+  protokół     host        ścieżka
+          (adres serwera)  do zasobu
+
+
+ --------------------------------------------------------		
+ 1. Podaj przykład, w którym dostęp do jednostki E
+    wymaga dalszego tłumaczenia jej adresu na inny adres.
+
+  Jeśli myślimy o adresach urządzeń, to takim przykładem może być adres IP,
+  który jest używany w sieci, ale następnie wymaga daleszego tłumaczenia
+  na adres MAC konkretnej karty sieciowej.
+
+  Innym przykładem może być użycie synonimów w adresie. W systemie Windows każdy użytkownik
+  ma zdefiniowaną zmienną %TEMP%. Wówczas ścieżka folderu: '%TEMP%\NuGet\TempCache'
+  jest tłumaczona na przykład do: 'C:\Users\User1\AppData\Local\Temp\NuGet\TempCache'.
+
