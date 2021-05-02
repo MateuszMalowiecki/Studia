@@ -77,7 +77,7 @@ namespace POO_L8_Z1 {
             } 
         }
         public void CopyDownload(string oldFileName, string newFileName) {
-            File.Copy(oldFileName, newFileName); 
+            File.Copy(oldFileName, newFileName, true); 
         }
     }
     public class Invoker {
@@ -102,16 +102,16 @@ namespace POO_L8_Z1 {
             IFileCommand command=null;
             switch (commandNumber){
                 case 0:
-                    command=new FTPDownloadCommand("Some file");
+                    command=new FTPDownloadCommand("ftp://ftp.adobe.com/");
                     break;
                 case 1:
-                    command=new HTTPDownloadCommand("Some file");
+                    command=new HTTPDownloadCommand("https://ii.uni.wroc.pl/~wzychla/ra2K2L/ra2K2L.html");
                     break;
                 case 2:
-                    command=new EmptyDownloadCommand("Some file", 42);
+                    command=new EmptyDownloadCommand("./foo.txt", 42);
                     break;
                 default:
-                    command=new CopyDownloadCommand("Some file", "Some other file");
+                    command=new CopyDownloadCommand("./foo.txt", "./bar.txt");
                     break;
             }
             commands.Enqueue(command);
@@ -131,7 +131,7 @@ namespace POO_L8_Z1 {
     }
     public class Test {
         public static void Main() {
-
+            Invoker i =new Invoker();
         }
     }
 }
