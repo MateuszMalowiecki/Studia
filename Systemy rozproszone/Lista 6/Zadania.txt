@@ -1,0 +1,151 @@
+2. Rozważ zachowanie dwu maszyn w systemie rozproszonym. Obie mają zegary, o których
+założono, że tykają 1 000 razy w ciągu 1 ms. Jeden z nich rzeczywiście tak chodzi, natomiast
+drugi tyka tylko 990 razy na 1 ms. Ile wyniesie maksymalne odchylenie czasu tych zegarów,
+jeśli sygnał aktualizujący UTC dochodzi raz na minutę?
+
+Odpowiedź:
+
+Ponieważ drugi zegar tyka 990 000 razy na sekundę (o 10 000 za mało), 
+to opóźnienie wyniesie 10 ms na sekundę (gdyż 10 000 tyknięć 
+pierwszy zegar wykonuje w ciągu 10 ms). W ciągu minuty to opóźnienie
+wyniesie więc 600 ms.
+
+6. Czy potwierdzanie każdego komunikatu jest niezbędne do osiągnięcia za pomocą znaczników
+czasu Lamporta całkowicie uporządkowanego rozsyłania?
+
+Odpowiedź:
+
+Nie, ponieważ wystarczy, że do procesu dojdzie inna
+wiadomość z większym znacznikiem czasu. Zagwarantuje to, że nie ma
+więcej wiadomości z niższym znacznikiem. Wystarczy więc rozesłać 
+grupowo dowolną inną wiadomość o większym znaczniku czasowym.
+
+7. Rozważmy warstwę komunikacyjną, w której komunikaty są dostarczane 
+wyłącznie w kolejności ich wysyłania. 
+Podaj przykład, w którym nawet to uporządkowanie jest niepotrzebnie zbyt ograniczające
+
+Odpowiedź:
+
+Na przykład pobieranie dużego obrazu, który jest dostarczany w małych kawałkach, 
+z czego każdy kawałek zawiera informacje o pozycji w oryginalnym obrazku 
+(i być może wysokości i szerokości).
+Wtedy uporządkowanie nie jest konieczne, gdyż odbiorca może po prostu
+wklejać przychodzące kawałki na właściwe pozycje. 
+
+9. W scentralizowanym podejściu do wzajemnego wykluczania (rys. 5.13 w podręczniku polskim) 
+koordynator, otrzymując komunikat od procesu wyzbywającego się wyłącznego dostępu
+do używanej przez siebie sekcji krytycznej, 
+zazwyczaj udziela pozwolenia pierwszemu procesowi w kolejce. 
+Zaproponuj inny algorytm możliwy dla koordcynatora.
+
+Odpowiedź:
+
+Można nadać procesom priorytety. Wtedy koordynator za każdym razem
+dałby pierwszeństwo dostępu procesowi o największym priorytecie.
+
+10. Rozważmy raz jeszcze rys. 6.15 (MvS&AST). 
+Przypuśćmy, że koordynator ulega awarii. 
+Czy zawsze musi to powodować załamanie systemu? 
+Jeżeli nie, to w jakich warunkach do tego nie dojdzie? 
+Czy jest jakiś sposób, by uniknąć problemu i uczynić system 
+zdolnym tolerować awarie koordynatora?
+
+Odpowiedź:
+
+Nie zawsze. Na przykład jeśli koordynator odpowiada każdemu procesowi,
+zgodą lub odmową, to brak odpowiedzi ozancza, że koordynator uległ awarii.
+W takim przypadku wystarczy po prostu zainicjować elekcję nowego koordynatora.
+Dodatkowo koordynator może przechowywać wszystkie 
+zapytania od procesów na dysku, dzięki czemu po awarii nowy koordynator
+może zrekonstruować listę wszystkich krytycznych regionów 
+oraz kolejkę zapytań.
+
+
+12. Jak zmienią się wpisy w tablicy na planszy 35, jeśli założymy, 
+że algorytmy można zrealizować w sieci lokalnej ze sprzętowym rozgłaszaniem.
+
+Odpowiedź:
+
+Zmienią się tylko w przypadku algorytmu rozporoszonego, 
+ponieważ tylko w tym przypadku wiadomość jest wysyłana do więcej niż
+jednego procesu na raz.
+Dokładniej mówiąc wysłanie kilku wiadomości do różnych procesów 
+można zastąpić wysłaniem pojedynczego rozgłoszenia.
+Opóźnienie w takim przypadku wyniesie 1 + (n-1) = n:
+jedno rozgłoszenie do wszystkich procesów i n-1 odpowiedzi od tych procesów.
+
+14. Załóżmy, że dwa procesy wykrywają jednocześnie zgon koordynatora 
+i oba decydują się na ogłoszenie elekcji za pomocą algorytmu tyrana. 
+Co się stanie?
+
+Odpowiedź:
+
+Niektóre procesy dostaną dwukrotnie wiadomość "ELECTION", 
+ale zignorują drugą wiadomość. Elekcja odbędzie się normalnie.
+
+15. W systemie przedstawionym na planszy 31 krążą jednocześnie dwa komunikaty ELEKCJA.
+Choć obecność ich obu nie przysparza kłopotu, byłoby bardziej elegancko, gdyby pozbyto się
+jednego z nich. Opracuj algorytm, który będzie to wykonywał bez wpływania na działanie
+podstawowego algorytmu elekcji.
+
+Odpowiedź:
+
+Gdy proces dostaje komunikat elekcja sprawdza kto go wysłał
+(pierwszy element listy). Jeśli on sam go wysłał to wyśle 
+on teraz komunikat COORDINATOR jak jest opisane w MvS&AST, str. 333.
+Jeśli zaś proces dostał komunikat od innego procesu, 
+a sam wysłał wcześniej swój komunikat, to porównuje on numer procesu
+wysyłającego komunikat (głowę listy) ze swoim numerem. 
+Jeśli głowa jest mniejsza, to proces odrzuca taką wiadomość.
+Jeśli jest większa to przesyła wiadomość dalej, 
+doklejając swój numer na koniec listy, 
+jak w podstawowym algorytmie elekcji.
+Oczywiście jeśli proces nie wysłał żadnego komunikatu o elekcji, 
+a dostał taki komunikat od innego procesu, to zachowuje się bez zmian
+(dokleja numer do końca listy).
+W ten sposób przetrwa tylko komunikat od procesu o największym numerze, 
+a reszta zostanie zabita po drodze.
+
+17. Na rysunku 5.25(d) (wyd. pol., plansza 68) pokazano trzy plany – 
+dwa dopuszczalne i jeden niedozwolony. 
+Dla tych samych transakcji podaj pełną listę wartości, 
+które może przyjmować na końcu zmienna x i określ, 
+które z nich są dopuszczalne, a które niedopuszczalne.
+
+Odpowiedź:
+
+Dopuszczalne: 1, 2, 3
+Niedopuszczalne: 4, 5, 6
+
+20. Systemy stosujące blokowanie (zajmowanie, zamykanie) w celu sterowania 
+współbieżnością zwykle odróżniają blokady do czytania od blokad do pisania. 
+Co powinno się stać, gdy proces, który dokonał już zablokowania do czytania, 
+ubiega się o jego zmianę na zablokowanie do pisania? 
+A co można powiedzieć na temat zamiany blokady do pisania na blokadę do czytania?
+
+Odpowiedź:
+
+Gdy proces ma blokadę do czytania, a ubiega się o blokadę do pisania,
+to musi poczekać aż inne procesy posiadające blokadę do czytania 
+zwolnią ją. Zmiana blokady w drugą stronę (z pisania na czytanie)
+jest zawsze dozwolona.
+
+23. Czy użycie znaczników czasu do sterowania współbieżnością zapewnia szeregowalność?
+Omów tę kwestię.
+
+Odpowiedź:
+
+Tak, ponieważ w ten sposób możemy uszeregować transakcje 
+w kolejności ich znaczników czasowych.
+
+24. Często powtarzaliśmy, że w przypadku zaniechania transakcji świat 
+powraca do poprzedniego stanu, 
+tak jak gdyby transakcja nigdy nie wystąpiła. Kłamaliśmy. 
+Podaj przykład, w którym odtworzenie poprzedniego stanu świata jest niemożliwe.
+
+Odpowiedź:
+Zad. 19 z L1(plik SR_Lista1.pdf na Githubie):
+Wyobraźmy sobie, że mamy drukarkę na której coś drukujemy. 
+Gdy w trakcie drukowania strony nastąpi awaria, 
+to nie da się już wrócić do stanu sprzed awarii, 
+ponieważ część kartki jest już zadrukowana.

@@ -1,0 +1,78 @@
+11. Węzeł korzeniowy w hierarchicznych usługach lokalizacji może 
+    stać się wąskim gardłem. Jak można skutecznie uniknąć tego
+    problemu?
+
+Prostym sposobem ominięcia problemu jest odseparowanie logicznego
+węzła centralnego od jego fizycznej realizacji. Można utrzymywać
+rozproszone kopie logicznego węzła korzeniowego, co pozwoli zwiększyć
+wydajność całego systemu przez dystrybucję ruchu pomiędzy wiele
+maszyn. Dodatkowo można przechowywać pamięci podręczne zapytań,
+tworząc w ten sposób bezpośrednie skróty do wybranych węzłów, bez
+konieczności każdorazowego pytania węzła korzeniowego o lokalizację
+obiektu.
+
+----
+
+13. Wyjaśnij różnice między dowiązaniem miękkim a twardym w systemach 
+    unixowych.
+
+> Dowiązanie miękkie, nazywane częściej dowiązaniem symbolicznym 
+(ang. soft link), to specjalny typ pliku, który jedynie wskazuje
+lokalizację innego pliku. Nie zwiększa licznika referencji oryginału,
+na który wskazuje, a jeśli wskazywany plik zostanie usunięty lub
+przeniesiony, dowiązanie staje się błędne. Można myśleć o nim jak o
+linku do strony internetowej -- link mówi jak możemy dostać się do
+zasobu ale nie wie, czy strona rzeczywiście istnieje, czy może nie
+została przeniesiona. Analogicznie strona internetowa nie musi
+wiedzieć o istnieniu linku w pliku PDF na komputerze Jana Kowalskiego.
+Miękkie dowiązania mogą wskazywać na dowolne zasoby systemu plików --
+włączając w to foldery i pliki specjalne.
+
+> Dowiązanie twarde (ang. hard link) jest natomiast specjalnym typem
+pliku, który dzieli I-węzeł (odsyłam do internetu) z oryginalnym
+plikiem. Zwiększa ono licznik referencji pliku, dzięki czemu dane
+pliku nie zostaną usunięte dopóki wartość tego licznika nie spadnie 
+do 0. Dowiązania twarde działają poprawnie w systuacjach, kiedy
+oryginalny plik zostanie przeniesiony (co prawda jedynie w obrębie
+jednego systemu plików), zmieni nazwę lub zostanie usunięty. Zmiany
+oryginalnym pliku są widoczne z punktu widzenia każdego dowiązania
+twardego. Dodatkowym ograniczeniem jest natomiast brak możliwości
+stworzenia dowiązania twardego do specjalnych plików i folderów.
+
+Programiści C++ mogą kojarzyć dowiązania miękkie i twarde ze
+specjalnymi wskaźnikami `weak_ptr` i `shared_ptr`. W rzeczywistości
+lepszym skojarzeniem byłyby wskaźnik `void *` i `shared_ptr`.
+
+----
+
+27. Czy w pokoleniowym zliczaniu odniesień jest możliwe, aby wpis G[i]
+stał się mniejszy niż 0?
+
+> Oczywiście, że tak. Zauważmy, że G[i] jest aktualizowane jedynie
+przy usuwaniu obiektu, a w stanie początkowym G[] jest wypełnione
+zerami. Referencja generacji 0 sprawi, że wartość G[0] zostanie
+ustawiona na 1.
+
+Wyobraźmy sobie teraz sytuację, w której tworzymy dużo kopii
+referencji od już istniejących kopii (tworzymy drzewo kopii kopii).
+Każda kopia składa się z licznika `[ilość kopii-dzieci utworzonych od
+tej referencji, generacja tej referencji]`. Jeśli usuniemy teraz
+referencję, powiedzmy, siódmej generacji o liczniku kopii 20, to
+odebrana przez serwer wiadomość sprawi, że wartość G[7] zmniejszy się
+o 1 osiągając -1, a wartość G[8] zwiększy się o 20.
+
+----
+
+29. Opisz bardzo prosty sposób rozstrzygania, że krok stabilizacji w
+odśmiecaczu ze śledzeniem został osiągnięty.
+
+Stabilizację w grupie osiągamy, gdy nie ma więcej wiadomości do
+wysłania, a każdy system rozpropagował wiadomości z twardym
+oznaczeniem (ang. hard mark). Przyjmując model trójkolorowego
+oznaczania
+(https://en.wikipedia.org/wiki/Tracing_garbage_collection#Tri-color_marking)
+można powiedzieć, że stabilizację osiągamy kiedy szary zbiór jest
+pusty.
+
+Po więcej szczegółów odsyłam do
+https://ssw.jku.at/Teaching/Lectures/Sem/2005/Reports/Brunthaler.pdf.
