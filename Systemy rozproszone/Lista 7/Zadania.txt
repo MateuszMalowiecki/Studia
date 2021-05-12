@@ -1,0 +1,179 @@
+1. Dostęp do obiektu dzielonego Javy można uszeregować, deklarując używane w nim metody
+jako synchronizowane. Czy to wystarcza do zagwarantowania uszeregowania, gdy taki obiekt
+zostanie zwielokrotniony?
+
+Odpowiedź:
+
+Nie.
+Co prawda operacje na każdej z replik osobno będą uszeregowane, 
+ale operacje na różnych replikach mogą doprowadzić do niespójności
+replik, gdyż mogą one(operacje) być wykonywane równolegle.
+
+3. Wyjaśnij, jak odbywa się zwielokrotnianie w systemie DNS, 
+i dzięki czemu działa ono tak dobrze.
+
+Odpowiedź:
+
+Zwielokrotnianie w systemie DNS odbywa się poprzez użycie pamięci 
+podręcznej do przechowywania w niej ostatnio wyszukiwanych rezultatów.
+Działa to dobrze, gdyż rezultaty te mogą być przechowywane w Cache'u
+przez długi czas.
+
+4. Omawiając modele spójności, często odwoływaliśmy się do umowy 
+między oprogramowaniem a pamięcią danych. Czemu służy taka umowa?
+
+Odpowiedź:
+
+Jeśli program oczekuje sekwencyjnie spójnej pamięci danych,
+pamięć musi zapewnić sekwencyjną spójność.
+Jednakże niektóre systemy ze względów wydajnościowych mogą 
+dostarczać słabszy model. 
+Dzięki umowie oprogramowanie będzie mogło się zgodzić na zasady 
+nałożone przez ten model, a programy dalej będą mogły korzystać
+z sekwencyjnie spójnej pamięci danych.
+
+5. Co należałoby zrobić z replikami (dwoma kopiami) na rysunku 7.2 (s. 361 w MvS&AST,
+plansza 19 w materiałach do wykładu) w celu sfinalizowania wartości w konicie (conit – ang.
+consistency unit, jednostka spójności), aby zarówno w kopii A, jak i B uwidocznił się ten sam
+wynik?
+
+Odpowiedź:
+
+Należałoby dokonać takich operacji w kopiach A i B, 
+żeby wartości zmiennych x i y w konicie były takie same,
+ale też żeby zegary wektorowe, rzędy odchylenia 
+oraz odchylenia liczbowe miały taką samą wartość.
+
+6. Czy na rys. 7.7 (s. 366 w MvS&AST, plansza 28 w materiałach do wykładu) wartość 001110
+jest dozwolona dla pamięci spójnej sekwencyjnie? Wyjaśnij swoją odpowiedź.
+
+Odpowiedź:
+
+Wartość 001110 nie jest dozwolona dla pamięci spójnej sekwencyjnie.
+Wynika to z tego, że ostatnia operacja print wykonuje się po 
+wszystkich zapisach, więc powinna ona zawsze wydrukować "11", 
+a w tym przypadku drukuje ona "10".
+
+7. Często utrzymujemy, że modele spójności słabej dodatkowo obciążają osoby programujące.
+Do jakiego stopnia teza ta jest rzeczywiście prawdziwa?
+
+Odpowiedź:
+To zależy. Wielu programistów zwykle chroni swoje dane 
+z wykorzystaniem mechanizmów synchronizacji.
+Tacy programiści uważają, że operacje na zmiennych synchronizacji
+przynależą do spójności sekwencyjnej.
+
+8. Czy całkowicie uporządkowane rozsyłanie za pomocą procesu porządkowego i na rzecz
+spójności w aktywnym zwielokrotnieniu narusza czynnik powiązań końcowych (zob. p. 5.2.2
+w wydaniu polskim) w projektowaniu systemu?
+
+Odpowiedź:
+
+Tak, ponieważ czynnik powiązań końcowych mówi nam, że
+problemy powinny rozwiązywane na tym samym poziomie, 
+na którym się pojawią.
+Użycie procesu porządkowego powoduje zaś, wykonanie rozsyłania,
+ale na niższym poziomie abstrakcji. 
+W takim przypadku lepiej byłoby użyć protokołu podstawowego, 
+w którym aktualizacje są propagowane przez operacje wysyłania.
+
+9. Jaki rodzaj spójności zaproponujesz do realizacji 
+giełdy elektronicznej? Uzasadnij swoją odpowiedź.
+
+Odpowiedź:
+
+Myślę, że najlepszym rodzajem spójności będzie w tym przypadku
+spójność ciągła. 
+Można by wtedy zdefiniować konit jako pojedynczą akcję na giełdzie.
+Myślę że takie podejście jest dobre gdyż pozwala zachować spójność
+między akcjami na giełdzie.
+
+13. Czy przy korzystaniu z dzierżawy jest konieczne, 
+aby zegary klienta i serwera były ściśle zsynchronizowane?
+
+Odpowiedź:
+
+Nie jest to konieczne, gdyż klient może wziąć dzierżawę 
+na długo przed wygaśnięciem obecnego zegara serwera.
+
+13. Rozważmy nieblokowany protokół podstawa-zapas, użyty do zapewnienia spójności
+sekwencyjnej w rozproszonej pamięci danych. Czy taka pamięć danych zawsze umożliwia
+spójność czytania swoich zapisów?
+
+Odpowiedź:
+Nie, ze względu na brak blokowania.
+Wyobraźmy sobie bowiem sytuację w której jakiś proces po otrzymaniu
+informacji, że jego zapis do pewnej kopii jest wykonywany, 
+próbuje dokonać odczytu z innej kopii. Nie mamy żadnej gwarancji,
+że zapis do tej kopii będzie dokonany przed odczytem.
+Całkowicie inaczej jest w przypadku protokołów blokujących w których
+odczytu możemy dokonać jedynie po całkowitym rozpropagowaniu
+zapisu do wszystkich kopii.
+
+14. Ogólnie biorąc, do działania aktywnego zwielokrotnienia jest 
+niezbędne, aby wszystkie operacje były wykonywane na każdej kopii 
+w tej samej kolejności. Czy to uporządkowanie jest zawsze konieczne?
+
+Odpowiedź:
+
+Nie jest to konieczne, ponieważ na przykład 
+jeżeli dokonujemy tylko operacji odczytu (nie dokonujemy zapisu),
+to uporządkowanie na różnych replikach może być różne,
+
+16. Plik jest zwielokrotniony na 10 serwerach. Wylicz kombinacje kworum czytania i kworum
+pisania, dozwolone w algorytmie głosowania.
+
+Odpowiedź:
+
+Dozwolone są wszystkie kombinacje w których N_w > 5 oraz N_w + N_r > 10.
+
+17. Rozważmy monitor omówiony w rozdz. 1 (wydanie polskie). 
+Jeśli w zwielokrotnionym monitorze wątki mogą się blokować, 
+to co powinniśmy zapewnić przy sygnalizowaniu zmiennej warunkowej?
+
+Odpowiedź:
+
+Powinniśmy zapewnić żeby na każdym monitorze sygnał był wysłany
+do tego samego wątku, żeby zapewnić spójność wykonania 
+przepływu kontroli na każdym z monitorów.
+
+18. W liniowości zakładamy istnienie globalnego zegara. 
+Przy okazji omawiania spójności ścisłej wykazaliśmy jednak, że 
+takie założenie jest nierealne w większości systemów rozproszonych. 
+Czy da się zrealizować liniowość dla pamięci danych rozproszonych fizycznie?
+
+Odpowiedź:
+
+Tak, ponieważ liniowość zakłada, że w danym przedziale czasowym 
+może zajść kilka zdarzeń. Wystarczy więc uszeregować te zdarzenia
+zgodnie ze spójnością sekwencyjną.
+
+19. Wieloprocesor ma jedną szynę. 
+Czy możemy wobec tego zrealizować w nim pamięć ściśle spójną?
+
+Odpowiedź:
+
+Tak.
+Ponieważ szyna jest jedynym sposobem dostępu do pamięci dla procesów,
+więc można poszeregować zapytania o dostęp do pamięci 
+wg. ich bezwzględnego czasu.
+Otrzymamy w ten sposób pamięć ściśle spójną.
+
+22. Czy system Orca oferuje spójność sekwencyjną, czy spójność wejścia?
+Uzasadnij swoją odpowiedź.
+
+Odpowiedź:
+
+System Orca oferuje spójność wejścia, w przypadku operacji 
+współbieżnych na tym samym obiekcie, gwarantując ich poprawne uporządkowanie.
+Spójność sekwencyjna jest natomiast oferowana w przypadku 
+całkowicie uporządkowanego rozsyłania. 
+
+
+23. Podaj przykład, w którym spójność nastawiona na klienta może 
+łatwo doprowadzić do konfliktów pisanie-pisanie.
+
+Odpowiedź:
+
+Zdjęcie założenia, że dostęp do zmiennej procesu dokonującego 
+zapisu jest wykluczający.

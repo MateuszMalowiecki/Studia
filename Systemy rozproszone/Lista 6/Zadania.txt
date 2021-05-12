@@ -1,3 +1,14 @@
+1. Wymień co najmniej trzy źródła opóźnień, które mogą się pojawić na drodze 
+między nadającą sygnały czasu radiostacją WWV a procesorami w systemie rozproszonym, regulującymi
+swoje wewnętrzne zegary.
+
+Odpowiedź:
+
+a) Opóźnienie sygnału w atmosferze
+b) Opóźnienie kolizji, podczas gdy maszyny z odbiornikami WWV
+walczą o dostęp do Ethernetu
+c) Opóźnienie związane z propagacją pakietów.
+
 2. Rozważ zachowanie dwu maszyn w systemie rozproszonym. Obie mają zegary, o których
 założono, że tykają 1 000 razy w ciągu 1 ms. Jeden z nich rzeczywiście tak chodzi, natomiast
 drugi tyka tylko 990 razy na 1 ms. Ile wyniesie maksymalne odchylenie czasu tych zegarów,
@@ -10,6 +21,22 @@ to opóźnienie wyniesie 10 ms na sekundę (gdyż 10 000 tyknięć
 pierwszy zegar wykonuje w ciągu 10 ms). W ciągu minuty to opóźnienie
 wyniesie więc 600 ms.
 
+5. Na rysunku 6.8 (podręcznik MvS&AST lub plansza 22 w materiałach pomocniczych do
+wykładu) dodaj nowy komunikat, który będzie współbieżny z komunikatem m1 (A na planszy
+22), tj. nie będzie ani poprzedzał m1, ani po nim występował.
+
+Odpowiedź:
+
+Na początku zauważmy że komunikat musi przejść między procesami 
+P2 i P3 (gdyż wiadomość m1 wychodzi z procesu P1, więc jakbyśmy w to
+zaangażowali P1, to komunikat nie byłby współbieżny z m1).
+Następnie zauważmy, że w procesie P2, komunikat ten musi 
+wyjść lub przyjść przed 16 (w przeciwnym przypadku
+ komunikat nie byłby współbieżny z m1).
+Mamy takie możliwość:
+(P1, 0) -> (P2, 10)
+(P1, 8) -> (P2, 20)
+(P2, 0) -> (P1, 8)
 6. Czy potwierdzanie każdego komunikatu jest niezbędne do osiągnięcia za pomocą znaczników
 czasu Lamporta całkowicie uporządkowanego rozsyłania?
 
@@ -31,6 +58,17 @@ z czego każdy kawałek zawiera informacje o pozycji w oryginalnym obrazku
 (i być może wysokości i szerokości).
 Wtedy uporządkowanie nie jest konieczne, gdyż odbiorca może po prostu
 wklejać przychodzące kawałki na właściwe pozycje. 
+
+8. W wielu algorytmach rozproszonych jest potrzebny proces koordynujący. Do jakiego stopnia
+takie algorytmy możemy uważać za rozproszone? Omów to zagadnienie.
+
+Odpowiedź:
+
+W scentralizowanych algorytmach mamy zwykle jednego koordynatora,
+a rozproszenie wynika z faktu, że inne procesy działają na innych maszynach.
+W rozproszonych algorytmach koordynator jest zwykle wybierany z procesów
+biorących udział w danym algorytmie. Sam fakt, że istnieje proces
+koordynujący nie czyni mniej rozproszonym.
 
 9. W scentralizowanym podejściu do wzajemnego wykluczania (rys. 5.13 w podręczniku polskim) 
 koordynator, otrzymując komunikat od procesu wyzbywającego się wyłącznego dostępu
@@ -129,6 +167,15 @@ Gdy proces ma blokadę do czytania, a ubiega się o blokadę do pisania,
 to musi poczekać aż inne procesy posiadające blokadę do czytania 
 zwolnią ją. Zmiana blokady w drugą stronę (z pisania na czytanie)
 jest zawsze dozwolona.
+
+21. Załóżmy, że przy porządkowaniu z użyciem znaczników czasu operację pisz (T1, x ) 
+można przekazać zarządcy danych, ponieważ jedyna potencjalnie konfliktowa operacja pisz(T2, x )
+miała mniejszy znacznik czasu. Czym można uzasadnić zgodę na odroczenie przez planistę
+przekazania operacji pisz(T1, x ) do czasu zakożczenia transakcji T2?
+
+Odpowiedź:
+
+Uniknięcie kaskadowego przerwawnia w przypadku przerwania T2.
 
 23. Czy użycie znaczników czasu do sterowania współbieżnością zapewnia szeregowalność?
 Omów tę kwestię.
