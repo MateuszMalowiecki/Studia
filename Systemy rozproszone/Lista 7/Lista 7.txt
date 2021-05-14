@@ -2,40 +2,43 @@ Mateusz Małowiecki
 
 Opracowanie wybranych zadań z listy 7.
 
-IIUWr, SR21, 21-05-12
+IIUWr, SR21, 21-05-14
 
-1. Dostęp do obiektu dzielonego Javy można uszeregować, deklarując używane w nim metody
-jako synchronizowane. Czy to wystarcza do zagwarantowania uszeregowania, gdy taki obiekt
+1. Dostęp do obiektu dzielonego Javy można uszeregować, 
+deklarując używane w nim metody jako synchronizowane. 
+Czy to wystarcza do zagwarantowania uszeregowania, gdy taki obiekt
 zostanie zwielokrotniony?
 
 Odpowiedź:
 
 Nie.
-Co prawda operacje na każdej z replik osobno będą uszeregowane, 
-ale operacje na różnych replikach mogą doprowadzić do niespójności
-replik, gdyż mogą one (operacje) być wykonywane równolegle.
+Co prawda operacje na każdej z kopii osobno będą uszeregowane,
+ale operacje na różnych kopiach mogą być wykonywane równolegle,
+co może doprowadzić do niespójności kopii w sytuacji, gdy operacje
+te nie będą zsynchronizowane na każdej kopii.
 
-5. Co należałoby zrobić z replikami (dwoma kopiami) na rysunku 7.2 (s. 361 w MvS&AST,
-plansza 19 w materiałach do wykładu) w celu sfinalizowania wartości w konicie (conit – ang.
-consistency unit, jednostka spójności), aby zarówno w kopii A, jak i B uwidocznił się ten sam
-wynik?
+5. Co należałoby zrobić z replikami (dwoma kopiami) na rysunku 7.2
+(s. 361 w MvS&AST, plansza 19 w materiałach do wykładu) 
+w celu sfinalizowania wartości w konicie 
+(conit – ang. consistency unit, jednostka spójności), 
+aby zarówno w kopii A, jak i B uwidocznił się ten sam wynik?
 
 Odpowiedź:
 
-Należałoby dokonać takich operacji w kopiach A i B, 
-żeby wartości zmiennych x i y w konicie były takie same,
-ale też żeby zegary wektorowe, rzędy odchylenia 
-oraz odchylenia liczbowe tych kopii miały taką samą wartość.
+Można na przykład w kopii A wykonać operację „y := y + 2”,
+a w kopii B operację „x := x + 4”.
+Wtedy w obu kopiach wartości konitu będą wynosić x = 6, y = 5.
 
-6. Czy na rys. 7.7 (s. 366 w MvS&AST, plansza 28 w materiałach do wykładu) wartość 001110
-jest dozwolona dla pamięci spójnej sekwencyjnie? Wyjaśnij swoją odpowiedź.
+6. Czy na rys. 7.7 (s. 366 w MvS&AST, 
+plansza 28 w materiałach do wykładu) wartość 001110 jest dozwolona 
+dla pamięci spójnej sekwencyjnie? Wyjaśnij swoją odpowiedź.
 
 Odpowiedź:
 
 Wartość 001110 nie jest dozwolona dla pamięci spójnej sekwencyjnie.
-Wynika to z tego, że ostatnia operacja print powinna wykonać się po 
-wszystkich zapisach, więc powinna ona zawsze wydrukować "11", 
-a w naszym przypadku drukuje ona "10".
+Wynika to z tego, że ostatnia operacja print powinna wykonać się
+po wszystkich zapisach, więc powinna ona zawsze wydrukować „11”, 
+a w naszym przypadku drukuje ona „10”.
 
 9. Jaki rodzaj spójności zaproponujesz do realizacji 
 giełdy elektronicznej? Uzasadnij swoją odpowiedź.
@@ -44,20 +47,23 @@ Odpowiedź:
 
 Myślę, że najlepszym rodzajem spójności będzie w tym przypadku
 spójność ciągła. 
-Można by wtedy zdefiniować konit jako pojedynczą akcję na giełdzie.
-Myślę że takie podejście jest dobre gdyż pozwala zachować spójność
-między akcjami na giełdzie.
+Można by wtedy zdefiniować konit jako pojedynczą akcję (ang. stock)
+na giełdzie. Myślę, że takie podejście jest dobre, 
+gdyż pozwala zachować spójność między cenami giełdowymi.
 
 18. W liniowości zakładamy istnienie globalnego zegara. 
 Przy okazji omawiania spójności ścisłej wykazaliśmy jednak, że 
-takie założenie jest nierealne w większości systemów rozproszonych. 
-Czy da się zrealizować liniowość dla pamięci danych rozproszonych fizycznie?
+takie założenie jest nierealne w większości systemów rozproszonych.
+Czy da się zrealizować liniowość dla pamięci danych 
+rozproszonych fizycznie?
 
 Odpowiedź:
 
-Tak, ponieważ liniowość zakłada, że w danym przedziale czasowym 
-może zajść kilka zdarzeń. Wystarczy więc uszeregować te zdarzenia
-zgodnie ze spójnością sekwencyjną.
+Tak, ponieważ liniowość zakłada, że w danym przedziale czasowym
+może zajść kilka zdarzeń. Wystarczy więc uszeregować zdarzenia
+w każdym przedziale czasowym zgodnie ze spójnością sekwencyjną,
+a następnie przyjąć, że zdarzenia w tym samym przedziale czasowym
+mają ten sam znacznik czasu, równy początkowi tego przedziału.
 
 19. Wieloprocesor ma jedną szynę. 
 Czy możemy wobec tego zrealizować w nim pamięć ściśle spójną?
@@ -67,5 +73,5 @@ Odpowiedź:
 Tak.
 Ponieważ szyna jest jedynym sposobem dostępu do pamięci dla procesów,
 więc można poszeregować zapytania o dostęp do pamięci 
-wg. ich bezwzględnego czasu.
+według ich bezwzględnego czasu.
 Otrzymamy w ten sposób pamięć ściśle spójną.

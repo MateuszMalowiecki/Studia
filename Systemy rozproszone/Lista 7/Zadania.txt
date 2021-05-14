@@ -88,7 +88,7 @@ Można by wtedy zdefiniować konit jako pojedynczą akcję na giełdzie.
 Myślę że takie podejście jest dobre gdyż pozwala zachować spójność
 między akcjami na giełdzie.
 
-13. Czy przy korzystaniu z dzierżawy jest konieczne, 
+13a. Czy przy korzystaniu z dzierżawy jest konieczne, 
 aby zegary klienta i serwera były ściśle zsynchronizowane?
 
 Odpowiedź:
@@ -96,7 +96,7 @@ Odpowiedź:
 Nie jest to konieczne, gdyż klient może wziąć dzierżawę 
 na długo przed wygaśnięciem obecnego zegara serwera.
 
-13. Rozważmy nieblokowany protokół podstawa-zapas, użyty do zapewnienia spójności
+13b. Rozważmy nieblokowany protokół podstawa-zapas, użyty do zapewnienia spójności
 sekwencyjnej w rozproszonej pamięci danych. Czy taka pamięć danych zawsze umożliwia
 spójność czytania swoich zapisów?
 
@@ -139,14 +139,17 @@ przepływu kontroli na każdym z monitorów.
 
 18. W liniowości zakładamy istnienie globalnego zegara. 
 Przy okazji omawiania spójności ścisłej wykazaliśmy jednak, że 
-takie założenie jest nierealne w większości systemów rozproszonych. 
-Czy da się zrealizować liniowość dla pamięci danych rozproszonych fizycznie?
+takie założenie jest nierealne w większości systemów rozproszonych.
+Czy da się zrealizować liniowość dla pamięci danych 
+rozproszonych fizycznie?
 
 Odpowiedź:
 
-Tak, ponieważ liniowość zakłada, że w danym przedziale czasowym 
-może zajść kilka zdarzeń. Wystarczy więc uszeregować te zdarzenia
-zgodnie ze spójnością sekwencyjną.
+Tak, ponieważ liniowość zakłada, że w danym przedziale czasowym
+może zajść kilka zdarzeń. Wystarczy więc uszeregować zdarzenia
+w każdym przedziale czasowym zgodnie ze spójnością sekwencyjną,
+a następnie przyjąć, że zdarzenia w tym samym przedziale czasowym
+mają ten sam znacznik czasu.
 
 19. Wieloprocesor ma jedną szynę. 
 Czy możemy wobec tego zrealizować w nim pamięć ściśle spójną?
