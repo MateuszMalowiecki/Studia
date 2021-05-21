@@ -1,0 +1,201 @@
+2. Od systemów spolegliwych często wymaga się 
+zapewniania dużego stopnia bezpieczeństwa. Dlaczego?
+
+Odpowiedź:
+
+Żeby system był spolegliwy, to musi on gwarantować wzajemne zaufanie
+między klientem, a serwerem.
+
+3. Co sprawia, że realizacja modelu zatrzymania awaryjnego 
+w wypadku załamań jest taka trudna?
+
+Odpowiedź:
+
+Fakt, że wykrycie czy serwer przestał działać jest bardzo trudne,
+ponieważ jedyne co on robi to przestaje produkować wynik.
+
+4. Rozważ przeglądarkę sieciową, która zwraca przeterminowaną stronę z pamięci podręcznej
+zamiast strony najnowszej, uaktualnionej w serwerze. Czy to jest awaria, a jeżeli tak, to jakiego rodzaju?
+
+Odpowiedź:
+
+Zależy jaki rodzaj spójności został zaoferowany klientowi.
+Jeżeli przeglądarka obiecuje dostarczyć strony starsze o
+co najwyżej T jednostek, to może to być
+awaria wydajności.
+Aczkolwiek wyzbywamy się tego problemu w przypadku słabszych
+form spójności nastawionej na klienta, które omówiliśmy
+w poprzednim rozdziale.
+
+5. Czy za pomocą modelu potrójnej redundancji modularnej można
+zaradzić wadom bizantyjskim? Podaj stosowne argumenty.
+
+Odpowiedź:
+
+Tak, gdyż jeśli któryś z elementów (np. A2) zawiedzie
+to dwa pozostałe (w tym przypadku A1 i A3) wyprodukują sensowny wynik.
+Dzięki temu możemy zamaskować błędy wykonania niektórych urządzeń.
+
+6. Ile uszkodzonych elementów (urządzeń i wybieraków) może wykryć układ z rysunku 8.3 w
+MVS&AST (lub z rys. 7.2 w wydaniu polskim, lub z planszy 21 w materiałach pomocniczych)?
+Podaj przykład najgorszego przypadku dającego się jeszcze zamaskować.
+
+Odpowiedź:
+
+Najgorszy przykład dający się zamaskować to sześć uszkodzonych elementów,
+po 1 w każdej kolumnie (przykład: A1, V1, B1, V4, C1, V7).
+
+7. Czy metodę TMR można uogólnić do pięciu elementów przypadających 
+na grupę zamiast trzech? 
+Jeśli tak, to jakie wykazywałaby ona właściwości?
+
+Odpowiedź:
+
+Tak, metoda ta zawsze pozwala na użycie nieparzystej liczby elementów
+na grupę. W przypadku pięciu elementów da się zamaskować do dwóch 
+elementów na grupę.
+
+8. Jaka semantyka: co najmniej jednokrotna czy co najwyżej 
+jednokrotna jest, Twoim zdaniem, najlepsza dla każdej 
+z następujących aplikacji? Uzasadnij swój wybór.
+(a) Czytanie i zapisywanie plików serwera.
+(b) Kompilowanie programu.
+(c) Zdalna bankowość.
+
+Odpowiedź:
+
+Dla przypadków (a) i (b) lepsza będzie semantyka co najmniej jednokrotna,
+gdyż nie ma żadnych problemów ponawianiem próby.
+W przypadku zdalnej bankowości bardziej bezpieczna wydaje się 
+semantyka co najwyżej jednokrotna, tak żeby nie wprowadzać 
+niespójności związanych z błędnym wykonaniem pewnej transakcji.
+
+9. W asynchronicznych wywołaniach RPC klient jest blokowany do czasu przyjęcia jego
+zamówienia przez serwer. Do jakiego stopnia awarie naruszają semantykę asynchronicznych
+wywołań RPC?
+
+Odpowiedź:
+
+Problem jest tu fakt, że serwer nie będzie przetwarzał zapytania 
+w czasie, gdy klient jest zablokowany co może spowodować problemy gdy
+w międzyczaise nastąpi uszkodzenie klienta.
+
+10. Podaj przykład, w którym komunikacja grupowa nie wymaga uporządkowania komunikatów.
+
+Odpowiedź:
+
+Rozsyłanie obrazów w małych fragmentach, z których każdy
+zawiera współrzędną swojej części danych.
+Rozsyłanie ponumerowanych stron książki.
+
+11. Czy w rozsyłaniu niezawodnym zawsze jest konieczne, 
+żeby warstwa komunikacyjna utrzymywała kopię komunikatu 
+na wypadek ponowienia transmisji?
+
+Odpowiedź:
+
+Nie, konieczne jest żeby tylko warstwa aplikacji przetrzymywała 
+kopię danych. Nie ma potrzeby, żeby warstwa komunikacji przechowywała
+swoją własną kopię.
+
+12. Do jakiego stopnia jest ważna skalowalność rozsyłania niepodzielnego?
+
+Odpowiedź:
+
+Zależy jak dużo procesów jest w grupie.
+Jeśli jest ich kilka to skalowalność nie jest problemem.
+Gdy tworzone są grupy różnych procesów, skalowalność może
+stać się problemem.
+
+13. Sugerujemy, że rozsyłanie niepodzielne może uratować sytuację, 
+gdy uaktualnienia trzeba wykonywać w zbiorze procesów osiągających porozumienie. 
+Do jakiego stopnia możemy zagwarantować, 
+że każde uaktualnienie jest rzeczywiście wykonywane?
+
+Odpowiedź:
+
+Nie możemy dać takiej gwarancji. 
+Aczkolwiek stopień tolerancji błędów można ulepszyć
+poprzez użycie atomowego schematu multiemisji.
+
+14. Synchroniczność wirtualna przypomina spójność słabą 
+w rozproszonych pamięciach danych; zmiany widoku grupy działają 
+w niej jak punkty synchronizacji. Co w tym kontekście
+byłoby analogonem spójności silnej?
+
+Odpowiedź:
+Synchronizacja wynikająca z pojedynczego rozsyłania.
+
+15. Jakie są dopuszczalne uporządkowania dostarczania na rysunku 
+8.27 w MVS&AST (lub na rys. 7.14 w wydaniu polskim, 
+lub na planszy 58 w materiałach pomocniczych) dla kombinacji
+rozsyłania FIFO i całkowicie uporządkowanego?
+
+Odpowiedź:
+
+Takich uporządkowań jest 6:
+m1, m2, m3, m4
+m1, m3, m2, m4
+m1, m3, m4, m2
+m3, m1, m2, m4
+m3, m1, m4, m2
+m3, m4, m1, m2
+
+17. Dlaczego blokowania w protokole zatwierdzania dwufazowego nie da się wyeliminować
+zupełnie i na zawsze nawet wówczas, gdy uczestnicy dokonują elekcji nowego koordynatora?
+
+Odpowiedź:
+
+Ponieważ nowy koordynator również może ulec uszkodzeniu, 
+więc uczestnicy nie będą mogli otrzymać wiadomości czy 
+nowy koordynatora głosował za zatwierdzeniem,
+czy za zaniechaniem.
+
+18. Z wyjaśnień dotyczących protokołu zatwierdzania trzyfazowego można wysnuć wniosek,
+że zatwierdzanie transakcji opiera się na głosowaniu większościowym. Czy to prawda? 
+Uzasadnij odpowiedź.
+
+Odpowiedź:
+
+Nie. Jest to po prostu protokół blokowania dwufazowego z 
+dodatkowym stanem PRECOMMIT.
+Nawet jeśli uczestnik wejdzie do stanu PRECOMMIT,
+a wynik głosowania to ABORT, to po pewnym czasie uczestnik ten
+zsynchronizuje się z resztą uczestników.
+
+19. Czy w sztukowanym modelu wykonywania deterministycznego wystarczy rejestrować
+tylko komunikaty, czy też należy rejestrować również inne zdarzenia? Dlaczego?
+
+Odpowiedź:
+
+Myślę że powinno się rejestrować również inne zdarzenia 
+niedeterministyczne (w tym lokalne wejście/wyjście) i wywołania
+systemowe.
+
+20. Wyjaśnij, w jaki sposób można wykorzystać rejestrowanie z 
+wyprzedzeniem do rekonstrukcji po awarii (uzdrowienia systemu) w transakcjach rozproszonych.
+
+Odpowiedź:
+
+W przypadku wystąpienia awarii, można wykorzystać 
+zapisane w rejestrze dane o ostatnio wykonywanej operacji
+do zrekonstruowania ostatniego stanu systemu.
+
+21. Czy serwer bezstanowy musi korzystać z punktów kontrolnych? Dlaczego tak lub dlaczego
+nie?
+
+Odpowiedź:
+
+To zależy, jakie dany serwer ma zadania do wykonania.
+Przykładowo serwer bazy danych dokonujący transakcji musi 
+przetrzymywać dziennik, żeby w przypadku zaniechania transakcji,
+wiedzieć do jakiego stanu bazy danych powrócić.
+W systemach rozproszonych nie ma jednak takiej potrzeby.
+
+22. Rejestrowanie komunikatów u odbiorcy jest na ogół uważane za lepsze niż rejestrowanie
+komunikatów u nadawcy. Dlaczego?
+
+Odpowiedź:
+
+Unikamy w ten sposób problemu, że po zarejestrowaniu u nadawcy,
+komunikat może zginąć w drodze do odbiorcy.
