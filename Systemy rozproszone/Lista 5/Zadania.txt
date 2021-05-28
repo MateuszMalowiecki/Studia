@@ -64,6 +64,15 @@ Odpowiedź:
 Korzeń jest tworzony przez siedziby, ale jest też podzielony tak,
 że każda jednostka ma swój własny serwer główny.
 
+8. Załóżmy, że pewna jednostka ruchoma prawie nigdy nie przenosi się poza domenę D, a jeśli
+już, to można oczekiwać szybkiego jej powrotu. Jak wykorzystać tę wiedzę do przyspieszenia
+operacji poszukiwania w hierarchicznych usługach lokalizacji?
+
+Odpowiedź:
+
+Zakodować domenę D w identyfikatorze jednostki używanej do
+wykonywania operacji poszukiwania.
+
 10. Rozważmy jednostkę, która przenosi się z miejsca A do B, przechodząc po drodze przez
 kilka miejsc pośrednich, w których pozostaje dość krótko. Po nadejściu do B sadowi się tam na
 pewien czas. Zmiana adresu w hierarchicznych usługach lokalizacji może zawsze trwać dość
@@ -86,6 +95,20 @@ Dowiązania twarde (w przeciwieństwie do miękkich) nie będą łączyć
 ścieżek w różnych systemach plików.
 Dodatkowo dowiązania twarde zawsze się odnoszą do istniejącego pliku,
 a miękkie mogą zawierać ścieżkę która się do niczego nie odnosi.
+
+14. Rozważmy system Chord (por. plansza nr 49 w materiałach pomocniczych w SKOS) 
+i załóżmy, że węzeł 7 właśnie dołączył do sieci. Jak wyglądałaby jego tablica wskazówek (finger
+table)? Czy w innych tablicach wskazówek wystąpiłyby jakieś zmiany?
+
+Odpowiedź:
+
+Tablica dla 7: 9, 9, 11, 18, 28
+Pozostałe tablice:
+Tablica dla 4: 7, 7, 9, 14, 28
+Tablica dla 21: 28, 28, 28, 1, 7
+Tablica dla 1: 4, 4, 7, 9, 18
+Reszta bez zmian.
+
 
 15. Rozważmy oparty na DHT (rozproszonej tablicy haszowania) system Chord, 
 w którym k bitów m-bitowej przestrzeni identyfikatorów zarezerwowano do przydzielania superpartnerom.
@@ -112,6 +135,17 @@ w systemie opartym na DHT?
 Odpowiedź:
 Jeśli wiadomość zginęła gdzieś po drodze, to klient nie będzie wiedział 
 dlaczego nie została ona mu zwrócona (który węzeł "zawiódł").
+
+18. Serwery nazw wysokiego poziomu w systemie DNS, 
+tj. serwery nazw realizujące węzły w przestrzeni nazw DNS w pobliżu korzenia, 
+z reguły nie umożliwiają rekurencyjnego rozbioru nazw. 
+Gdyby go umożliwiały, czy moglibyśmy oczekiwać znacznie większej wydajności?
+
+Odpowiedź:
+Myślę, że wzrost wydajności nie byłby zbyt duży,
+ponieważ z jednej strony klient odpytywałby tylko jeden serwer, a
+z drugiej strony sumaryczna liczba zapytań by się nie zmieniła 
+(por. rysunek 5.20 z MvS&AST).
 
 20. Jak odbywa się poszukiwanie punktu montowanego w większości systemów uniksowych?
  

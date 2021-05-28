@@ -1,0 +1,102 @@
+Mikołaj Motak
+Opracowanie wyznaczonych zadań z listy 3.
+IIUWr, SR21, 21-04-25
+=====================================================================
+10. Wyjaśnij, czym jest adapter obiektu.
+=====================================================================
+Adapter obiektu to strukturalny wzorzec projektowy, którego celem 
+jest umożliwienie współpracy dwóm klasom o niekompatybilnych inter-
+                                niezgodnych^^^^^^^^^^^^^^^^^
+                                                Długie słowo,
+                                                a znaczy to samo,
+                                                więc gorsze.                                                   
+                                
+fejsach (np. serwerowi i klientom). Adapter przekształca interfejs 
+jednej z klas na interfejs drugiej klasy.
+
+                                          Niezupełnie ta odpowiedź,
+                                          ponieważ my rozważamy tu
+                                          fragment oprogramowania
+                                          o takiej nazwie, a nie
+                                          abstrakcyjny „design
+                                          pattern”, niemniej reszta
+                                          się zgadza na ogólnym
+                                          poziomie, więc uznaję
+                                          odpowiedź.                                          
+
+=====================================================================
+16. Rozważ serwer Sieci, który działa na tablicy z odwzorowanymi ad-
+resami IP ostatnio odwiedzanych przez klienta stron WWW. Gdy klient 
+łączy się z takim serwerem, ten poszukuje klienta w swojej tablicy 
+i jeśli go znajdzie, to zwraca mu zarejestrowaną stronę. Czy serwer 
+taki jest pełnostanowy, czy bezstanowy?
+=====================================================================
+Jest to serwer bezstanowy. Jednym z wyznaczników stanowiących o sta-
+nowości serwera jest to jak ważne informacje na temat klientów serwer
+                      ^o,
+przechowuje i na ile są one potrzebne do poprawnego działania całego
+systemu.
+
+W naszym przypadku, jeżeli tablica z danymi zostałaby utracona z ja-
+kiegokolwiek powodu - klient i serwer wciąż mogłyby komunikować się
+                  ^^^u, [to]
+ze sobą, nie różniłoby się to wiele od sytuacji, w której klient
+      ^^^^ą. N
+komunikowałby się z serwerem po raz pierwszy (klient, który nie od-
+wiedział żadnych stron WWW).
+     ^^a                               OK, rozwiązanie wystarczająco
+                                       przetworzone w stosunku do
+                                       oryginalnego, aby je uznać.                                         
+
+=====================================================================
+18. Kiedy myślisz o przenośności kodu, jakie dostrzegasz problemy? 
+Czy korzystasz z wędrówki kodu? Jeśli tak, to za pomocą jakich środ-
+ków? A co powiesz o hiperwizorach w kontekście przenośności kodu?
+=====================================================================
+Gdy myślę o przenośności kodu - pierwszym i podstawowym problem jaki
+przychodzi mi do głowy jest brak kompatybilności między systemami,
+                                 ^^^^^^^^^^^^^^^zgodności
+między którymi przenosimy nasze oprogramowanie. Na przykład, gdy te
+                        ^^^^^^^^^y o 
+same polecenia oznaczają coś innego w obu systemach lub gdy nowy sys-
+tem nie posiada pewnych funkcji lub bibliotek. Kolejnym problemem 
+może być użycie określonych ścieżek plików dołączanych, które mogą
+nie zgadzać się z nowym systemem (np. różne nazwy partycji dysków).
+Do tego dochodzą podstawowe implementacje pewnych rzeczy - takich jak
+kolejność bajtów, definicja rozmiaru INT itd.
+
+Czy korzystam z wędrówki kodu? Tak - zaczynając od postawowych migra-
+cji jak aktualizacja oprogramowania, zmiana języka na jego nowszą 
+wersję. Ale również kopiowanie danych ze starego sprzętu na nowy. 
+Zdarzało mi się również przepisywać projekty (gry i programy) z języ-
+ka na inny (np. podczas przejścia na bardziej przyjemny programiście
+język programowania lub starając się przepisać rozwiązanie mojego 
+problemu w jednym języku na wymagany w zadaniu).
+
+Aby dokonać wędrówek kodu zazwyczaj korzystam ze specjalnych instala-
+torów, programów, ale czasami robię to również ręcznie. Czasami roz-
+wiązaniem jest również niewykonywanie wędrówki - a użycie specjalnych
+adapterów i maszyn wirtualnych, które mogą zasymulować działanie ory-
+ginalnego systemu w innym systemie.
+
+Hiperwizory to programy służące w dużej mierze na uproszczenie i za-
+                                               ^^do          ^a   
+bezpieczenie procesu przenoszenia kodu. Nadzorują one przebieg całego
+procesu, mogą rozpoznać, które zasoby można wykonać bezpośrednio na
+danym systemie, a które należy emulować - są menedżerami maszyn wir-
+tualnych. Hiperwizor pośredniczy również w przekazywaniu przerwań, 
+między wirtualnym systemem a zasobami sprzętowymi.
+
+Nie wszystkie hiperwizory są jednak sobie równe. Niektóre działają
+bezpośrednio na poziomie sprzętu i mają nad nim kontrolę, monitorując
+uruchomione systemy operacyjne. Inne działają jako program uruchomio-
+ny na danym systemie operacyjnym.
+   ^^...{w | pod kontrolą danego...}       OK, podoba mi się
+                                           rozwiązanie zadania L3.18
+                                           w Pańskim wykonaniu,
+                                           aczkolwiek w rozważanym
+                                           kontekście wędrówka kodu
+                                           oznacza wyłącznie
+                                           działania wykonywane
+                                           automatycznie.
+                                           

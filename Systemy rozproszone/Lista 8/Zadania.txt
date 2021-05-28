@@ -1,3 +1,31 @@
+1. Od dobrych kilku lat uruchamiasz (czyścisz z błędów, „debugujesz”) swoje
+programy. Podaj kilka przykładów z własnej praktyki, gdy Twoje robocze hipotezy co do
+przyczyny błędu okazały się nietrafne. Dlaczego testowanie oprogramowania raczej nie
+powinno być wykonywane przez autorów kodu? Czy testowanie może wykazać brak błędów?
+Zawsze? Nigdy? Dlaczego tak lub dlaczego nie? Jak Twoim zdaniem powinien wyglądać proces
+specyfikowania i budowy oprogramowania minimalizujący prawdopodobieństwo wystąpienia
+błędów? 
+
+Odpowiedź:
+
+Przykłady gdy hipotezy okazały się nietrafne:
+- brak średnika,
+- złe zarządzanie pamięcią
+- brak odwołania do biblioteki
+
+Testowanie nie powinno być wykonywane przez autorów kodu, 
+gdyż autorzy będą się starać tak pisać testy żeby nie musieć
+naprawiać ewentualnych błędów (kolokwialnie mówiąc, 
+będą pisać testy pod siebie).
+
+Testowanie nie może wykazać brak błędów, a jedynie ich obecność,
+gdyż nie jesteśmy w stanie przetestować wszystkich przypadków brzegowych
+(jesteśmy tylko ludźmi).
+
+Proces specyfikowania i budowy oprogramowania powinien być iteracyjny 
+(np. Scrum) i po każdej fazie zbudowane oprogramowanie powinno być
+dokładnie przetestowane.
+
 2. Od systemów spolegliwych często wymaga się 
 zapewniania dużego stopnia bezpieczeństwa. Dlaczego?
 
@@ -140,6 +168,25 @@ m1, m3, m4, m2
 m3, m1, m2, m4
 m3, m1, m4, m2
 m3, m4, m1, m2
+
+16. Protokół instalowania następnego widoku Gi + 1, 
+używany w realizacji równoczesności wirtualnej, 
+zmodyfikuj tak, aby tolerował awarie procesu.
+
+Odpowiedź:
+
+Kiedy proces dostanie nowy widok wysyła kopię wiadomości
+do wszystkich procesów w tym widoku oraz 
+komunikat o usunięciu dla Gi + k. 
+Taka wiadomość jest stabilna.
+Następnie jeśli proces otrzymał wiadomość
+wysłaną z Gj, w którym nie był, to odrzuca ją.
+Jeśli proces był w Gj, a najnowszy widok to Gl, to
+mamy trzy przyapdki:
+l > j - odrzucenie wiadomości
+l = j - dostarczenie wiadomości
+l < j - wiadomość jest przechowywana w warstwie komunikacyjnej
+do momentu zainstalowania widoku Gj.
 
 17. Dlaczego blokowania w protokole zatwierdzania dwufazowego nie da się wyeliminować
 zupełnie i na zawsze nawet wówczas, gdy uczestnicy dokonują elekcji nowego koordynatora?

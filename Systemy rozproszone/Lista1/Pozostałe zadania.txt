@@ -1,0 +1,41 @@
+16. Wyjaśnij, co się rozumie pod pojęciem wirtualnej organizacji 
+(przedsiębiorstwa, instytucji)
+i poddaj wskazówki dotyczące sposobu jej (jego) utworzenia.
+
+Odpowiedź:
+
+Wirtualna organizacja to grupa użytkowników, mających dostęp do pewnej
+specyficznej grupy zasobów, które są rozproszone między różne komputery.
+Definiuje ona kto ma dostęp do czego. To również sugeruje, że zasoby powinny
+trzymać informację o obcych użytkownikach wraz z ich prawami dostępu
+
+18. Co wiesz o chmurach? Nie mamy oczywiście na myśli cirrusów, stratusów czy cumulusów.
+
+Odpowiedź:
+Chmura to model przetwarzania danych oparty na użytkowaniu usług. 
+Jest ona oferowana przez dane oprogramowanie. 
+Może być publiczna (dostępna publicznie) lub prywatna 
+(dostępna tylko w obrębie danej organizacji).
+
+22. Omówiliśmy kilka przykładów wszechobecnych („pleniących się”) 
+systemów rozproszonych. 
+Wskazaliśmy na systemy domowe, 
+doglądania zdrowia indywidualnego pacjenta i sieci sensorowe. 
+Rozszerz tę listę o więcej przykładów.
+
+Odpowiedź:
+
+- wielkoskalowe bezprzewodowe sieci kratowe w miastach
+- systemy monitoringu siedlisk
+- elektroniczne więzienia
+- systemy biurowe wdrażające aktywne identyfikatory
+ 
+23. Eksperymentalny serwer plików przez 3/4 czasu jest sprawny, a przez 1/4 czasu nieczynny
+z powodu błędów. Ile razy należałoby zwielokrotnić ten serwer, aby jego dostępność wyniosła
+co najmniej 99 procent? Co się rozumie przez dostępność.
+
+Odpowiedź:
+
+Dostępność - okres w którym system działa (conajmniej jeden podsystem działa).
+Tyle żeby była spełniona nierówność (1/4)^k < 0.01.
+Po obliczeniach wychodzi k=4.

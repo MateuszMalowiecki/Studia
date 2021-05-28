@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.1.14)  3 MAR 2021 11:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6930 64-bit) (preloaded format=pdflatex 2019.1.14)  17 MAR 2021 17:00
 entering extended mode
 **./Streszczenie.tex
 (Streszczenie.tex
@@ -243,12 +243,6 @@ LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <8> on input line 11.
 LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <6> on input line 11.
-
-Overfull \hbox (1.33403pt too wide) in paragraph at lines 15--16
-\OT4/cmr/m/n/10 rzys-ta¢ asyn-chron-iczn¡ ko-mu-nikacj¦ do unika-nia czeka-nia 
-na odpowied¹. Opisowi
- []
-
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 17.
 ("C:\Users\cp24\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
@@ -258,26 +252,51 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 
 [1
 
-{C:/Users/cp24/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-(Streszczenie.aux) ) 
+{C:/Users/cp24/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Overfull \hbox (8.08395pt too wide) in paragraph at lines 24--25
+\OT4/cmr/m/n/10 zwielokrot-ni-a-nia (zwi¦k-sze-nie wyda-jno±ci sys-temu, ukryci
+e prob-lemów zwi¡zanych
+ []
+
+
+Overfull \hbox (8.13948pt too wide) in paragraph at lines 24--25
+\OT4/cmr/m/n/10 z ko-mu-nikacj¡ w sys-temach rozpros-zonych ge-ograficznie). Na
+st¦p-nie au-tor rozwa»a
+ []
+
+
+Overfull \hbox (13.27841pt too wide) in paragraph at lines 24--25
+\OT4/cmr/m/n/10 lemów ze spójno±-ci¡, poniewa» mody-fikacja jed-nej z kopii za-
+sobu mo»e spowodowa¢,
+ []
+
+
+Overfull \hbox (4.36176pt too wide) in paragraph at lines 24--25
+\OT4/cmr/m/n/10 niezwykle trudny do im-ple-men-tacji w skalowalny sposób ze wzg
+l¦du na opó¹nienia
+ []
+
+[2] (Streszczenie.aux) ) 
 Here is how much of TeX's memory you used:
- 2207 strings out of 492946
- 32716 string characters out of 3126710
- 102955 words of memory out of 3000000
- 6068 multiletter control sequences out of 15000+200000
- 9320 words of font info for 28 fonts, out of 3000000 for 9000
+ 2209 strings out of 492946
+ 32765 string characters out of 3126710
+ 103960 words of memory out of 3000000
+ 6069 multiletter control sequences out of 15000+200000
+ 9856 words of font info for 29 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,6n,25p,895b,196s stack positions out of 5000i,500n,10000p,200000b,50000s
-{C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/enc/
-dvips/pl/plrm.enc}<C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmsy10.pfb><C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/pl/plbx12.pfb><C:/Users/cp24/AppData/Local/Programs/MiKTeX 2
-.9/fonts/type1/public/pl/plr10.pfb><C:/Users/cp24/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/cp24/AppData/Local/Programs/MiKT
-eX 2.9/fonts/type1/public/pl/plr17.pfb>
-Output written on Streszczenie.pdf (2 pages, 49313 bytes).
+ 41i,6n,25p,1025b,196s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/
+enc/dvips/pl/plit.enc}{C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/en
+c/dvips/pl/plrm.enc}<C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb><C:/Users/cp24/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/pl/plbx12.pfb><C:/Users/cp24/AppData/Local/Programs/MiKTeX
+ 2.9/fonts/type1/public/pl/plr10.pfb><C:/Users/cp24/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/pl/plr12.pfb><C:/Users/cp24/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/pl/plr17.pfb><C:/Users/cp24/AppData/Local/Programs/
+MiKTeX 2.9/fonts/type1/public/pl/plti10.pfb>
+Output written on Streszczenie.pdf (2 pages, 62805 bytes).
 PDF statistics:
- 30 PDF objects out of 1000 (max. 8388607)
+ 35 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

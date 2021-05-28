@@ -88,6 +88,24 @@ Można by wtedy zdefiniować konit jako pojedynczą akcję na giełdzie.
 Myślę że takie podejście jest dobre gdyż pozwala zachować spójność
 między akcjami na giełdzie.
 
+10. Rozważ osobistą skrzynkę pocztową użytkownika ruchomego, 
+zrealizowaną jako część rozległej, rozproszonej bazy danych. 
+Jaki rodzaj spójności nastawionej na klienta byłby tu najodpowiedniejszy?
+
+Odpowiedź:
+
+Wszystkie, 
+ponieważ właściciel powinien zawsze widzieć tę samą skrzynkę pocztową,
+bez względu na to, czy ją czyta, czy aktualizuje.
+
+11. Opisz prostą implementację spójności czytania swoich zapisów 
+do wyświetlania właśnie zaktualizowanych stron Sieci.
+
+Odpowiedź:
+
+Pozwolenie przeglądarce na sprawdzenie, czy wyświetlana jest
+najnowsza wersja strony.
+
 13a. Czy przy korzystaniu z dzierżawy jest konieczne, 
 aby zegary klienta i serwera były ściśle zsynchronizowane?
 
@@ -119,6 +137,24 @@ Odpowiedź:
 Nie jest to konieczne, ponieważ na przykład 
 jeżeli dokonujemy tylko operacji odczytu (nie dokonujemy zapisu),
 to uporządkowanie na różnych replikach może być różne,
+
+15. Jedną z metod realizacji całkowicie uporządkowanego rozsyłania za pomocą procesu
+porządkowego jest przekazanie operacji najpierw do porządkowego, 
+który przypisuje jej niepowtarzalny numer, po czym ją rozsyła. 
+Wymień dwie inne metody i porównaj wszystkie trzy.
+
+Odpowiedź:
+
+1. Rozsyłanie operacji, ale odroczenie dostarczenia do momentu, 
+gdy proces porządkowy roześle dla niej numer sekwencyjny.
+2. Najpierw otrzymujekmy numer sekwencji od procesu porządkowego,
+po czym rozsyłamy operację.
+
+Porówanie:
+Pierwsze podejściw wymaga wysłania jednej wiadomości z 
+operacją.
+Drugie wymaga wysłania dwóch wiadomości (operacji i numeru sekwencji).
+Trzecie wymaga wysłania wiadomości z numerem sekwencji.
 
 16. Plik jest zwielokrotniony na 10 serwerach. Wylicz kombinacje kworum czytania i kworum
 pisania, dozwolone w algorytmie głosowania.
@@ -162,6 +198,26 @@ więc można poszeregować zapytania o dostęp do pamięci
 wg. ich bezwzględnego czasu.
 Otrzymamy w ten sposób pamięć ściśle spójną.
 
+20. Zakładając, że chodzi o spójność ścisłą, dlaczego ciąg 
+W1(x)a 
+R2(x)NIL 
+R3(x)a 
+na rys. 7.4 w MvS&AST (plansza 22 w materiałach wykładowych) jest niedozwolony?
+
+Odpowiedź:
+
+Narusza ten ciąg spójność danych.
+
+21. W większości implementacji (pilnej) spójności 
+zwalniania w systemach rozproszonej pamięci dzielonej zmienne dzielone 
+są na synchronizowane przy zwalnianiu, lecz nie przy nabywaniu.
+Po co w takim razie w ogóle je nabywać?
+
+Odpowiedź:
+
+Żeby opóźnić proces próbujący uzyskać dostęp do zmiennych dzielonych,
+podczas gdy inny proces już to robi.
+
 22. Czy system Orca oferuje spójność sekwencyjną, czy spójność wejścia?
 Uzasadnij swoją odpowiedź.
 
@@ -180,3 +236,28 @@ Odpowiedź:
 
 Zdjęcie założenia, że dostęp do zmiennej procesu dokonującego 
 zapisu jest wykluczający.
+
+24. W tekście nakreśliliśmy schemat zapobiegania zwielokrotnionym wywołaniom, z udziałem
+nadawcy. W schemacie z udziałem odbiorcy kopia odbiorcza rozpoznaje kopie nadchodzących
+komunikatów, dotyczące tego samego wywołania. Opisz, jak można zapobiec zwielokrotnionym
+wywołaniom w schemacie z udziałem odbiorcy.
+
+Odpowiedź:
+
+Niech obiekt A wywołuje obiekt B.
+Każde wywołanie ma swój unikalny identyfikator.
+Każda kopia A wykonuje zapytanie do kopii B.
+Kiedy dana kopia A otrzyma zapytanie wywołania,
+sprawdza czy przyszło ono od repliki A.
+Jeśli nie, wywołanie jest wykonywane w replice lokalnej, 
+a wiadomość zwrotna jest rozsyłana grupowo do wszystkich replik A .
+W przeciwnym przypadku przychodzące zapytanie jest ignorowane.
+Podobnie jest z replikami A.
+
+25. Rozważ leniwe zwielokrotnianie spójne przyczynowo. 
+W jakich dokładnie okolicznościach 
+można usunąć operację z kolejki pisania?
+
+Odpowiedź:
+
+Kiedy wiadomo, że operacja była wykonana wszędzie.

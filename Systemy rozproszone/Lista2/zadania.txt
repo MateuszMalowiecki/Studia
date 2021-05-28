@@ -1,4 +1,5 @@
 Rozwiązania wybranych zadań z listy 2. z Systemów rozprosoznych
+
 1. Jeśli klient i serwer znajdują się w odległych od siebie miejscach, zauważamy, że opóźnienie
 sieciowe ma zasadniczy wpływ na wydajność. Jak można temu zaradzić?
 
@@ -70,6 +71,27 @@ Te wymagania to:
 -bezpieczeństwo (Dzięki blokowaniu i obserwowaniu kilku węzłów super-peer, możliwe jest blokowanie i obserwowanie całej sieci)
 więcej na stronie: "https://www.quora.com/Not-every-node-in-a-peer-to-peer-network-should-become-superpeer-What-are-reasonable-requirements-that-a-superpeer-should-meet"
 
+12. Podaj nieodparty (techniczny) argument przemawiający za tym, że polityce "
+coś za coś" (tit-for-tat ), stosowanej w Bit Torrents, wiele brakuje do optymalnej, 
+jeśli chodzi o dzielenie się plikami w Internecie.
+
+Odpowiedź:
+
+Rozumowanie jest proste. 
+Ogólnie klientom oferuje się dużą przepustowość przychodzącą,
+ale nikt nie oczekuje, że klienci będą mieli do zaoferowania usługi.
+BitTorrent natomiast traktuje klientów jako współpracujące serwery.
+Zatem dużo lepsze byłybu symetryczne połączenia.
+
+13. Podaliśmy dwa przykłady przechwytywaczy w adaptacyjnej warstwie pośredniej (zob.
+plansza 48 w materiałach do wykładu 2 w SKOS-ie). Wymyśl jakieś inne przykłady.
+
+Odpowiedź:
+
+1. Przechwytywacz wspierający mobilność
+2. Przechwytywacz szyfrujący wiadomości
+3. Przechwytywacz pilnujący dostępu do obiektu podczas logowania.
+
 14. Do jakiego stopnia przechwytywacze zależą od warstwy pośredniej, w której są rozlokowywane?
 
 Odpowiedź:
@@ -87,3 +109,25 @@ Przykłady systemów samochodowych działających na zasadzie sprzężeń zwrotn
 Uwagi do opracowania:
 - Nazewnictwo (flooding, random walks)
 - Nazwy rozdziałów(Wstęp, obliczenia, ...)
+
+16. Podaj przykład systemu samoobsługowego (samorządnego, self-managing), 
+w którym składowa analityczna jest zupełnie rozproszona lub nawet ukryta.
+
+Odpowiedź:
+
+Nieustrukturyzowany system partnerski(peer-to-peer).
+
+
+17. Naszkicuj rozwiązanie automatycznego wyznaczania najlepszej 
+długości śladu do przewidywania zasad zwielokrotniania w systemie Globule.
+
+Odpowiedź:
+
+Oryginalny serwer użyje śladów od 7 do T_i+1, żeby sprawdzić
+przewidywalność polityki dla tego okresu. Może po prostu sprawdzić, 
+czy polityka, która została wybrana na podstawie rzeczywistych wzorców dostępu, 
+jest taka sama, jak ta wybrana na podstawie żądań w okresie od T_i do 7,
+co pozwoli serwerowi obliczyć błąd przewidywania. Zmieniając długość śladu
+serwer będzie w stanie znaleźć długość, dla której prognoza jest minimalna.
+W ten sposób otrzymujemy automatyczne określenie optymalnej długości śladu, 
+skutecznie przyczyniając się do samozarządzającego charakteru Globule.

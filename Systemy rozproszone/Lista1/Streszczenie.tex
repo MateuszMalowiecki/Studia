@@ -4,20 +4,22 @@
 \usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\title{Streszczenie stron 20-22(fragment sekcji "Scaling techniques") z pierwszego rozdziału książki "Distributed systems"}
 \author{Mateusz Małowiecki}
-
+\title{Streszczenie stron 20-23 (podpunkt "Scaling techniques") z pierwszego rozdziału książki "Distributed systems"}
+\date{5 marca 2021}
 \begin{document}
 \maketitle
 \section*{Wstęp}
-Sekcja "scaling techniques" zaczyna się od krótkiego wstępu. We wstępie tym autor na początku zastanawia się, w jaki sposób można rozwiązać problemy związane ze skalowalnością. Autor rozważa problem skalowalności jako problem wydajnościowy i podaje jako rozwiązanie technikę zwaną "skalowanie w górę" (ang. scaling up - zwiększenie pojemności zasobów systemowych). Następnie autor rozważa problem "skalowania w poziomie" (ang. scaling out - rozszerzanie systemu rozproszonego poprzez wdrażanie większej liczby maszyn) i podaje trzy techniki na rozwiązanie tego problemu: ukrywanie opóźnień komunikacji(ang. hiding communication latencies), dystrybucja pracy(ang. distribution of work) i replikacja(ang. replication). My opiszemy w tym streszczeniu dwie pierwsze techniki(trzecią technikę opisze następna osoba z systemu zapisów).
+Podpunkt "Scaling techniques" zaczyna się od krótkiego wstępu. We wstępie na początku zastanawiamy się, w jaki sposób można rozwiązać problemy związane ze skalowalnością. Rozważamy problem skalowalności jako problem wydajnościowy i podaje jako rozwiązanie technikę zwaną \textit{skalowaniem w górę} (ang. \textit{scaling up}, czyli zwiększaniem pojemności zasobów systemowych). Następnie rozważamy problem \textit{skalowania w poziomie} (ang. \textit{scaling out} - rozszerzanie systemu rozproszonego przez wdrażanie większej liczby maszyn) i podaje trzy techniki na rozwiązanie tego problemu: ukrywanie opóźnień komunikacji (ang. hiding communication latencies), dystrybucja pracy (ang. \textit{distribution of work}) i zwielokrotnianie (ang. \textit{replication}).
 \section*{Ukrywanie opóźnień komunikacji}
-Na początku tej sekcji, autor podaje podstawową ideę techniki "ukrywania opóźnień komunikacji", która brzmi: "staraj się unikać czekania na odpowiedzi na żądania usług zdalnych". Następnie autor podaje w jaki sposób można wykorzystać asynchroniczną komunikację do unikania czekania na odpowiedź. Opisowi temu autor poświęca jeden akapit. Potem autor zauważa, że nie wszystkie systemy mogą wykorzystywać asynchroniczną komunikację i jako przykład podaje aplikacje interaktywne. Podaje też rozwiązanie, które jest lepsze w tym przypadku: ograniczenie ogólnej komunikacji, oraz przypadek wykorzystania tego rozwiązania: dostęp do bazy danych za pomocą formularza. Na koniec tej sekcji, autor opisuje dwa sposoby na wypełnienie formularza: 
+Na początku tego podpunktu, podajemy podstawową ideę techniki \textit{ukrywania opóźnień komunikacji}, która brzmi: \textit{staraj się unikać czekania na odpowiedzi na żądania usług zdalnych}. Następnie podajemy, w jaki sposób można wykorzystać asynchroniczną komunikację do unikania czekania na odpowiedź. Opisowi temu autor poświęca jeden akapit. Potem autor zauważa, że nie wszystkie systemy mogą wykorzystywać asynchroniczną komunikację i jako przykład podaje aplikacje interaktywne. Podaje też rozwiązanie, które jest lepsze w tym przypadku: ograniczenie ogólnej komunikacji oraz przypadek wykorzystania tego rozwiązania: dostęp do bazy danych za pomocą formularza. Na koniec tego podpunktu, autor opisuje dwa sposoby na wypełnienie formularza: 
 \begin{itemize}
-\item wysyłanie oddzielnej wiadomości dla każdego pola 
-\item wysłanie kodu do wypełnienia formularza
+\item wysyłanie oddzielnego komunikatu do każdego pola, 
+\item wysłanie kodu do wypełnienia formularza.
 \end{itemize}
-Sposoby te zostały przedstawione na rysunkach 1.4(a) oraz 1.4(b).
 \section*{Dystrybucja pracy}
-Sekcję tą autor zaczyna od przedstawienia czym jest metoda dystrybucji pracy oraz podania przykładu jej wykorzystania (system DNS). Następnie autor pobieżnie opisuje działanie systemu DNS. Na koniec autor podaje i opisuje drugi przykład dystrybucji pracy(sieć internetowa World Wide Web).
+Podpunkt ten autor zaczyna od przedstawienia, czym jest metoda dystrybucji pracy oraz podania przykładu jej wykorzystania (system DNS). Następnie autor opisuje działanie systemu DNS, jako drzewo domen, które są podzielone na nie nakładające się strefy. W każdej takiej strefie nazwy są obsługiwane przez pojedynczy
+serwer nazw. Autor podaje (bez wdawania się w szczegóły techniczne) pewne intuicje związane z systemem DNS (nazwa każdej ścieżki w drzewie jest nazwą hosta w Internecie) i jako przykład rozważa nazwę \textit{flits.cs.vu.nl}. Potem autor podaje drugi przykład dystrybucji pracy (Sieć internetowa World Wide Web). Mimo że większości użytkowników może się wydawać, że Sieć internetowa oparta jest tylko na jednym serwerze, to w rzeczywistości jest ona rozproszona na kilkaset milionów serwerów, gdzie nazwa serwera obsługującego dany dokument jest zakodowana w adresie URL tego dokumentu.
+\section*{Zwielokrotnianie}
+Autor rozpoczyna ten podpunkt od podania kilku przykładów wykorzystania zwielokrotniania (zwiększenie wydajności systemu, ukrycie problemów związanych z komunikacją w systemach rozproszonych geograficznie). Następnie autor rozważa buforowanie (ang. \textit{caching}) jako specjalną formę zwielokrotniania, podając jednocześnie podobieństwa i różnice między buforowaniem a zwielokrotnianiem. Autor zauważa, że zwielokrotnianie i buforowanie mogą doprowadzić do problemów ze spójnością, ponieważ modyfikacja jednej z kopii zasobu może spowodować, że ta kopia będzie się różnić od pozostałych kopii zasobu. Potem autor zauważa, że stopień w jakim można tolerować niespójności, zależy w dużej mierze od wykorzystania zasobu i podaje kilka przykładów. Na koniec autor zauważa, że zwielokrotnianie wymaga mechanizmu globalnej synchronizacji, który jest niezwykle trudny do implementacji w skalowalny sposób ze względu na opóźnienia sieciowe.
 \end{document}
