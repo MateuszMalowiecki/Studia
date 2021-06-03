@@ -1,0 +1,36 @@
+Piotr Słowik, rozwiązania zadań 1,3,6 z listy 8 SR.
+
+1.    Przykłady:
+   Wadliwy był serwer a szukałem przyczyny w kliencie.
+   Błąd wydawał się być błędem logicznym a jednak był
+   po prostu dobrze ukrytym błędem składniowym.
+   Szukałem problemu w obliczeniach a błąd polegał na
+   iterowaniu "o jeden za mało/dużo".
+      
+      Autorzy kodu nie powinni testować swojego kodu,
+   ponieważ zakładają oni często że ich kod jest poprawny
+   i ciężko jest im dotrzeć wady własnego kodu. Nie oznacza
+   to, że autor nie powinien testować swojego kodu. Warto 
+   za to pokazać kod testerowi, który spojrzy na program z innej
+   perspektywy i jeszcze raz sprawdzi jego poprawność.
+      Testowanie może wykazać brak błędów. Zdarzy się to
+   relatywnie rzadko ale taka sytuacja jest możliwa.
+      Powinniśmy budować modularny kod oraz testować każdy
+   z jego fragmentów. Każdy fragment kodu powinien być
+   testowalny i przetestowany. Następnie kod, który przeszedł
+   wszystkie nasze testy powinien być przetestowany przez
+   zespół testerów, którzy z innej perspektywy spojrzą na
+   program.
+   
+3.    W praktyce serwery po prostu przestają produkować
+   dane wyjściowe jednak sprawdzenie czy w rzeczywistości
+   serwer się zatrzymał jest trudne. Z punktu widzenia
+   innego procesu serwer może być po prostu wolny lub
+   komunikacja może być tymczasowo zawieszona.
+
+6.    W każdym rzędzie co najwyżej jeden element może
+   zawieść i być zamaskowany. Najgorszym możliwy 
+   przypadek następuje gdy wszystkie 6 elementów
+   na szczycie swoich kolumn zawiodą, wtedy 2 z 3
+   końcowych wyników wyjściowych będą poprawne. Z
+   tego powodu możemy przetrwać 6 awarii.
