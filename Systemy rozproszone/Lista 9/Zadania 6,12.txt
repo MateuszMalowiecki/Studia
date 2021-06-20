@@ -1,0 +1,45 @@
+Julia Majkowska
+Rozwiązania wybranych zadań z listy 9 z Systemów Rozproszonych
+
+6. Co można zarzucić pomysłowi zrealizowania jednorazówki w postaci znacznika 
+czasu?
+
+Jednorazówka z założenia powinna być niemożliwa w łatwy sposób do odgadnięcia 
+przez osobę trzecią w komunikacji. Sam znacznik czasu nadawcy, czasu jest
+możliwy do oszacowania. Użycie znacznika czasu do wygenerowania pseudolosowej
+jednorazówki będzie zdecydowanie skuteczniejszą strategią. 
+
+12. Jak są zrealizowane listy kontroli dostępów w systemie plików UNIX?
+
+W systemie UNIX każdy proces ma swój identyfikator i listę grup do których należy. 
+Do atrybutów pliku dołączone jest 12 bitów kodujących prawa dostępu do pliku. 
+
+
+            rwx         rwx         rwx         [suid]        [sgid]    
+             u           g           o            
+Pierwsze 3 bity opisują prawa dostępu dla właściciela pliku (u), kolejne 3 
+dla grupy (g), a kolejne 3 dla pozostałych użytkowników (o). 
+W każdej z tych trójek występują trzy bity kodujące kolejno prawo do czytania
+(r), modyfikacji (w) i wykonywania (x). 
+
+W przypadku katalogów bit r odpowiada za zdolność wglądu do katalogu, a x za
+możliwość otwierania plików zawartych w katalogu. 
+
+10 bit to bit ustawienia użytkownika. Jeśli jest ustawiony na 1 to aktualny
+użytkownik jest traktowany jak  właściciel pliku. Podobnie 11  bit jest bitem
+ustawienia grupy. 
+
+Dodatkowo w niektórych systemach umożliwia się dodatkowe dospecyfikowanie praw 
+dla poszczególnych użytkowników. 
+
+Nadanie:  "r-- u:harry" użytkownik harry ma prawo do odczytu.
+Odebranie: "-w- g:acsu" zabranie prawa do modyfikacji dla grupy acsu.
+Pozwolenai warunkowe: "rw- u:bill, g:swe" nadanie użytkownikowi bill prawa do odczytu i zapisu jeśli bill jest członkiem grupy swe. 
+
+Z tak rozszerzonymi listami kontroli dostępu możliwe jest wymuszenie dołączenia
+użytkownika do grupy przed nadaniem praw. 
+
+Właściciel pliku oraz root są w stanie zmieniać te ustawienia pliku przy pomocy
+komendy chmod. 
+
+

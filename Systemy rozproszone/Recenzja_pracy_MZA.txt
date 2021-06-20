@@ -5,22 +5,21 @@ Maksymiliana Zawartkę
 
 IIUWr, SR21, 21-06-16
 
-Referat „InterPlanetary File System” opisuje 
-międzyplanetarny system plików. Składa się on z trzech 
-głównych części. Na początku podana jest 
+Referat „InterPlanetary File System” składa się z 
+trzech głównych części. Na początku podana jest
 definicja IPFS oraz opis podstawowych założeń tego systemu
 (tzn. adresowania zawartością, skierowanych grafów acyklicznych
 oraz rozproszonych tablic mieszających). Następnie przechodzi się 
 do MFS (Mutable File System), podaje się, czym jest MFS 
-oraz definicje pewnych podstawowych operacji,
-jakie można wykonywać za pomocą MFS. W ostatniej części podane są 
-pewne zastosowania IPFS (takie jak LikeCoin, OpenBazaar czy Audius).
+oraz definicje podstawowych operacji,
+jakie można wykonywać za pomocą MFS. W ostatniej części podane są
+zastosowania IPFS (takie jak LikeCoin, OpenBazaar czy Audius).
 Opisane jest tutaj m.in. dokładne działanie tych systemów oraz 
 w jaki sposób wykorzystują one IPFS.
 
 Od strony merytorycznej praca wydaje się wyczerpywać temat.
 Opisy poruszanych zagadnień są szczegółowe, 
-a dzięki hiperłączom umieszczonym w tekście pracy dostajemy dodatkowo 
+a dzięki hiperłączom użytym w tekście pracy dostajemy dodatkowo 
 możliwość dokładniejszego zgłębienia poruszanych zagadnień.
 
 Od strony graficznej praca również jest dobrze wykonana.
@@ -28,7 +27,7 @@ Rozmiary czcionek zostały dobrze dobrane, a słowa kluczowe zostały
 oznaczone innym kolorem. Jedyne, do czego można się przyczepić
 to brak tytułu na niektórych slajdach, co może być nieco mylące, do
 czego dany slajd się odnosi. Poza tym praca pod względem graficznym
-wykonana jest naprawdę dobrze.
+wykonana jest poprawnie.
 
 Podsumowując, referat „InterPlanetary File System” został 
 wykonany wzorcowo i zasługuje na wysoką ocenę. Gdybym miał go
