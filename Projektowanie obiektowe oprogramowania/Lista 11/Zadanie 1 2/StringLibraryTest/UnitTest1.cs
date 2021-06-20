@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using POO_L11_Z1_Z2;
+using POO_L11_Z1_Z2_Z3;
 using System;
 
 namespace StringLibraryTest {
@@ -134,6 +134,8 @@ namespace StringLibraryTest {
             Baz b = c.Resolve<Baz>();
             Assert.IsInstanceOfType(b, typeof(Baz));
         }
+        
+        //Testy do zadania 1
         [TestMethod]
         public void PropertyTest() {
             SimpleContainer c = new SimpleContainer();
@@ -141,6 +143,7 @@ namespace StringLibraryTest {
             c.RegisterType<D>(false);
             Assert.IsInstanceOfType(c.Resolve<A>().TheD, typeof(D));
         }
+
         [TestMethod]
         public void PropertyPrivateSetterTest() {
             SimpleContainer c = new SimpleContainer();
@@ -148,6 +151,7 @@ namespace StringLibraryTest {
             c.RegisterType<D>(false);
             Assert.IsNull(c.Resolve<B>().TheD);
         }
+
         [TestMethod]
         public void PropertyNoSetterTest() {
             SimpleContainer c = new SimpleContainer();
@@ -155,7 +159,8 @@ namespace StringLibraryTest {
             c.RegisterType<D>(false);
             Assert.IsNull(c.Resolve<C>().TheD);
         }
-
+        
+        //Testy do zadania 2
         [TestMethod]
         public void BuildUpTest() {
             SimpleContainer c = new SimpleContainer();
@@ -166,6 +171,7 @@ namespace StringLibraryTest {
             Assert.IsNotNull(TheA.TheD); 
         }
 
+        //Testy do zadania 3
         [TestMethod]
         public void ServiceLocatorSingletonTest() {
             SimpleContainer c = new SimpleContainer();
