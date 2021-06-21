@@ -1,0 +1,10 @@
+Adam Kuczaj
+20.06.2021
+lista 9, zadanie 20
+
+# Jaką rolę odgrywa znacznik czasu w komunikacie 6 na planszy 87 (rys. 8.38 w wydaniu polskim) i dlaczego należy go szyfrować?
+
+Znacznik czasu jest zabezpieczeniem przed próbą podszycia się Cyryla pod Aję;
+próba taka mogłaby polegać na wysłaniu przez Cyryla do usługi TGS tego samego komunikatu, który wysłała Aja.
+Usługa TGS zorientuje się, że znacznik czasowy w komunikacie wysłanym przez Cyryla jest nieaktualny.
+Znacznik czasowy powinien być szyfrowany, żeby Cyryl nie mógł w łatwy sposób zoptymalizować ataku poprzez nadpisanie znacznika czasowego na aktualny.

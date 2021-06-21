@@ -1,0 +1,7 @@
+Adam Kuczaj
+20.06.2021
+lista 9, zadanie 2
+
+# Czy w metodzie RISSC całe bezpieczeństwo można skoncentrować na bezpiecznych serwerach, czy nie?
+
+Nie, nie można. Nawet gdy same serwery są zabezpieczone, wciąż istotne jest, aby szyfrować wrażliwe dane przesyłane poza serwer oraz sprawdzać tożsamość użytkowników próbujących połączyć się z serwerem.
