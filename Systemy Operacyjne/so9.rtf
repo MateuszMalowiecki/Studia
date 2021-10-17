@@ -1,0 +1,106 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset2 Wingdings;}}
+{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+Best-fit - przesukaj ca\'b3\'b9 list\'ea, poszukaj pasuj\'b9cy blok o jak najmniejszym rozmiarze aby zminimalizowa\'e6 fragmentacj\'ea.\par
+Gorliwe z\'b3\'b9czanie - z\'b3\'b9czanie wolnych blok\f1\lang1033\'f3w od razu kiedy jest to mo\f0\'bfliwe a nie jedynie w razie potrzeby.\lang1045\par
+Zwa\'bfywszy na to, \'bfe ka\'bfdy blok ma posiada\'e6 boundary tags (header i footer) oraz wska\'9fniki na poprzedni i kolejny wolny blok w przypadku wolnych blok\f1\lang1033\'f3w, to w takim razie najmniejszy mo\f0\'bfliwy rozmiar bloku jakiego mo\'bfemy u\'bfywa\'e6 musi mie\'e6 rozmiar co najmniej 4 s\'b3\f1\'f3w\f0 .\par
+Symulacja przebiegu przydzia\'b3\f1\'f3w pami\f0\'eaci:\par
+(by\'e6 mo\'bfe nie uzwgl\'eadniono wyr\f1\'f3\f0 wna\'f1)\par
+
+\pard\sa200\sl240\slmult1\par
+
+\pard\sa200\sl276\slmult1\par
+\lang1045 Zad.2\par
+Przechowujemy w s\'b3owie maszynowym(tym pierwszym) rozmiar(20 bit\f1\lang1033\'f3\f0\lang1045 w), prev/16(log_2(wielko\'9cci)-4bit\f1\lang1033\'f3\f0\lang1045 w), next/16(log_2(wielko\'9cci)-4bit\f1\lang1033\'f3\f0\lang1045 w).\par
+Zad.3\par
+algorytm kube\'b3kowy - dzielimy rozmiary blok\f1\lang1033\'f3\f0\lang1045 w na klasy i tworzymy osobne listy w tych klasach (np.1-2 zawiera wolne bloki rozmiaru 1 lub 2, 3 zawiera wolne bloki rozmiaru 3, 5-8 zawiera wolne bloki rozmiaru 5, 6, 7 lub8), Kiedy blok zostaje zwolniony, to zostaje do\'b3\'b9czony do listy blok\f1\lang1033\'f3w tego rozmiaru. Kiedy \f0\'bf\'b9dana jest alokacja, to wybiera si\'ea blok z odpowiedniej, jak najmniejszej listy.\lang1045\par
+gorliwe z\'b3\'b9czanie -j.w.\par
+malloc:\par
+ To allocate a block of size n:\par
+\f2\'a7\f1\lang1033  Search appropriate free list for block of size m > n (i.e., first fit)\par
+\f2\'a7\f1  If an appropriate block is found:\par
+\f2\'a7\f1  Split block and place fragment on appropriate list (optional)\par
+\f2\'a7\f1  If no block is found, try next larger class\par
+\f2\'a7\f1  Repeat until block is found\par
+\f2\'a2\f1  If no block is found:\par
+\f2\'a7\f1  Request additional heap memory from OS (using sbrk())\par
+\f2\'a7\f1  Allocate block of n bytes from this new memory\par
+\f2\'a7\f1  Place remainder as a single free block in largest size class.\par
+\f0\lang1045 free:\par
+-oznacz blok jako wolny\par
+-je\'bfeli z lewej lub z prawej jest wolny blok po\'b3\'b9cz si\'ea z tym blokiem(podobnie do zad.1) oraz usu\'f1 te bloki z ich list(je\'9cli blok jest ostatni wykonujemy usuwanie ostatniego elementu z listy).\par
+-powsta\'b3y blok umie\'9c\'e6 na odpowiedniej li\'9ccie\par
+Co robi malloc, gdy na danej li\'9ccie nie ma wolnego bloku \'bf\'b9danego rozmiaru?\par
+Szuka bloku o wi\'eakszym rozmiarze (kt\f1\lang1033\'f3ry nast\f0\'eapnie podzieli). Je\'bfeli w og\f1\'f3le nie ma dostatecznie du\f0\'bfych wolnych blokow to nast\'eapuje alokacja nowej strony, kt\f1\'f3r\f0\'b9 wype\'b3nia si\'ea (na przyk\'b3ad) blokami szukanego rozmiaru.\par
+Jak poradzi\'e6 sobie w trakcie z\'b3\'b9czania wolnych blok\f1\'f3w w procedurze free, je\f0\'9cli chcemy usun\'b9\'e6 ostatni element z listy?\par
+Je\'bfeli zwalniamy blok, kt\f1\'f3ry jest ostatni w swoim kube\f0\'b3ku, to w\f1\'f3wczas nie dzieje si\f0\'ea nic specjalnego. Lista staje si\'ea pusta i tyle. (nie rozumiem gdzie mia\'b3by by\'e6 problem xd).\lang1045\par
+leniwe z\'b3\'b9czanie - konsolidacja blok\f1\lang1033\'f3w nast\f0\'eapuje dopiero w momencie kolejnej alokacji (i nie napotkali\'9cmy jeszcze bloku o odpowiednio du\'bfym rozmiarze).\par
+Leniwe z\'b3\'b9czanie zmniejsza czas wyszukiwania blok\f1\'f3w gdy chcemy dokonywa\f0\'e6 ma\'b3ych alokacji: przy z\'b3\'b9czaniu gorliwym ma\'b3e bloki zostaj\'b9 skonsolidowane i w wi\'eakszo\'9cci przypadk\f1\'f3w trzeba szuka\f0\'e6 miejsca w\'9crod tych wi\'eakszych. Leniwe z\'b3\'b9czanie pozwala r\f1\'f3wnie\f0\'bf przenie\'9c\'e6 ci\'ea\'bfar pracy ze zwalniania na alokowanie nowych obiekt\f1\'f3w.\f0\lang1045\par
+problemy - komplikacja alokacji, bloki mog\'b9 by\'e6 wstawiane na listy z\'b3ych klas(bo ich rozmiary s\'b9 w innych klasach ni\'bf rozmiar ich sumy)???\par
+Zad.4\par
+moje przypuszczenia:\par
+bad-1.c:\par
+linijki 7 i 9 - na tablic\'ea p alokujemy 10*4=40 bajt\f1\lang1033\'f3\f0\lang1045 w, po czym na 10 element\f1\lang1033\'f3\f0\lang1045 w tablicy alokujemy 5*4=20 bajt\f1\lang1033\'f3\f0\lang1045 w, czyli najpierw alokujemy 40 bajt\f1\lang1033\'f3\f0\lang1045 w, a potem 10*20=200\par
+bad-2.c:\par
+strlen zwraca d\'b3ugo\'9c\'e6 \'b3a\'f1cucha bez znaku '/0', a strcpy kopiuje znak '/0'. W linijce 7 powinno by\'e6 malloc(strlen(s)+1)\par
+bad-3.c:\par
+tablica y ma 40 bajt\f1\lang1033\'f3\f0\lang1045 w, a memset wype\'b3nia 80 bajt\f1\lang1033\'f3\f0\lang1045 w(tu b\'b3\'b9d jest zg\'b3aszany)\par
+bad-4.c:\par
+1.b\'b3\'b9d- odwo\'b3anie si\'ea do zwolnionej pami\'eaci w linijce 12.\par
+2.b\'b3\'b9d- niezwolnienie pami\'eaci po tablicy y\par
+bad-5.c:\par
+1.zwalniamy tylko pierwszy element, zamiast ca\'b3ej listy\par
+2.new_node(i) wykonuje si\'ea dwa razy\par
+3.w SLIS_INSERT_HEAD jest (elm)->field.sle_next = (head)->slh_first a head nie jest przecie\'bf zainicjowane \'bfadn\'b9 sensown\'b9 warto\'9cci\'b9 (w tym przypadku nie ma NULLa na ko\'f1cu). \par
+Po odkomentowaniu:\par
+bad-1. - heap buffer overflow(9. linijka) + brak zwolnienia pami\'eaci\par
+bad-2. - heap buffer overflow(strcpy)\par
+bad-3.c - (taki jak napisa\'b3em wy\'bfej)+podw\f1\lang1033\'f3\f0\lang1045 jne zwolnienie x.\par
+bad-4.c - "heap-use-after-free" - odwo\'b3anie si\'ea do zwolnionej pami\'eaci\par
+bad-5.c - brak zwolnienia pami\'eaci\par
+Zad.5\par
+koszt u\'bfywania:\par
+Table 1: Memory usage with AddressSanitizer (MB)\par
+Benchmark Original Instrumented Increase\par
+400.perlbench 670 2168 3.64x\par
+401.bzip2 858 1618 2.12x\par
+403.gcc 893 4133 5.21x\par
+429.mcf 1684 2098 1.40x\par
+445.gobmk 37 369 11.22x\par
+456.hmmer 33 582 19.84x\par
+458.sjeng 180 249 1.56x\par
+462.libquantum 104 930 10.06x\par
+464.h264ref 72 439 6.86x\par
+471.omnetpp 181 787 4.89x\par
+473.astar 343 1214 3.98x\par
+483.xalancbmk 434 1688 4.38x\par
+433.milc 694 1618 2.62x\par
+444.namd 58 146 2.83x\par
+447.dealII 807 2602 3.63x\par
+450.soplex 637 2479 4.38x\par
+453.povray 17 371 24.55x\par
+470.lbm 417 550 1.48x\par
+482.sphinx3 52 426 9.22x\par
+total 8171 24467 3.37x\par
+Table 2: Stack increase with AddressSanitizer (KB)\par
+Benchmark Original Instrumented Increase\par
+400.perlbench 568 1740 3.06x\par
+445.gobmk 184 264 1.43x\par
+458.sjeng 828 848 1.02x\par
+483.xalancbmk 2116 4720 2.23x\par
+453.povray 88 96 1.09x\par
+482.sphinx3 248 252 1.02x\par
+Shadow map:\par
+AddressSanitizer przeznacza jedn\'b9 \f1\lang1033\'f3sm\f0\'b9 wirtualnej przestrzeni adresowej na pami\'ea\'e6 cienia i wykorzystuje bezpo\'9crednie mapowanie ze skal\'b9 i przesuni\'eaciem, aby przet\'b3umaczy\'e6 adres aplikacji na odpowiadaj\'b9cy jej adres cienia. Bior\'b9c pod uwag\'ea adres pami\'eaci aplikacji Addr, adres bajtu cienia to obliczone jako (Addr >> 3) + Offset.\par
+instrumentacja:\par
+Podczas instrumentowania 8-bajtowego dost\'eapu do pami\'eaci AddressSanitizer oblicza adres odpowiedniego bajtu cienia, \'b3aduje ten bajt i sprawdza, czy wynosi zero:\par
+ShadowAddr = (Addr >> 3) + Offset;\par
+if (* ShadowAddr! = 0)\par
+ReportAndCrash (Addr);\par
+Przy dost\'eapie do instrument\f1\'f3w 1-, 2- lub 4-bajtowych instrumentacja jest nieco bardziej z\f0\'b3o\'bfona: je\'9cli warto\'9c\'e6 cienia jest dodatnia (tj. Adresowalne s\'b9 tylko pierwsze k bajt\f1\'f3w w 8-bajtowym s\f0\'b3owie), musimy por\f1\'f3wna\f0\'e6 3 ostatnie bity adresu za pomoc\'b9 k.\par
+ShadowAddr = (Addr >> 3) + Offset;\par
+k = * ShadowAddr;\par
+if (k! = 0 && ((Addr & 7) + AccessSize> k))\par
+ReportAndCrash (Addr);\f1\lang21\par
+}
+ 

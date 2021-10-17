@@ -1,0 +1,84 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 L4\par
+Zad.1\par
+Obraz procesu - kopia stanu danego procesu w danym momencie\par
+Dziedziczone zasoby:\par
+\tab    process ID\par
+\tab    parent process ID\par
+\tab    process group ID\par
+\tab    access groups(Wywo\'b3anie systemowe getgroups () pobiera bie\'bf\'b9c\'b9 list\'ea dost\'eapu do grupy procesu u\'bfytkownika i przechowuje j\'b9 w tablicy gidset - current group \tab access list of the user process)\par
+\tab    working directory(katalog w kt\f1\lang1033\'f3\f0\lang1045 rym si\'ea obecnie znajdujemy)\par
+\tab    root\tab directory(\f1\lang1033\'84\f0\lang1045 N\f2\lang1033 ajwy\f0\'bfszy\rdblquote  katalog w hierarchii.\lang1045 )\par
+\tab    control terminal(terminal kontroluj\'b9cy dany proces)\par
+\tab    resource usages(spos\f1\lang1033\'f3\f0\lang1045 b u\'bfycia zasob\f1\lang1033\'f3\f0\lang1045 w)\par
+\tab    interval timers(licznik przerwa\'f1)\par
+\tab    resource limits(limity zasob\f1\lang1033\'f3\f0\lang1045 w; np. najwi\'eakszy rozmiar, najd\'b3u\'bfszy czas procesora)\par
+\tab    file mode mask(maska pozwalaj\'b9ca kontrolowa\'e6 uprawnienia pliku)\par
+\tab    signal mask(zbi\f1\lang1033\'f3\f0\lang1045 r zablokowanych sygna\'b3\f1\lang1033\'f3\f0\lang1045 w)\par
+Otwarte pliki:\par
+Deskryptory plik\f1\lang1033\'f3w otwarte w obrazie procesu wywo\f0\'b3uj\'b9cego pozostaj\'b9 otwarte w nowym obrazie procesu, z wyj\'b9tkiem tych, dla kt\f1\'f3rych ustawiono flag\f0\'ea close-on-exec (patrz close (2) i fcntl (2)).\par
+Obs\'b3uga sygna\'b3\f1\'f3\f0 w:\par
+Sygna\'b3y ustawione do zignorowania w procesie wywo\'b3ywania s\'b9 ustawione do zignorowania w nowym procesie. Sygna\'b3y, kt\f1\'f3re maj\f0\'b9 zosta\'e6 przechwycone w obrazie procesu wywo\'b3uj\'b9cego, s\'b9 ustawione na dzia\'b3anie domy\'9clne w nowym obrazie procesu.\par
+Zablokowane sygna\'b3y pozostaj\'b9 zablokowane niezale\'bfnie od zmian w dzia\'b3aniu sygna\'b3u. Stos sygna\'b3u jest resetowany do niezdefiniowanego.\par
+bit uprawnie\'f1 - bit decyduj\'b9cy o tym jakie uprawnienia (odczyt/zapisywanie/wykonywanie) ma w\'b3a\'9cciciel pliku/cz\'b3onkowie grupy/inni u\'bfytkownicy\par
+set-uid/set-gid - bity uprawniaj\'b9ceu u\'bfytkownik do uruchamiania programu z uprawnieniami jego w\'b3a\'9cciciela/grupy w\'b3a\'9cciciela (np. sudo).\par
+\lang1045 W bitach uprawnie\'f1 "s"(w pierwszej cz\'ea\'9c\'e6i, po "w") reprezentuje set-uid, a "S"(w drugiej cz\'ea\'9c\'e6i, po "w") reprezentuje set-gid.\par
+/usr/bin:\par
+ls -al /usr/bin | grep "[r|\\-][w|\\-]s"\par
+set-uid:\par
+chfn, chsh, gpasswd, newgrp, passwd, pkexec, sudo, \par
+set-gid:\par
+bsd-write, chage, crontab, expiry, mlocate, ssh-agent, wall\par
+Zad.2\par
+Je\'bfeli system u\'bfywa stronicowania na \'bf\'b9danie, to w\f1\lang1033\'f3wczas kopiuje stron\f0\'ea z dysku do pami\'eaci wtedy, gdy nast\'eapuje pr\f1\'f3ba dost\f0\'eapu do niej. Gdyby system pozwala\'b3 modyfikowa\'e6 uruchomione pliki wykonywalne, to w\f1\'f3wczas istnieje mo\f0\'bfliwo\'9c\'e6, \'bfe dokona\'b3by modyfikacji fragmentu tego pliku, kt\f1\'f3ry znajdowa\f0\'b3by si\'ea na stronie nieza\'b3adowanej jeszcze do pami\'eaci przez co przy pr\f1\'f3bie wykonania tego fragmentu m\'f3g\f0\'b3by zosta\'e6 wykonany zmodyfikowany kod.\par
+\lang1045 Zad.3\par
+operacje w paragrafie 39:\par
+mkdir\par
+rmdir\par
+closedir(zamyka strumie\'f1 katalogu)\par
+opendir(otwiera strumie\'f1 katalogu)\par
+readdir(odczytuje katalogu)\par
+ls\par
+chmod\par
+fsync(przesy\'b3a\lang1033  wszystkie zmodyfikowane dane wewn\'eatrzne katalogu, \f1 na urz\f0\'b9dzenie dyskowe\lang1045 )\par
+create\par
+open\par
+read\par
+write\par
+close\par
+printf\par
+fork\par
+dup - dup, dup2, dup3 - duplicate a file descriptor\par
+dup2\par
+stat\par
+lseek - zmienia offset pliku\par
+Struktura katalogu:\par
+Katalog sk\'b3ada si\'ea z nieposortowanych wpis\f1\lang1033\'f3\f0\lang1045 w, ka\'bfda pozycja katalogu to: I-node number(19 dla pliku "colosal", 42 dla pliku "voluminous" i 88 dla katalogu bigdir), rec len(To pole jest potrzebne, aby znale\'9f\'e6 nast\'eapny wpis dla przypadku, gdy nazwa pliku jest uzupe\'b3niona o nieznan\'b9 d\'b3ugo\'9c\'e6), type(plik, katalog), file-name length(d\'b3ugo\'9c\'e6 rzeczywistej nazwy), nazwa pliku\par
+usuni\'eacie:\par
+Zmieniamy wska\'bfnik entry poprzednika usuwanego na nast\'eapnik usuwanego; za usuwanego wstawiamy "unused"\par
+metadane - W kontek\'9ccie system\f1\lang1033\'f3w plik\'f3w Unix lub Linux \f2\'84metadane\rdblquote  to informacje o pliku: identyfikator u\f0\'bfytkownika, kt\f1\'f3ry jest jego w\f0\'b3a\'9ccicielem, uprawnienia, typ pliku.\lang1045\par
+metadane  s\'b9 przechowywane w systemie plik\f1\lang1033\'f3w, a wszystkie parametry s\f0\'b9 kopiowane r\'eacznie jeden po drugim (cho\'e6 niekt\f1\'f3rych nie mo\f0\'bfna w og\f1\'f3le skopiowa\f0\'e6).\lang1045\par
+st_nlink - liczba twrdych dowi\'b9za\'f1(  pozycji katalogu, kt\f1\lang1033\'f3r\f0\lang1045 y\f1\lang1033  wi\f0\'b9\'bfe nazw\'ea z plikiem (lub danymi fizycznymi) w systemie plik\f1\'f3w.) \f0\lang1045 do pliku.\par
+kiedy zostaje usuni\'eaty -rm  po prostu pobiera nazw\'ea pliku do usuni\'eacia i zwraca zero po pomy\'9clnym zako\'f1czeniu. Powodem tego jest to, \'bfe gdy system plik\f1\lang1033\'f3w roz\f0\'b3\'b9cza plik, sprawdza liczb\'ea referencji w obr\'eabie numeru i-node'a. Ta liczba odwo\'b3a\'f1 (czasami nazywana liczb\'b9 odsy\'b3aczy) pozwala systemowi plik\f1\'f3w \f0\'9cledzi\'e6, ile r\f1\'f3\f0\'bfnych nazw plik\f1\'f3w zosta\f0\'b3o powi\'b9zanych z tym konkretnym i-w\'eaz\'b3em. Wywo\'b3anie rm usuwa \f2\'84link\rdblquote  mi\f0\'eadzy czyteln\'b9 dla cz\'b3owieka nazw\'b9 (usuwany plik) a podanym numerem i-w\'eaz\'b3a i zmniejsza liczb\'ea referencji; dopiero gdy liczba odniesie\'f1 osi\'b9gnie zero, system plik\f1\'f3w zwalnia r\'f3wnie\f0\'bf i-w\'eaze\'b3 i powi\'b9zane bloki danych, a tym samym naprawd\'ea \f2\'84usuwa\rdblquote  plik\f0\lang1045\par
+Zad.4\par
+Bity uprawnie\'f1:\par
+katalog jest traktowany jako lista nazw\par
+r-prawo do odczytu listy(mo\'bfna robi\'e6 "ls", nie mo\'bfna robi\'e6 "cd" do niego).\par
+w-prawo do modyfikowania listy(dodawania ,usuwania, zmieniania nazw) o ile bit x jest ustawiony\par
+x-Ustaw ten katalog jako katalog roboczy, np. Cd. Potrzebujesz tego pozwolenia, je\'9cli chcesz:\par
+dost\'eap (odczyt, zapis, wykonanie) element\f1\lang1033\'f3w mieszkaj\f0\'b9cych w \'9crodku.\par
+zmodyfikuj sam\'b9 list\'ea, tj. dodaj, zmie\'f1 nazw\'ea, usu\'f1 na niej nazwy (oczywi\'9ccie bit zapisu musi by\'e6 ustawiony w katalogu).\lang1045\par
+\f1\lang1033 The setuid (set user id) \f0  nie ma \'bfadnego wp\'b3ywu na katalog.\par
+The setgid (set group id) zmienia standardowe zachowanie, tak \'bfe grupa plik\f1\'f3w utworzonych w tym katalogu nie b\f0\'eadzie nale\'bfe\'e6 do katalogu  u\'bfytkownika, kt\f1\'f3ry je utworzy\f0\'b3, ale do samego katalogu nadrz\'eadnego(w kt\f1\'f3\f0 rym wszyscy cz\'b3onkowie grupy b\'ead\'b9 mogli modyfikowa\'e6 ten plik)\lang1045\par
+sticky -  chocia\'bf nie ma wp\'b3ywu na pliki, gdy jest u\'bfywany w katalogu, \b wszystkie pliki w tym katalogu b\'ead\'b9 modyfikowalne tylko przez ich w\'b3a\'9ccicieli\b0\lang1033\par
+Zad.5\par
+problem - mo\'bfe by\'e6 sytuacja \'bfe sprawdzili\'9cmy czy istnieje plik i wtedy nie istnia\'b3, jednak zanim wywo\'b3amy to ten plik zostanie stworzony przez kogo\'9c innego(O-CREAT nie sprawdza czy plik istnieje ), przez co 2 procesy otrzymaj\'b9 blokad\'ea.\par
+Rozwi\'b9zanie - bool f_lock(const char* path)\par
+\{\par
+    return Open(path, O_CREAT | O_EXCL | O_WRONLY, 0700) >= 0;\par
+\}\par
+(z dokumentacji O_EXCL): if this flag is specified in conjunction with O_CREAT, and pathname already exists, then open() fails with the error EEXIST.\par
+ TOCTTOU - problem:istnieje przedzia\'b3 czasowy mi\'eadzy sprawdzaniem wa\'bfno\'9cci a operacj\'b9 zwi\'b9zan\'b9 z tym sprawdzaniem wa\'bfno\'9cci, przez co atakuj\'b9cy mo\'bfe w tym przedziale czasowym celowo zmieni\'e6 dane.\lang1045\par
+}
+ 

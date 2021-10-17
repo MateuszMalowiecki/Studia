@@ -1,0 +1,76 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil Calibri;}{\f2\fnil\fcharset0 Calibri;}{\f3\fnil\fcharset1 Cambria Math;}{\f4\fnil\fcharset0 Cambria Math;}{\f5\fnil\fcharset238 Cambria Math;}}
+{\*\generator Riched20 10.0.17763}{\*\mmathPr\mmathFont3\mwrapIndent1440 }\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+Warunki konieczne do zaistnienia zakleszczenia:\par
+1. wzajemne wykluczenie \f1\endash  w danym czasie tylko jeden proces mo\f0\'bfe korzysta\'e6 z danego zasobu \par
+2. wstrzymanie i oczekiwanie (hold and wait) \f1\endash  proces mo\f0\'bfe trzyma\'e6 dost\'eap do zasob\f2\lang1033\'f3w, czekaj\f0\'b9c na otrzymanie dost\'eapu do innych zasob\f2\'f3w  \par
+3. brak wyw\f0\'b3aszczania (no preemption) \f1\endash  zasoby przydzielone wcze\f0\'9cniej nie mog\'b9 by\'e6 przymusowo zabrane procesom. Musz\'b9 by\'e6 jawnie zwolnione przez proces, kt\f2\'f3ry jest ich w\f0\'b3a\'9ccicielem.  \par
+4. cykliczne czekanie (circural wait) \f1\endash  \f0\lang1045 istnieje \lang1033\'b3a\'f1cuch proces\'f3w, w kt\'f3rym ka\'bfdy proces trzyma co najmniej jeden zas\'f3b potrzebny innemu procesowi  \par
+1-3: mo\'bfe zdarzy\'e6 si\'ea deadlock 1-4: jest deadlock\par
+zapobieganie zakleszczeniom \f1\endash  system zarz\f0\'b9dza zasobami w taki spos\f2\'f3b, \f0\'bfeby zakleszczenia nie wyst\'b9pi\'b3y\par
+1. wzajemne wykluczenie \f1\endash  w przypadku danych mo\f0\'bfna nada\'e6 im status tylko do odczytu, tak aby procesy mog\'b3y jednocze\'9cnie z nich korzysta\'e6. W przypadku zasob\f2\'f3w do pisania, mo\f0\'bfna stosowa\'e6 np. spooling \f1\endash  dane wymagaj\f0\'b9ce przetworzenia przez urz\'b9dzenie s\'b9 umieszczane w buforze na dysku lub w pami\'eaci. Niewykorzystywane bo np. w przypadku drukarek mo\'bfliwe jest, \'bfe proces, dla kt\f2\'f3rego rozpocz\f0\'eato drukowanie nie dostarczy\'b3 jeszcze wszystkich danych do bufora. Je\'bfeli oczekuje si\'ea na wszystkie dane przed rozpocz\'eaciem drukowania, to mo\'bfliwe jest przepe\'b3nienie bufora.\par
+2. trzymaj i czekaj (hold and wait) \f1\endash  \f0\lang1045 Mo\'bfna to zrobi\'e6 na d\f2\lang1033 wa sposoby: \par
+a. wymaganie od procesu \f0\'bf\'b9dania wszystkich zasob\'f3w przed rozpocz\'eaciem wykonywania. Je\'9cli wszystko jest dost\'eapne, proces otrzyma wszystko, czego potrzebuje, i b\'eadzie m\f2\'f3g\f0\'b3 dzia\'b3a\'e6 do ko\'f1ca. Je\'9cli jaki\'9c zas\f2\'f3b jest niedost\f0\'eapny, \'bfaden zas\f2\'f3b nie zostanie przydzielony i proces musi czeka\f0\'e6. Niewykorzystywane bo proces nie wie na pocz\'b9tku jakich zasob\f2\'f3\f0 w potrzebuje. \par
+b. wymaganie od procesu tymczasowego zwolnienia wszystkich przetrzymywanych zasob\f2\'f3w przed zam\'f3wieniem nowego\f0\lang1045 , po czym proces pr\f2\lang1033\'f3\f0\lang1045 buje odebra\'e6 zwolnione oraz nowe zasoby. Niewykorzystywane bo mo\'bfemy doprowadzi\'e6 do livelock'a. \f2\lang1033  \par
+3. brak wyw\f0\'b3aszczania (no preemption) - je\'9cli procesowi przydzielono drukark\'ea i jest on w trakcie drukowania swojego wyj\'9ccia, przymusowe zabranie mu drukarki ze wzgl\'eadu na to, \'bfe potrzebny ploter jest niedost\'eapny, b\'eadzie czasami niemo\'bfliwe, a na pewno trudne.  mo\'bfna doprowadzi\'e6 do wirtualizacji niekt\f2\'f3rych zasob\'f3w. Buforowanie wyj\f0\'9ccia drukarki na dysk i zezwolenie na dost\'eap do fizycznej drukarki tylko demonowi eliminuje zakleszczeni zwi\'b9zane z drukark\'b9 (tworzy mo\'bfliwo\'9c\'e6 zakleszczenia z powodu wyczerpania si\'ea miejsca na dysku). Niewykorzystywane bo nie wszystkie zasoby mo\'bfna jednak wirtualizowa\'e6 w taki spos\f2\'f3b, np. rekordy w bazie danych lub tablice wewn\f0\'b9trz systemu operacyjnego.\par
+4.  cykliczne czekanie (circural wait) :\par
+a) mo\'bfemy zastosowa\'e6 regu\'b3\'ea, zgodnie z kt\f2\'f3r\f0\'b9 w okre\'9clonym momencie proces jest uprawniony tylko do jednego zasobu. Je\'9cli potrzebuje kolejnego, musi zwolni\'e6 poprzedni.  Niewykorzystywane bo dla procesu, kt\f2\'f3ry wymaga skopiowania du\f0\'bfego pliku z ta\'9cmy na drukark\'ea, takie ograniczenie jest nie do zaakceptowania. \par
+b) inny spos\f2\'f3b: nadanie ka\f0\'bfdemu zasobowi okre\'9clony, unikatowy numer porz\'b9dkowy (liczb\'ea naturaln\'b9) i wymuszenie na procesach zamawiania zasob\f2\'f3w, wed\f0\'b3ug rosn\'b9cej numeracji. Oznacza to, \'bfe proces, kt\f2\'f3ry ma ju\f0\'bf w swoim posiadaniu zas\f2\'f3b nr 4, mo\f0\'bfe zaj\'b9\'e6 zas\f2\'f3b nr 5, ale ju\f0\'bf nie mo\'bfe zaj\'b9\'e6 zasoby nr 3, a nawet kolejnego egzemplarza zasobu nr 4. Wykorzystywane.\par
+Zad.2\par
+instrukcja atomowa - i\f1 nstrukcja, kt\f2\'f3ra jest niepodzielna\f0\lang1045  na danym poziomie abstrakcji\f2\lang1033  i wykonuje si\f0\'ea w ca\'b3o\'9cci za jednym razem\par
+compare and swap \f1\endash  jej dzia\f0\'b3anie polega na por\f2\'f3wnaniu zawarto\f0\'9cci pewnej lokacji w pami\'eaci z zadan\'b9 warto\'9cci\'b9, a nast\'eapnie je\'bfeli obie warto\'9cci s\'b9 r\f2\'f3wne zmodyfikowaniu jej do nowej warto\f0\'9cci. Wynik operacji wskazuje, czy dzia\'b3anie zapisu zosta\'b3o dokonane czy nie. Dwie wersje: zwracanie warto\'9cci logicznej lub warto\'9cci odczytanej w podanej lokalizacji przed zapisem\par
+ver1. (ta chyba bardziej intuicyjna) \par
+function cas(p : pointer to int, old : int, new : int) \{ \par
+if *p \f3\u8800?\f2  old \{ \f0\lang1045\par
+\f2 return false \par
+\} \par
+*p \f3\u8592?\f2  new \par
+return true \par
+\} \par
+ver2. function cas(p : pointer to int, old : int, new : int) \par
+\{ old_p_val = *p if *p = old \{ *p \f3\u8592?\f2  new \} return old_p_val \}\par
+blokada\f4  \f2 wiruj\f0\'b9ca\f4  (\f0 spinlock\f4 ) - \f0 spos\f2\'f3b\f4  \f2 realizacji\f4  \f2 synchronizacji\f4  \f2 mi\f0\'eadzyprocesowej\f4 , \f0 w\f4  \f0 kt\f2\'f3rym\f4  \f2 oczekiwanie\f4  \f2 na\f4  \f2 zwolnienie\f4  \f2 blokady\f4  \f2 polega\f4  \f2 na\f4  \f2 ci\f0\'b9g\'b3ym\f4  \f0 badaniu\f4  \f0 jej\f4  \f0 stanu\f4 . \f0 Spinlock\f4  \f0 dzia\'b3a\f4  \f0 wi\'eac\f4  \f0 na\f4  \f0 zasadzie\f4  \f0 aktywnego\f4  \f0 oczekiwania\f5\lang1045 .\par
+int owner = 0;  //wskazuje id w\'b9tku, kt\f4\lang1033\'f3ry jest w sekcji krytycznej (0 - \f5\'bfaden) void spinlock( spin_t *lock ) \{ \par
+cas(lock, 0, 1)\par
+while( cas( lock, 0, 1) )  \{ \par
+/* do nothing */ \par
+\} \par
+\}\par
+ void unlock(spin_t *lock) \{ *lock = 0; \} \par
+/* spos\f4\'f3b u\f5\'bfycia */ \{ spinlock( &owner); /* kod sekcji krytycznej */ unlock( &owner ); \}\par
+U\'bfycie blokad wiruj\'b9cych ma sens tylko na maszynach wieloprocesorowych, gdy\'bf je\'bfeli mamy do dyspozycji jedynie jeden procesor, to w\'b9tek, kt\f4\'f3ry pr\'f3buje dokona\f5\'e6 blokady, marnuje czas procesora w p\'eatli while. W przypadku maszyn wieloprocesorowych p\'eatla mo\'bfe by\'e6 wykonywana r\f4\'f3wnolegle z innym kodem.\par
+\f0 blokady usypiaj\'b9ce \f1\endash  blokady, w ktorych proces oczekuj\f0\'b9cy na blokad\'ea zostaje u\'9cpiony zamiast kr\'eaci\'e6 si\'ea w p\'eatli i u\'bfywa\'e6 czasu procesora.\par
+r\f2\'f3\f0 znice - github\par
+nie wymaga wywo\'b3a\'f1 systemowych\tab wymaga wywo\'b3a\'f1 systemowychr\f2\'f3\f0\'bfnice - L6Z1(2).pdf\par
+Zad.3\par
+operacje atomowe \f1\endash  \f0\lang1045 jw.\par
+\f2\lang1033 Atomiczno\u347?\u263? gwarantuje nam brak przerwa\u324? sprz\u281?towych, sygna\u322?\'f3w, izolacj\f0\'ea od innych w\'b9tk\f2\'f3w i proces\'f3w. \par
+\f0\lang1045 a) i b) - plik L5.pdf, b\'b3\'b9d wykonania w 13 -wype\'b3niamy kolejk\'ea do n element\f2\lang1033\'f3\f0\lang1045 w. budzimy konsumenta, on pobiera element, queue.full jest true, wyw\'b3aszczany jest przed wakeup. Producent wstawia ostatni element i zasypia, po czym konsument robi wakeup, poczym producent wstawia element do pe\'b3nej kolejki.\par
+Zad.4\par
+To mamy tak: 2 zasoby(warto\'9c\'e6 count=2) oraz 4 w\'b9tki A, B, C, D. Kazdy robi wait, ale C i D s\'b9 wyw\'b3aszczone przed 18 linijk\'b9. czyli count=-2. A robi signal:count=-1, delay=1, B robi signal: count=0, delay=1(bo delay ma tylko warto\'9cci 1). wznawia si\'ea w\'b9tek C, dochodzi do 18 linijki, delay=0, robi signal i count=1 wi\'eac nie wysy\'b3a signala na delay w linii 27, delay=0. W\'b9tek D ma deadlocka na 18 linijce.\par
+Zad.5\par
+Problem ucztuj\'b9cych filozof\f2\lang1033\'f3\f0\lang1045 w - wiadomo co,\par
+teza: Zawsze istnieje filozof kt\f2\lang1033\'f3ry mo\f0\'bfe je\'9c\'e6.\lang1045\par
+P jest prawakiem:\par
+P ma prawy widelec:\par
+Oznaczmy lewego s\'b9siada P przez Q.\par
+Je\'bfeli Q nie trzyma prawego widelca -> P mo\'bfe go wzi\'b9\'e6 i je\'9c\'e6.\par
+Je\'bfeli Q trzyma prawy widelec to:\par
+Q je -> teza spe\'b3niona.\par
+Q nie je to jest prawakiem i czeka na sw\f2\lang1033\'f3j lewy widelec (i jego wszyscy kolejni s\f0\'b9siedzi prawacy). Oznaczmy przez L pierwszego lewaka na lewo od Q.\par
+L je -> teza spe\'b3niona.\par
+L nie je -> nie u\'bfywa prawego, zatem jego prawy mo\'bfe go wzi\'b9\'e6 i je\'9c\'e6.\par
+P nie ma prawego widelca:\par
+Oznaczmy prawego s\'b9siada P przez Q\par
+Je\'bfeli Q nie trzyma lewego widelca -> P mo\'bfe go wzi\'b9\'e6.\par
+Je\'bfeli Q trzyma lewy widelec:\par
+Q je -> teza spe\'b3niona.\par
+Q nie je to jest lewakiem i czeka na sw\f2\'f3j prawy widelec (i jego wszyscy kolejni s\f0\'b9siedzi lewacy). Oznaczmy przez R pierwszego prawka na lewo od Q.\par
+R je -> teza spe\'b3niona\par
+R nie je -> nie u\'bfywa lewego, zatem jego lewy mo\'bfe sobie go wzi\'b9\'e6 i je\'9c\'e6.\par
+P jest lewakiem:\par
+Dow\f2\'f3d per analogiam.\par
+\f0\lang1045 Zag\'b3odzenie mo\'bfe by\'e6:\par
+Wyobra\'bfmy sobie \'bfe jeden z filozof\f2\lang1033\'f3\f0\lang1045 w ci\'b9gle jest ubiegany. Je\'9cli tak nie jest to \'b3atwo zauwa\'bfy\'e6 \'bfe nie b\'eadzie g\'b3odzenia(je\'9cli P trzyma prawy to jego kolejni s\'b9siedzi z lewej b\'ead\'b9 mieli pr\'eadzej czy p\f2\lang1033\'f3\f0\lang1045\'bfniej okazj\'ea zje\'9c\'e6 i od\'b3o\'bfy\'e6 widelec, wi\'eac pr\'eadzej czy p\f2\lang1033\'f3\f0\lang1045\'bfniej P dostanie lewy widelec). Podobnie gdy P nie ma \'bfadnego widelca. \f2\lang1033\par
+}
+ 

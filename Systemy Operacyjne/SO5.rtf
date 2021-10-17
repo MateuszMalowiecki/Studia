@@ -1,0 +1,50 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil\fcharset1 Cambria Math;}{\f3\fnil\fcharset238 Cambria Math;}{\f4\fnil\fcharset0 Cambria Math;}}
+{\*\generator Riched20 10.0.17763}{\*\mmathPr\mmathFont2\mwrapIndent1440 }\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+\'8ccie\'bfka absolutna - \'8ccie\'bfka z katalogu g\'b3\f1\lang1033\'f3\f0\lang1045 wnego do pliku (np. usr/ast/malibox oznaczaj\'b9ca, \'bfe katalog g\'b3\f1\lang1033\'f3wny zawiera podkatalog\f0\lang1045  \f1\lang1033 usr, kt\'f3ry z kolei zawiera podkatalog ast, kt\'f3ry zawiera skrzynk\f0\'ea pocztow\'b9 pliku.\lang1045 ).Katalog g\'b3\f1\lang1033\'f3wny jest pojedynczym katalogiem, od kt\'f3rego rozpoczyna si\f0\'ea ca\'b3a hierarchia. Pierwszym znakiem \'9ccie\'bfki bezwzgl\'eadnej jest uko\'9cnik (/)\lang1045\par
+\'8ccie\'bfka relatywna  - Je\'9cli wyznaczymy jeden katalog jako bie\'bf\'b9cy katalog roboczy,\f1\lang1033  to wszystkie nazwy \f0\'9ccie\'bfek, kt\f1\'f3re nie rozpoczynaj\f0\'b9 si\'ea w katalogu g\'b3\f1\'f3wnym, s\f0\'b9 przejmowane wzgl\'eadem katalogu roboczego.\lang1045  Np. je\'9cli katalogiem roboczym jest usr/ast to do pliku o \'9ccie\'bfce absolutnej "usr/ast/mailbox" mo\'bfna si\'ea odwo\'b3a\'e6 jako "mailbox." \'8ccie\'bfki relatywne nie zaczynaj\'b9 si\'ea od "/".\par
+\'8ccie\'bfka znormalizowana - \'9ccie\'bfka pozbawiona znak\f1\lang1033\'f3\f0\lang1045 w "/./" oraz "../dir".  Np. dla ../d1/./d2/../f1 \'9ccie\'bfka znormalizowana to  ../d1/f1 .\par
+\'8ccie\'bfka relatywna obliczana jest wzgl\'eadem obecnego katalogu roboczego. Ten katalog mo\'bfna zmieni\'e6 wywo\'b3aniem systemowym chdir(2).\par
+Punkt monta\'bfowy to katalog (zazwyczaj pusty) w aktualnie dost\'eapnym systemie plik\f1\lang1033\'f3w, w kt\'f3rym zamontowany jest dodatkowy system plik\'f3w (tj. Logicznie pod\f0\'b3\'b9czony).Punkt pod\'b3\'b9czenia staje si\'ea katalogiem g\'b3\f1\'f3wnym nowo dodanego systemu plik\'f3w, a ten system plik\'f3w jest dost\f0\'eapny z tego katalogu. Oryginalna zawarto\'9c\'e6 tego katalogu staje si\'ea niewidoczna i niedost\'eapna do momentu odmontowania systemu plik\f1\'f3w (tj. Od\f0\'b3\'b9czenia od g\'b3\f1\'f3wnego systemu plik\'f3w).\f0\par
+\lang1045 noatime -Wy\'b3\'b9cza mo\'bfliwo\'9c\'e6 aktualizacji czas\f1\lang1033\'f3w dost\f0\'eapu i-node'\f1\'f3w w tym systemie plik\'f3w (np\f0\lang1045 .\f1\lang1033  W celu szybszego dost\f0\'eapu do bufora wiadomo\'9cci w celu przyspieszenia serwer\f1\'f3w wiadomo\f0\'9cci). Dzia\'b3a to dla wszystkich typ\f1\'f3w i-\f0\lang1045 node'\f1\lang1033\'f3\f0\lang1045 w. \par
+noexec - Nie zezwalaj na bezpo\'9crednie wykonywanie jakichkolwiek plik\f1\lang1033\'f3w binarnych w zamontowanym systemie plik\'f3w.\par
+\f0\lang1045 sync - Wszystkie operacje wej\'9ccia / wyj\'9ccia w systemie plik\f1\lang1033\'f3w powinny by\f0\'e6 wykonywane synchronicznie. W przypadku no\'9cnik\f1\'f3w o ograniczonej liczbie cykli zapisu (np. niekt\'f3re dyski flash) synchronizacja mo\f0\'bfe spowodowa\'e6 skr\f1\'f3cenie cyklu \f0\'bfycia.\par
+Zad.2\par
+rename zmienia nazw\'ea pliku, w razie potrzeby przenosz\'b9c go mi\'eadzy katalogami. Wszelkie inne twarde \'b3\'b9cza do pliku (utworzone za pomoc\'b9 link(2)) oraz otwarte deskryptory plik\f1\'f3w dla oldpath\f0\lang1045  \f1\lang1033 pozostaj\f0\'b9 nienaruszone.\par
+Je\'9cli newpath ju\'bf istnieje, zostanie on zast\'b9piony atomowo, tak \'bfe nie b\'eadzie punktu, w kt\f1\'f3rym inny proces usi\f0\'b3uj\'b9cy uzyska\'e6 dost\'eap do newpath uzna, \'bfe go brakuje. Prawdopodobnie b\'eadzie jednak okno, w kt\f1\'f3rym zar\'f3wno oldpath, jak i newpath odnosz\f0\'b9 si\'ea do nazwy pliku, kt\f1\'f3rego nazwa jest zmieniana.\par
+Je\f0\'9cli oldpath i newpath s\'b9 istniej\'b9cymi twardymi dowi\'b9zaniami odnosz\'b9cymi si\'ea do tego samego pliku, w\f1\'f3wczas \f0\lang1045 rename\f1\lang1033  () nic nie robi i zwraca status powodzenia.\par
+Je\f0\'9cli newpath istnieje, ale operacja z jakiego\'9c powodu nie powiedzie si\'ea, rename () gwarantuje pozostawienie instancji newpath na miejscu.\par
+oldpath mo\'bfe okre\'9cla\'e6 katalog. W takim przypadku newpath musi albo nie istnie\'e6 lub musi okre\'9cla\'e6 pusty katalog.\par
+Je\'9cli oldpath odnosi si\'ea do dowi\'b9zania symbolicznego, nazwa \'b3\'b9cza jest zmieniana; je\'9cli newpath odnosi si\'ea do dowi\'b9zania symbolicznego, \'b3\'b9cze zostanie nadpisane. \par
+Operacja atomowa - operacja, kt\f1\'f3ra na okre\f0\'9clonym poziomie abstrakcji jest niepodzielna.\par
+EXDEV - Linux pozwala na pod\'b3\'b9czenie systemu plik\f1\'f3w w wielu punktach, ale \f0\lang1045 rename\f1\lang1033  () nie dzia\f0\'b3a w r\f1\'f3\f0\'bfnych punktach pod\'b3\'b9czenia, nawet je\'9cli ten sam system plik\f1\'f3w jest zamontowany na obu\f0\lang1045 . Nie mo\'bfna przemieszcza\'e6 si\'ea mi\'eadzy systemami plik\f1\lang1033\'f3w za pomoc\f0\'b9 wywo\'b3ania systemowego, wi\'eac np. mv wykonuje kopiowanie i usuwanie w przestrzeni u\'bfytkownika, co nigdy nie jest atomowe\par
+Zad.3\par
+Dowi\'b9zania symboliczne (ang. symbolic links) specjalny typ pliku, kt\f1\'f3ry\f0\lang1045  \f1\lang1033 w zawarto\f0\'9cci przechowuje \'9ccie\'bfk\'ea do innego pliku. System nie sprawdza poprawno\'9cci tej \'9ccie\'bfki \f2\u8594?\f1  mo\f0\'bfe powsta\'e6 p\'eatla.\par
+\f3\lang1045 Dowi\'b9zania twarde - wska\'9fniki na i-node'y plik\f4\lang1033\'f3w\par
+\f3\lang1045 r\f4\lang1033\'f3\f3\lang1045\'bfnica - dowi\'b9zanie twarde wskazuje konkretny obszar na dysku, dowi\'b9zanie symboliczne wskazuje na inny plik, kt\f4\lang1033\'f3ry wskazuje na obszar na dysku (taki skr\'f3t windowsowy).\f3\lang1045\par
+p\'eatle:\par
+$ mkdir foo                   make a new directory\par
+     $ touch foo/a                 create a 0-length file\par
+     $ ln -s ../foo foo/testdir    create a symbolic link\par
+komentarz: testdir jest dow. symb. do katalogu foo w kt\f4\lang1033\'f3\f3\lang1045 rym si\'ea znajduje\par
+\lang1033 kiedy wykryje - Gdy wyst\'b9pi\'b3o zbyt wiele poziom\f4\'f3\f3 w dowi\'b9za\'f1 symbolicznych, obecnie maksimum wynosi 40.\par
+dlaczego twarde nie robi p\'eatli - Zezwalanie na twarde \'b3\'b9cza do katalog\f4\'f3w spowodowa\f3\'b3oby uszkodzenie struktury skierowanego acyklicznego grafu systemu plik\f4\'f3w, prawdopodobnie tworz\f3\'b9c p\'eatle katalog\f4\'f3w i zawieszaj\f3\'b9ce si\'ea poddrzewa katalogu, co spowodowa\'b3oby, \'bfe fsck i inne modu\'b3y przechodz\'b9ce drzewa plik\f4\'f3w by\f3\'b3y podatne na b\'b3\'eady.\par
+Zgodnie z konwencj\'b9 systemy plik\f4\'f3w UNIX traktuj\f3\'b9 wpis \'84.\rdblquote  i wpis nadrz\'eadny \'84..\rdblquote  jako dowi\'b9zania twarde odpowiednio do tego samego katalogu i katalogu nadrz\'eadneg. liczba dowi\'b9za\'f1 do katalogu == liczba podkatalag\f4\'f3\f3 w + 2 (2 jest warto\'9cci\'b9 domy\'9cln\'b9)\par
+\f0\lang1045 Zad.4\par
+W informatyce ioctl (skr\f1\lang1033\'f3t od kontroli wej\f0\'9ccia / wyj\'9ccia) to systemowe wywo\'b3anie specyficznych dla urz\'b9dzenia operacji wej\'9ccia / wyj\'9ccia i innych operacji, kt\f1\'f3rych nie mo\f0\'bfna wyrazi\'e6 za pomoc\'b9 zwyk\'b3ych wywo\'b3a\'f1 systemowych. \par
+\lang1045 Drugi argument(request) to zale\'bfny od urz\'b9dzenia kod \'bf\'b9dania.\par
+ Trzeci argument to nietypowy wska\'9fnik do pami\'eaci. Jest to tradycyjnie char * argp (zanim void * by\'b3 wa\'bfny C) .\par
+Ioctl ma polecenie zakodowane w dolnym s\'b3owie, a wielko\'9c\'e6 dowolnych parametr\f1\lang1033\'f3w wej\f0\'9cciowych i wyj\'9cciowych w g\f1\'f3rnym s\f0\'b3owie. Wysokie 3 bity g\f1\'f3rnego s\f0\'b3owa s\'b9 u\'bfywane do kodowania statusu wej\'9ccia / wyj\'9ccia parametru.\lang1045\par
+
+\pard\ri-72\sa200\sl276\slmult1\par
+31 29 28                             16 15                        8 7                      0\par
++---------------------------------------------------------------------------------+\par
+| I/O | Parameter Length        | Command Group | Command       |\par
++---------------------------------------------------------------------------------+\par
+
+\pard\sa200\sl276\slmult1 DIOCEJECT - Wysu\'f1 kaset\'ea z no\'9cnikiem z urz\'b9dzenia wymiennego.\par
+KIOCTYPE - Pobierz znak z klawiatury\par
+SIOCGIFCONF - Pobierz list\'ea konfiguracji interfejsu.\par
+\lang1033 komentarz - ten interejs jest brzydki !!!\par
+}
+ 

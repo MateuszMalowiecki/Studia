@@ -1,0 +1,120 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+Sprawiedliwo\'9c\'e6 - Podej\'9ccie round-robin(1. lista) by\'b3oby najbardziej uczciwym podej\'9cciem wielow\'b9tkowym. To dlatego, \'bfe tutaj ka\'bfdy w\'b9tek ma szans\'ea na wykonanie.\par
+silny semafor - semafor kt\f1\lang1033\'f3\f0\lang1045 ry dzia\'b3a na zasadzie kolejki FIFO (proces kt\f1\lang1033\'f3\f0\lang1045 ry pierwszy przyszed\'b3, pierwszy go opu\'9cci). G\'b3\f1\lang1033\'f3wn\f0\'b9 r\f1\'f3\f0\'bfnic\'b9 w s\'b3abym i silnym semaforze jest kolejno\'9c\'e6 usuwania proces\f1\'f3w. Nie ma okre\f0\'9clonej kolejno\'9cci, w kt\f1\'f3rej procesy s\f0\'b9 usuwane z kolejki w s\'b3abym semaforze.\lang1045\par
+Odwr\f1\lang1033\'f3\f0\lang1045 cenie priorytet\f1\lang1033\'f3\f0\lang1045 w - zjawisko mog\'b9ce wyst\'eapowa\'e6 w wielozadaniowych systemach operacyjnych takie, \'bfe w danej chwili wykonuje si\'ea inne zadanie ni\'bf powinno si\'ea wykonywa\'e6 zgodnie z regu\'b3ami algorytmu szeregowania.\par
+\tab W praktyce inwersja priorytet\f1\lang1033\'f3w to zdobycie przez zadanie b\f0\'ead\'b9ce w sekcji krytycznej pierwsze\'f1stwa w dost\'eapie do procesora kosztem zada\'f1 o wy\'bfszych priorytetach.\par
+Blokady wiruj\'b9ce:\par
+Sprawiedliwo\'9c\'e6:\par
+Je\'9cli nie zostanie wyw\'b3aszczony to sam nie odda.\par
+Je\'9cli deadlock to ju\'bf w og\f1\'f3le nie ma fairness \par
+\f0 Odwr\f1\'f3\f0 cenie priorytet\f1\'f3\f0 w:\par
+Za\'b3\f1\'f3\f0\'bfmy, \'bfe w systemie s\'b9 dwa w\'b9tki. W\'b9tek 2 (T2) ma wysoki priorytet planowania, a W\'b9tek 1 (T1) ma ni\'bfszy priorytet. W tym przyk\'b3adzie za\'b3\f1\'f3\f0\'bfmy, \'bfe program planuj\'b9cy CPU zawsze b\'eadzie dzia\'b3a\'b3 T2 na T1, je\'9cli rzeczywi\'9ccie oba s\'b9 mo\'bfliwe do uruchomienia; T1 dzia\'b3a tylko wtedy, gdy T2 nie jest w stanie tego zrobi\'e6 (np. Gdy T2 jest zablokowany na I / O). Teraz problem. Za\'b3\f1\'f3\f0\'bfmy, \'bfe T2 jest z jakiego\'9c powodu zablokowany. Wi\'eac T1 dzia\'b3a, chwyta blokad\'ea i wchodzi do krytycznej sekcji. T2 jest teraz odblokowany (by\'e6 mo\'bfe dlatego, \'bfe zako\'f1czono we / wy), a program planuj\'b9cy CPU natychmiast go planuje (w ten spos\f1\'f3b usuwaj\f0\'b9c z pami\'eaci T1). T2 pr\f1\'f3buje teraz zdoby\f0\'e6 blokad\'ea, a poniewa\'bf nie mo\'bfe (T1 trzyma blokad\'ea), po prostu si\'ea kr\'eaci. Poniewa\'bf zamek jest zamkiem obrotowym, T2 obraca si\'ea na zawsze, a system jest zawieszony.\par
+Deadlock przy odwr\f1\'f3ceniu priorytet\'f3w\f0\par
+Powy\'bfej wymienione przypadki wynikaj\'b9 z b\'b3\'ead\f1\'f3\f0 w planisty.\par
+W jaki spos\f1\'f3\f0 b pozosta\'b3e metody zapobiegaj\'b9:\par
+Sprawiedliwo\'9c\'e6:\par
+Mutex - sam si\'ea wyw\'b3aszczy przy czekaniu, zaimplementowanie na kolejce (?)\par
+Semafor - rzeczywiste wdro\'bfenie semafor\f1\'f3w obejmuje kwestie zwi\f0\'b9zane z kolejk\'b9 i harmonogramem planowania w celu zapewnienia uczciwo\'9cci i priorytetu, np. obud\'9f najd\'b3u\'bfszy u\'9cpiony w\'b9tek o najwy\'bfszym priorytecie.\par
+Zmienne warunkowe - Zmienne warunkowe pozwalaj\'b9 na u\'9cpienie zestawu w\'b9tk\f1\'f3w a\f0\'bf do "\'b3askotania"(ang. tickle)! Mo\'bfesz \'b3askota\'e6 jeden w\'b9tek lub wszystkie w\'b9tki, kt\f1\'f3re \f0\'9cpi\'b9. Je\'9cli obudzisz tylko jeden w\'b9tek, system operacyjny zdecyduje, kt\f1\'f3ry w\f0\'b9tek si\'ea obudzi. Nie budzisz w\'b9tk\f1\'f3w bezpo\f0\'9crednio, zamiast tego \f2\'84sygnalizujesz\rdblquote  zmienn\f0\'b9 warunkow\'b9, kt\f1\'f3ra nast\f0\'eapnie budzi jeden (lub wszystkie) w\'b9tki, kt\f1\'f3re \f0\'9cpi\'b9 w zmiennej warunkowej.\par
+Odwr\f1\'f3\f0 cenie priorytet\f1\'f3\f0 w:\par
+Mutex:\par
+W przypadku protoko\'b3u pu\'b3apu priorytetu wsp\f1\'f3\f0\'b3u\'bfytkowany proces mutex (kt\f1\'f3ry uruchamia kod systemu operacyjnego) ma sw\'f3j charakterystyczny (wysoki) priorytet, kt\'f3ry jest przypisany do zadania blokuj\f0\'b9cego muteks. Dzia\'b3a to dobrze, pod warunkiem, \'bfe inne zadania o wysokim priorytecie, kt\f1\'f3re pr\'f3buj\f0\'b9 uzyska\'e6 dost\'eap do muteksu, nie maj\'b9 priorytetu wy\'bfszego ni\'bf priorytet pu\'b3apu.\par
+Semafor - j.w.\par
+Zmienna warunkowa - ???\par
+\par
+Zad.2\par
+semafor: mechanizm do synchronizacji m\f1\'f3wi\f0\'b9cy ile jest dost\'eapnych zasob\f1\'f3w. \par
+\f0 class Semaphore\{\par
+    Mutex mutex;\par
+    CondVar cond;\par
+    int cnt; \par
+\}\par
+void init(Semaphore s, int val)\{ \par
+    s.cnt = val;\par
+    s.mutex = new Mutex();\par
+    s.cond = new CondVar();\par
+\}\par
+void wait(Semaphore s)\{ // AKA wait()\par
+   mutex_lock(s.mutex)\par
+while(s.cnt < 1)  \{\par
+        cond_wait(s.cond, s.mutex);\par
+  \} \par
+   s.cnt--;\par
+    mutex_unlock(s.mutex);\par
+\}\par
+void post(Semaphore s)\{ // AKA post() AKA signal()\par
+  mutex_lock(s.mutex);\par
+  s.cnt++;\par
+  if(s.cnt == 1)\{\par
+        cond_broadcast(s.cond);\par
+    \} \par
+    mutex_unlock(s.mutex);\par
+\}\par
+Zad.3\par
+shared lock: wiele w\'b9tk\f1\'f3w mo\f0\'bfe by\'e6 podpi\'eatych do jednego zasobu na jednej blokadzie i wiele mo\'bfe naraz czyta\'e6, tylko jeden mo\'bfe naraz pisa\'e6.\par
+struct RWLock \{\par
+tid_t owner; //id pisarza, kt\f1\'f3\f0 ry siedzi(NULL, gdy siedz\'b9 czytelnicy)\par
+int readers; //liczba czytelnik\f1\'f3\f0 w wewn\'b9trz zasobu(0 gdy korzysta pisarz)\par
+mutex_t critsec, writer;  //(mutex do sekcji krytycznej oraz muteks blokuj\'b9cy innych pisarzy)\par
+cond_t noreaders, nowriter; //zmienne warukowe, kt\f1\'f3\f0 re blokuj\'b9 czytelnik\f1\'f3\f0 w i pisarza\par
+\}\par
+void init(RWLOCK r)\{\par
+    r.owner = NULL; r.readers = 0;\par
+    mutex_init(&r.critsec); mutex_init(&r.writer);\par
+    cond_init(&r.noreaders); cond_init(&r.nowriter);\par
+\}\par
+void rdlock(RWLOCK r)\{\par
+    lock(r.critsec);\par
+    while(r.owner != NULL) // aka writer exists\par
+        cond_wait(r.nowriter, r.critsec);\par
+   r. readers++;\par
+    unlock(r.critsec);\par
+\}\par
+\par
+void wrlock(RWLOCK r, tid_t tid)\{\par
+    lock(r.writer); // other writers will block here\par
+    lock(r.critsec);\par
+    while(r.readers > 0) // on 0 readers critsec acquired\par
+        cond_wait(r.noreader, r.critsec);\par
+    r.owner = tid; // set owner AKA there is a writer\par
+    unlock(r.critsec);\par
+\}\par
+void rwunlock(RWLock r)\{\par
+    lock(r.critsec);\par
+   if(r.readers == 0)\{ // writer unlock\par
+        r.owner = NULL;\par
+        cond_broadcast(r.nowriter); // readers can continue. Broadcast to wakeup all readers\par
+        unlock(r.writer); // next writer will unlock and wait for critsec\par
+    \} else \{ // reader unlock\par
+        r.readers--;\par
+        if(r.readers == 0) // budzimy writera tylko je\'9cli reader\f1\'f3w jest 0 \f0\'bfeby nie by\'b3o fake-\f1\'f3w\par
+           \f0\lang1045 cond_\f1\lang1033  \f0\lang1045 singal\f1\lang1033 (\f0\lang1045 r.\f1\lang1033 noreaders); // mo\f0\'bfna broadcasta \'bfeby budzi\'e6 wszystkich writer\f1\'f3w\par
+    \}\par
+    unlock(\f0\lang1045 r.\f1\lang1033 critsec)\par
+\}\par
+\f0\lang1045 Zad.4\par
+futex (ang. fast user space mutex) \f2\endash  implementuje podstawowe blokowanie (podobnie jak muteks), ale unika odwo\f0\'b3ywania si\'ea do j\'b9dra, je\'9cli nie jest to bezwzgl\'eadnie konieczne.  \par
+ Ka\'bfda operacja futeksa startuje z user space, ale mo\'bfe by\'e6 konieczna komunikacja z kernelem, u\'bfywaj\'b9c syscall'a \par
+futex_wait zwi\'eaksza o 1 licznik \par
+\f2\bullet  je\f0\'9cli zdekrementowano do 0, to oznacza, ze nie ma rywalizacji i mo\'bfna przej\'9c\'e6 do sekcji krytycznej.  \par
+\f2\bullet  je\f0\'9cli jest ujemny, to oznacza, ze jest rywalizacja \f2\endash  trzeba ustawi\f0\'e6 licznik na -1 i za po\'9crednictwem wywsysa futex() wys\'b3a\'e6 proces do kolejki zablokowanych, czekaj\'b9cych, a\'bf inny proces zrobi up na futeksie. \par
+futex_wake zwi\'eaksza o 1 licznik.  \par
+\f2\bullet  je\f0\'9cli zwi\'eakszono licznik z 0 do 1, to oznacza, ze nie by\'b3o rywalizacji, wi\'eac nic nie trzeba robi\'e6. \par
+\f2\bullet  je\f0\'9cli licznik nie jest dodatni, to trzeba ustawi\'e6 go na 1 i wybudzi\'e6 dowoln\'b9 liczb\'ea u\'9cpionych proces\f1\lang1033\'f3w. U\f0\'bfywa si\'ea do tego system wywsysa futex(2).  \par
+ \lang1045 futex(2). Futex ma licznik domy\'9clnie ustawiony na 1.   \par
+rywalizacja - min.2 w\'b9tki czekaj\'b9 na odblokowanie semafora\par
+Implementacja bsem'a:\par
+var bsem = \{cnt=1\}\par
+lock()\{\par
+    while(!compare_and_swap(bsem.cnt, 1, 0)) // iff cnt==0 or couldn't write\par
+        FUTEX_WAIT(bsem.cnt, 0); // no deadlock as u can see\par
+    // exit only on successful swap AKA lock acquire\par
+\}\par
+unlock()\{\par
+    compare_and_swap(bsem.cnt, 0, 1); // cnt always 0 at this point so it works\par
+    FUTEX_WAKE(bsem.cnt, 1);\par
+\}\f1\lang1033\par
+}
+ 

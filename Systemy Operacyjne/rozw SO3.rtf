@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+stan procesu - stan w kt\f1\lang1033\'f3\f0\lang1045 rym znajduje si\'ea proces\par
+stany procesu:\par
+-gotowy(za\'b3adowany do pami\'eaci g\'b3\f1\lang1033\'f3\f0\lang1045 wnej i czekaj\'b9cy na rozpocz\'eacie wykonania si\'ea [na prze\'b3\'b9czenie kontekstu].)\par
+-wykonywany(zosta\'b3 wybrany przez dispatcher do wykonania si\'ea).\par
+-zatrzymany( proces zosta\'b3 zatrzymany i mo\'bfe zosta\'e6 wznowiony jedynie przez inny proces [na przyk\'b3ad proces mo\'bfe zosta\'e6 zatrzymywany i wznawiany przez debuggera] lub przez SIGCONT.) -sygna\'b3y Sigstop i Sigcont\par
+-sen przerywalny(Zablokowany stan procesu w tym trybie proces czeka zdarzenie[tj. koniec I/O, dost\'eapno\'9c\'e6 zasob\f1\lang1033\'f3\f0\lang1045 w] albo sygna\'b3. ) -sleep mode\par
+-sen nieprzerywalny(R\f1\lang1033\'f3wnie\f0\'bf stan zablokowany, proces nie obs\'b3uguje \'bfadnych sygna\'b3\f1\'f3w(na przyk\f0\'b3ad czeka na obs\'b3u\'bfenie page fault)).\lang1045\par
+-zombie(Zako\'f1czy\'b3 swoje wykonanie, jednak nadal musi zachowywa\'e6 struktur\'ea swojej pracy w tablicy proces\f1\lang1033\'f3\f0\lang1045 w; ojciec nie obs\'b3u\'bfy\'b3 jego zamkni\'eacia).\par
+Zmiany stan\f1\lang1033\'f3\f0\lang1045 w:\par
+-Sygna\'b3(wykonyany -> zatrzymany, zatrzymany -> gotowy, przerywalny -> gotowy; wysy\'b3ane przez proces u\'bfytkownika; mog\'b9 te\'bf by\'e6 wys\'b3ane(chyba)przez j\'b9dro[np. SIGSTOP; SIGCONT])\par
+-Zdarzenie(przerywalny -> gotowy, nieprzerywalny -> gotowy; np. zako\'f1czenie I/O czy udost\'eapnianie zasobu podejmowane przez j\'b9dro SO[poniewa\'bf ono tym wszystkim zarz\'b9dza])\par
+-Running state (gotowy -> wykonywany; podejmowane przez dispatcher - j\'b9dro SO)\par
+-Zaplanowanie(wykonywany -> gotowy; podejmowane przez scheduler - j\'b9dro SO)\par
+-Ko\'f1czenie(wykonywany -> zombie; kod sterownik\f1\lang1033\'f3\f0\lang1045 w(exit, SIGKILL, SIGTERM, b\'b3\'b9d I/O))\par
+-Executing -> Interruptible/Uninterruptible: (\'bf\'b9danie wykonania jakiego\'9c I/O(j\'b9dro SO))\par
+R\f1\lang1033\'f3\f0\lang1045 znica mi\'eadzy przerywalnym i nieprzerywalnym -  W przerywalnym reaguje na sygna\'b3y, w nieprzerywalnym nie reaguje(bo mo\'bfe spa\'e6 w trakcie wykonania SYSCALL'a).(Stallings)\par
+Zablokowany sygna\'b3 - sygna\'b3 wys\'b3any, ale nie mo\'bfe by\'e6 odebrany dop\f1\lang1033\'f3\f0\lang1045 ki nie zostanie odblokowany.\par
+Ignorowa\'e6 sygna\'b3 - nic nie robi\'e6 po otrzymaniu sygna\'b3u. Nie zosta\'b3 zdefiniowany handler dla konkretnego sygna\'b3u\par
+Nie da si\'ea blokowa\'e6 SIGKILLa(w przeciwie\'f1stwie do Sigint i Sigterm) . Zignorowanie tego sygna\'b3u powoduje zabicie procesu.\par
+Zad.2\par
+Linux:\par
+\f1\lang1033 Proces jest tworzony, gdy inny proces wykonuje wywo\f0\'b3anie fork. \lang1045 Tworzony jest nowy deskryptor procesu(task_struct)   dla procesu potomnego i wi\'eakszo\'9c\'e6 danych przepisywana jest od rodzica. Dziecko otrzymuje PID, tworzona zostaje mapa jego pami\'eaci i nadawany zostaje dzielony dost\'eap do plik\f1\lang1033\'f3w rodzica\f0\lang1045 . \f1\lang1033 Nast\f0\'eapnie wype\'b3nia si\'ea jego rejestry odpowiednimi informacjami i jest gotowy do uruchomienia. \par
+WinNT:\par
+Proces jest tworzony, gdy inny proces wykonuje wywo\'b3anie CreateProcess, kt\f1\'f3re tworzy ca\f0\'b3kiem nowy proces, kt\f1\'f3ry wykonuje program podany jako argument.\f0\lang1045  Proces-dziecko nie otrzymuje kopii pami\'eaci swojego rodzica (CreateProcess dzia\'b3a troch\'ea jak po\'b3\'b9czenie fork z execve).\f1\lang1033\par
+fork:\par
+- utworzenie struktury zada\u324? "task-struct" (Struktura zada\u324? zawiera r\'f3\f0\'bfnorodne pola. Niekt\f1\'f3re z tych p\'f3l zawieraj\f0\'b9 wska\'9fniki do innych struktur danych lub segment\f1\'f3w, na przyk\f0\'b3ad zawieraj\'b9ce informacje o otwartych plikach) oraz kilku innych towarzysz\'b9cych struktur danych, takich jak stos trybu j\'b9dra(kernel-mode stack) i struktura informacji w\'b9tku(thread-info).\par
+-szukanie dost\'eapnego PID, kt\f1\'f3ry nie jest obecnie u\f0\'bfywany przez \'bfaden proces, i aktualizacja wpisu tablicy skr\f1\'f3t\'f3w PID, aby wskazywa\f0\'b3 na now\'b9 struktur\'ea zada\'f1. (W przypadku kolizji w tabeli skr\f1\'f3t\'f3w deskryptory proces\'f3w mog\f0\'b9 by\'e6 powi\'b9zane). \par
+-przydzielenie pami\'eaci dla danych dziecka i segment\f1\'f3w stosu oraz wykona\f0 nie dok\'b3adnych kopii segment\f1\'f3w rodzica\f0\lang1045 (p\f1\lang1033 oniewa\f0\'bf semantyka rozwidlenia m\f1\'f3wi, \f0\'bfe \'bfadna pami\'ea\'e6 nie jest dzielona mi\'eadzy rodzicem a dzieckiem). \par
+- dziecko gotowe do uruchomienia. \par
+execve(przekszta\'b3caj\'b9cy  proces wywo\'b3ywania w nowy proces.Nowy proces jest zbudowany ze zwyk\'b3ego pliku, kt\f1\'f3rego nazwa \f0\lang1045 jest wskazywana przez PATH).\f1\lang1033\par
+Wywo\f0\'b3anie exec sprawia, \'bfe j\'b9dro szuka danego polecenia, kopiuje argumenty i zmienne \'9crodowiskowe i zwalnia star\'b9 przestrze\'f1 adresow\'b9 i tablic\'ea stron. Tworzona zostaje nowa przestrze\'f1 adresowa ale (w wi\'eakszo\'9cci system\f1\'f3w) nie zostaje ona uzupe\f0\'b3niona (by\'e6 mo\'bfe z wyj\'b9tkiem strony dla stosu). Na koniec argumenty i zmienne \'9crodowiskowe zostaj\'b9 skopiowane na stos, sygna\'b3y zostaj\'b9 zresetowane a rejestry wype\'b3nione zerami.\par
+COW:\par
+ Kopiowanie pami\'eaci jest drogie. SO daje dziecku w\'b3asne tablice stron, ale wskazuj\'b9 na strony rodzica, oznaczone jako tylko do odczytu. W ten spos\'f3b nale\'bfy skopiowa\'e6 tylko te strony, kt\f1\'f3re \f0\lang1045 b\'ead\'b9 \f1\lang1033 nadpisywane przez dziecko\f0\lang1045 . \f1\lang1033 Kiedy dziecko pr\'f3buje pisa\f0\'e6 do pami\'eaci, nast\'eapuje protection fault. J\'b9dro w takiej sytuacji alokuje now\'b9 kopi\'ea strony dla procesu (read/write) i dopiero wtedy kopiuje do niej pami\'ea\'e6.\par
+\lang1045 Zad.3\par
+-Fork\f2  nie jest ju\f0\'bf prosty. Specyfikacja POSIX wymienia 25 specjalnych przypadk\f1\lang1033\'f3w kopiowania stanu rodzica do dziecka (file locks, timery, asynchroniczne IO, tracing itp.). W dodatku wiele flag wp\f0\'b3ywa na zachowanie fork w kwestii: - mapowania pami\'eaci, - deskryptor\f1\'f3w plik\'f3w\f0\lang1045 , \lang1033 w\'b9tk\f1\'f3w\f0\lang1045 .\f1\lang1033\par
+\f0\lang1045 -Fork nie komponuje. Na przyk\'b3ad przez duplikowanie ca\'b3ej przestrzeni adresowej przy buferowanym IO u\'bfytkownik musi eksplicite sflushowa\'e6 IO przed forkiem aby unikn\'b9\'e6 duplikacji zawarto\'9cci bufora. Powoduje to, \'bfe fork jest kiepsk\'b9 abstrakcj\'b9\lang1033\par
+\lang1045 -Fork nie jest w\'b9tkowo-bezpieczny. Dziecko utworzone przez fork ma tylko jeden w\'b9tek (kopi\'ea w\'b9tku wywo\'b3uj\'b9cego). Mo\'bfliwe jest, \'bfe przestrze\'f1 adresowa dziecka nie b\'eadzie sp\f1\lang1033\'f3jn\f0\'b9 kopi\'b9 przestrzeni rodzica. \lang1045  \par
+-Fork jest niepewny. Domy\'9clnie rozwidlone dziecko dziedziczy wszystko od swojego rodzica, a programista jest odpowiedzialny za jawne usuni\'eacie stanu, kt\f1\lang1033\'f3rego dziecko nie potrzebuje, przez: zamkni\f0\'eacie deskryptor\f1\'f3w plik\'f3w (lub oznaczenie ich jako close-on-exec), czyszczenie sekret\'f3w z pami\f0\'eaci, izolowanie przestrzenii nazw za pomoc\'b9 unshare () itp.\par
+-Fork jest wolny. W ci\'b9gu dziesi\'eacioleci od pierwszego wdro\'bfenia fork'a Thompson rozmiar pami\'eaci i wzgl\'eadny koszt dost\'eapu stale ros\'b3y.\par
+-Fork nie skaluje si\'ea. Sposobem do stworzenia skalowalnego systemu jest unikanie niepotrzebnego dzielenia. Sforkowany proces dzieli wszystko ze swoim rodzicem. Wynika st\'b9d centralizacja stanu w monolitycznym j\'b9drze.\par
+-Fork zach\'eaca do nadmiernego marnotrastwa pami\'eaci. Gdy du\'bfy proces wywo\'b3uje fork nale\'bfy stworzy\'e6 wiele mapowa\'f1 stron copy-on-write, kt\f1\'f3re prawdopodobnie nigdy nie zostan\f0\'b9 zmodyfikowane. \par
+Vfork:\par
+Tworzy nowy proces, kt\f1\'f3ry dzieli przestrze\f0\'f1 adresow\'b9 rodzica dop\f1\'f3ki dziecko wezwie exec. Pozwala to na podobny styl u\f0\'bfycia jak fork gdzie nowy proces modyfikuje stan kernela przed wywo\'b3aniem execa. Przez dzielenie pami\'eaci jest trudno u\'bfywa\'e6 go bezpiecznie ale unika si\'ea kopiowania przestrzeni adresowej dzi\'eaki czemu zyskuje si\'ea na wydajno\'9cci.\par
+posix_spawn(fork/vfork + exec)\par
+API posix_spawn u\'b3atwia refaktorowanie kodu, kt\f1\'f3ry zawiera\f0\'b3 fork i exec, kt\f1\'f3re by\f0\'e6 mo\'bfe znajdowa\'b3y si\'ea w odleg\'b3ych miejscach w kodzie. Wywo\'b3anie close() po wywo\'b3aniu fork mo\'bfe zosta\'e6 zast\'eapione przez pre-spawn call, kt\f1\'f3re zapisuje, \f0\'bfe w dziecku ma odby\'e6 si\'ea zamkni\'eacie danego pliku.\par
+\lang1045 Zad.4\par
+polecenia: xeyes &, kill PID, xeyes &, pkill xeyes, xkill, xeyes, kill -STOP $PID, kill -CONT $PID, cd /proc/24, cat statuskill -SIGUSR1 [pid], cat /proc/[pid]/status, kill -SIGUSR2 [pid], cat /proc/[pid]/status, kill -SIGHUP  [pid], cat /proc/[pid]/status, kill -SIGINT  [pid], cat /proc/[pid]/status.)\par
+Kt\f1\lang1033\'f3\f0\lang1045 ry sygna\'b3 - sygna\'b3 nakazuj\'b9cy koniec pracy(SIGTERM).\par
+Sygna\'b3 oczekuj\'b9cy - sygna\'b3 wys\'b3any, ale jeszcze nie odebrany\par
+Maska syg. ocz. - sigpnd(tak m\f1\lang1033\'f3\f0\lang1045 wi man 5 proc).\par
+SIGUSR1/SIGUSR2 \f2\endash  sygna\f0\'b3y zdefiniowane przez u\'bfytkownika\par
+SIGHUP (\f2\'84signal hang up\rdblquote ) \endash  sygna\f0\'b3 wysy\'b3any do procesu kiedy jego terminal zostanie zamkni\'eaty.\par
+SIGINT \f2\endash  przerwanie z klawiatury\f0\par
+pozosta\'b3e pola: \par
+SigQ \f2\endash  liczba zakolejkowanych sygna\f0\'b3\f1\lang1033\'f3w real user ID danego procesu oraz limit zakolejkowanych sygna\f0\'b3\f1\'f3w dla tego procesu.\f0\lang1045\par
+Sigblk, Sigign, Sigcgt - maski opisuj\'b9ce sygna\'b3y (odpowiednio) zablokowane, zignorowane, z\'b3apane(przekazane handlerowi)\par
+kt\f1\lang1033\'f3\f0\lang1045 ry jako pierwszy - Jako pierwszy dostarczony zostanie SIGHUP (znajdowa\'b3 si\'ea na prawym ko\'f1cu w masce sygna\'b3\f1\lang1033\'f3w oczekuj\f0\'b9cych).\lang1045\par
+}
+ 

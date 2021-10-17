@@ -1,0 +1,61 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+odwzorowanie plik\f1\lang1033\'f3\f0\lang1045 w w pami\'ea\'e6 - Mapowanie pliku mapuje region pliku bezpo\'9crednio do pami\'eaci wirtualnej procesu wywo\'b3uj\'b9cego.Po zmapowaniu pliku mo\'bfna uzyska\'e6 dost\'eap do jego zawarto\'9cci poprzez operacje na bajtach w odpowiednim regionie pami\'eaci.Strony z pliku s\'b9 \'b3adowane zgodnie z wymaganiami.\par
+odwzorwanie pami\'eaci anonimowej - Nie ma odpowiadaj\'b9cego mu pliku. Zamiast tego wszystkie strony s\'b9 zainicjowane na zero. (mo\'bfna te\'bf my\'9cle\'e6 o tym jako o mapowaniu pliku wirtualnego, kt\f1\lang1033\'f3\f0\lang1045 rego warto\'9cci s\'b9 zinicjowane na zero).\par
+Zawarto\'9c\'e6 pam. wirt. :\par
+odwzorowanie plik\f1\lang1033\'f3\f0\lang1045 w - region danego pliku.\par
+odwzorowanie anonimowe - zero\par
+R\f1\lang1033\'f3\f0\lang1045\'bfnice mi\'eadzy prwatnym i dzielonym:\par
+R\f1\lang1033\'f3\f0\lang1045\'bfnice te maj\'b9 zwi\'b9zek z tym \'bfe niekt\f1\lang1033\'f3\f0\lang1045 re strony pami\'eaci wirtualnej mog\'b9 by\'e6 dzielone mi\'eadzy kilka proces\f1\lang1033\'f3\f0\lang1045 w. W mapowaniu prywatnym(w przeciwie\'f1stwie do dzielonego) modyfikacje zawarto\'9cci mapowa\'f1 s\'b9 niewidoczne dla pozosta\'b3ych proces\f1\lang1033\'f3\f0\lang1045 w i w przypadku mapowania plik\f1\lang1033\'f3w nie s\f0\'b9 przenoszone do pliku bazowego.\par
+kopiowanie przy zapisie - gdy jaki\'9c proces robi zapis do strony, tworzona jest kopia tej strony.(fajny rysunek na l10(2).pdf, strona 3)\par
+dlaczego wykorzystuje - poniewa\'bf pomimo tego \'bfe strony s\'b9 dzielone, to zmiany s\'b9 prywatne.\par
+Zad.2\par
+scenariusze u\'bfycia:\par
+prywatne plik\f1\'f3\f0 w - zainicjowanie regionu pami\'eaci z zawarto\'9cci pliku(np. zainicjowanie sekcji text i data z cz\'ea\'9cci binarnego pliku wykonywalnego lub biblioteki wsp\f1\'f3\f0\'b3dzielonej).\par
+prywatne anonimowe - zaalokowanie nowej pami\'eaci dla procesu\par
+dzielone plik\f1\'f3\f0 w - Pozwoli\'e6 niepowi\'b9zanym procesom wsp\f1\'f3\f0\'b3u\'bfytkowa\'e6 region pami\'eaci  w celu wykonania IPC(komunikacja mi\'eadzyprocesowa) w okre\'9clony spos\f1\'f3b\f0\lang1045  podobny do dzielonych segment\f1\lang1033\'f3\f0\lang1045 w pami\'eaci System V.\par
+dzielone anonimowe - IPC podobne do dzielonych segment\f1\lang1033\'f3\f0\lang1045 w pami\'eaci System V, ale jedynie pomi\'eadzy powi\'b9zanymi procesami.\par
+Private file mapping:\par
+char *priv_file_map = (char *)mmap(NULL, 4096, PROT_NONE, MAP_FILE | MAP_PRIVATE, fd, 0);\par
+Private anonymous mapping:\par
+char *priv_anon_map = (char *)mmap(NULL, 4096, PROT_READ, MAP_PRIVATE | MAP_ANON, -1, 0);\par
+Shared file mapping:\par
+char *shar_file_map = (char *)mmap(NULL, 4096, PROT_WRITE, MAP_SHARED | MAP_FILE, fd, 0 );\par
+Shared anonymous mapping:\par
+char *shar_anon_map = (char *)mmap(NULL, 4096, PROT_EXEC, MAP_SHARED | MAP_ANON, -1, 0 );\par
+If addr is NULL, then the kernel chooses the (page-aligned) address at which to create the mapping; this is the most portable method of creating a new mapping.  If addr is not NULL, then the kernel takes it as a hint about where to place the mapping;\par
+fork - dziecko dziedziczy mapowania oraz ich typ(MAP_PRIVATE, MAP_SHARED). W przypadku MAP_PRIVATE robimy copy-on-write, w przypadku MAP_SHARED dziecko wsp\f1\lang1033\'f3\f0\lang1045\'b3dzieli strony RAM z rodizcem.\par
+execve - mapowania s\'b9 stracone, ale zostaj\'b9 odziedziczone przez nowy proces stworzony przez forka.Odwzorowania pami\'eaci nie s\'b9 zachowywane.\par
+ przestrze\'f1 wymiany \f2\endash  przestrze\f0\'f1 na dysku u\'bfywana do tymczasowego przechowywania stron, gdy pami\'ea\'e6 RAM jest ju\'bf pe\'b3na. Na Linuxie jest na to osobna partycja. Dla standardowych 4-8GB RAM ma ona zazwyczaj rozmiar 4GB. Nie powinna by\'e6 traktowana jako dodatkowy RAM, bo dost\'eap zajmuje wi\'eacej czasu. Przenosi si\'ea tam g\'b3\f1\lang1033\'f3wnie strony z odwzorowa\f0\'f1 anonimowych, bo nie mo\'bfna ich ujednolici\'e6 z pami\'eaci\'b9. \lang1045\par
+Zad.3\par
+slajdy:https://skos.ii.uni.wroc.pl/pluginfile.php/14357/mod_resource/content/1/18-vm-systems.pdf \par
+co si\'ea robi : L10(2).pdf, strona 5\f1\lang1033\par
+SEGV_ACCERR - \f0\lang1045 Dost\'eap do strony, z nieprawid\'b3owymi \f1\lang1033 uprawnieniami.\par
+SEGV_MAPERR - Dost\f0\'eap do strony, kt\'f3ra w og\'f3le nie jest \lang1045 odwzorowana\f1\lang1033  w przestrze\f0 ni adresowej aplikacji.\par
+pomniejszy b\'b3\'b9d strony (ang. minor page fault) - strona mo\'bfe fizycznie by\'e6 przechowywana w pami\'eaci, ale nie ma jej w tablicy stron procesu. Strona mog\'b3a by\'e6 np. za\'b3adowana do pami\'eaci z dysku przez inny proces. W tym przypadku nie ma potrzeby, by si\'eaga\'e6 do dysku ponownie. Wystarczy odpowiednio zmapowa\'e6 stron\'ea w tablicy stron. \par
+powa\'bfny b\'b3\'b9d strony (ang. major page fault) - gdy zachodzi konieczno\'9c\'e6 sprowadzenia strony z dysku \par
+b\'b3\'b9d segmentacji (ang. segmentation fault) - w programie nast\'b9pi\'b3a pr\f1\'f3ba dost\f0\'eapu do nieprawid\'b3owego adresu i nie ma potrzeby dodawania mapowania do TLB - sysopek zabija taki proces.\par
+ bufor stron - przezroczysta pami\'ea\'e6 podr\'eaczna dla stron pochodz\'b9cych z dodatkowego urz\'b9dzenia pami\'eaci masowej, takiego jak dysk twardy (HDD) lub dysk SSD.\par
+\lang1045 rola bufora - pami\'ea\'e6 dla HDD i SSD\par
+vm_prot - (uprawnienia odczyt/zapis danego miejsca pami\'eaci). Gdy np. strona jest w pami\'eaci wymiany(Zad.2), a proces chce sobie co\'9c do niej zapisa\'e6. W RAM-ie jej fizycznie nie ma, wi\'eac page fault. Ew. mo\'bfe przy copy-on-write. \par
+obiekt wspieraj\'b9cy - obiekt z kt\f1\lang1033\'f3\f0\lang1045 rego pobieramy warto\'9cci inicjuj\'b9ce(plik regularny, plik anonimowy)\par
+SIGBUS - wielko\'9c\'e6 odwzorowania nie jest wielokrotno\'9cci\'b9 rozmiaru strony.\par
+Zad.4\par
+rzeczywisty id - m\f1\lang1033\'f3\f0\lang1045 wi kim naprawd\'ea jeste\'9c\par
+obowi\'b9zuj\'b9cy(efektywny???) - jak widzi ci\'ea SO(w szczeg\f1\lang1033\'f3\f0\lang1045 lno\'9cci jakie masz uprawnienia pod nowym id).\par
+zapisany - u\'bfywany np. gdy EUID jest id roota (r\f1\lang1033\'f3\f0\lang1045\'bfnym od ruid), ale proces musi (przez pewien okres czasu) dzia\'b3a\'e6 z EUID r\f1\lang1033\'f3\f0\lang1045 wnym RUID. Wtedy star\'b9 warto\'9c\'e6 EUID orzechowujemy w SUID.\par
+zmiany:\par
+rzeczywisty -niezmieniony(2000) \par
+obowi\'b9zuj\'b9cy - zmienia warto\'9c\'e6 na obowi\'b9zuj\'b9cy id w\'b3a\'9cciciela(0 lub 1000)\par
+zachowany - ma warto\'9c\'e6 wcze\'9cniejszego id obowi\'b9zuj\'b9cego(0 lub 1000 lub 2000)\par
+instrukcje program\f1\lang1033\'f3\f0\lang1045 w A i B -seteuid(2000) lub setreuid(-1, 2000) lub setreuid(2000, 2000) - komentarz: nie zmieniamy ruid(bo nie musimy), euid zmieniamy na 2000.(przynajmniej drugi z tych program\f1\lang1033\'f3\f0\lang1045 w).\par
+Zad.5\par
+\f1\lang21 Zasada najmniejszego uprzywilejowania (tak\f0\'bfe zasada minimalnego uprzywilejowania lub najmniejsze uprzywilejowanie) \f2\endash  zasada wymagaj\f0\'b9ca, aby na danym poziomie abstrakcji ka\'bfdy element systemu informatycznego (zale\'bfnie od poziomu mo\'bfe to by\'e6 modu\'b3, proces, u\'bfytkownik, program itp.) mia\'b3 dost\'eap tylko do tych informacji i zasob\f1\lang1033\'f3w, kt\'f3re s\f0\'b9 niezb\'eadne do spe\'b3nienia wyznaczonego mu celu lub zadania.\par
+wydzielanie - Zmodyfikowali\'9cmy gzip, aby u\'bfywa\'b3 libcapsicum, przechwytuj\'b9c trzy podstawowe funkcje i opcjonalnie proxy je przy u\'bfyciu RPC do piaskownicy na podstawie zasad zapytanych z libcapsicum, jak pokazano na rysunku 11. Ka\'bfde RPC przekazuje r\f1\'f3wnie\f0\'bf dwie mo\'bfliwo\'9cci, dla wej\'9ccia i wyj\'9ccia, do piaskownicy, jak r\f1\'f3wnie\f0\'bf jako r\f1\'f3\f0\'bfne pola, takie jak zwracany rozmiar, oryginalna nazwa pliku i czas modyfikacji. Ograniczaj\'b9c prawa do mo\'bfliwo\'9cci kombinacji CAP READ, CAP WRITE i CAP SEEK, tworzony jest \'9cci\'9cle ograniczony obszar izolowany, uniemo\'bfliwiaj\'b9cy dost\'eap do jakichkolwiek innych plik\f1\'f3w w systemie plik\'f3w lub innych globalnie nazwanych zasob\'f3w, w przypadku luki w kodzie kompresji jest wykorzystywany.\par
+\f0\lang1045 kt\f1\lang1033\'f3\f0\lang1045 re prawa powinny zosta\'e6 nadane - rights: cap_fstat, cap_seek, cap_write ?????\f1\lang1033\par
+Zad.6\par
+Jak u\f0\'bfy\'e6 - unveil(host, NULL) ?????\par
+ro\'bfnice mi\'eadzy chroot i unveil - chroot zmienia g\'b3\'f3wny katalog, a unveil ustala uprawnienia dla danego katalgou(???), chroot jest na Linuxie a unveil tylko na bsd(???), chroot przyjmuje jeden argument a unveil dwa(????)\par
+}
+ 

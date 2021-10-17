@@ -1,0 +1,71 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}{\f2\fnil Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 Zad.1\par
+Deadlock - sytuacja  gdy ka\'bfdy proces jest zablokowany, bo czeka na zdarzenie od innego zablokowanego procesu (np. na zwolnienie jakiego\'9c zasobu). \'afadne ze zdarze\'f1 nigdy nie nast\'b9pi, wi\'eac zakleszczenie jest trwa\'b3e. \par
+\f1\lang1033 Ruch uliczny - plac spo\f0\'b3eczny we Wroc\'b3awiu\par
+livelock - sytuacja, w kt\'f3rej dwa procesy zmieniaj\'b9 sw\f1\'f3j stan w odpowiedzi na zmian\f0\'ea tego drugiego bez wykonania post\'eapu w pracy. Podobne do zakleszczenia, bo nie ma \'bfadnego progresu, ale r\f1\'f3\f0\'bfni si\'ea tym, \'bfe procesy nie s\'b9 blokowane i nie czekaj\'b9 na \'bfadne zasoby.  \par
+Ruch uliczny - auta stoj\'b9 przed sob\'b9 i pr\f1\'f3\f0 buj\'b9 si\'ea ruszy\'e6 w lewo/prawo.\par
+starvation - sytuacja, w kt\f1\'f3rej dany proces jest pomijany przez planist\f0\'ea i mimo \'bfe ma mo\'bfliwo\'9c\'e6 dzia\'b3ania, to nie ma dost\'eapu do procesora lub wsp\f1\'f3\f0\'b3dzielonego zasobu.  \par
+ruch uliczny - wyjazd z podporz\'b9dkowanej ulicy\par
+a) wykrywanie i usuwanie zakleszcze\'f1 \f2\endash  system nie zapobiega zakleszczeniom, ale zamiast tego pozwala im si\f0\'ea wydarzy\'e6, pr\f1\'f3buje je wykry\f0\'e6 i podj\'b9\'e6 kroki w celu rozwi\'b9zania problemu.\par
+wykrywanie:\par
+\tab jeden zas\f1\'f3b ka\f0\'bfdego typu:\par
+\tab\tab -Budujemy graf skierowany na podstawie stanu systemu, w kt\f1\'f3\f0 rym wierzcho\'b3ki to procesy i zasoby, a kraw\'eadzie s\'b9 dw\f1\'f3\f0 ch typ\f1\'f3\f0 w:\par
+\tab\tab\tab 1: (r, p), gdzie r jest jakim\'9c zasobem, a p jest procesem oznacza, \'bfe proces p trzyma zas\f1\'f3\f0 b r.\par
+\tab\tab\tab 2: (p, r), gdzie p - proces, a r - zas\f1\'f3\f0 b oznacza \'bfe p chce mie\'e6 zas\f1\'f3\f0 b r.\par
+\tab\tab -Sprawd\'9f, czy graf zawiera cykl. Je\'bfeli tak, to procesy w cyklu s\'b9 zakleszczone.\par
+wiele zasob\f1\'f3w ka\f0\'bfdego typu:\par
+\tab\tab 1. Tworzymy macierze alokacji C i \'bf\'b9da\'f1 R, takich \'bfe $C_\{ij\}$ to liczba zasob\f1\'f3w typu $j$ przetrzymywanych przez proces $i$ (\f0\lang1045 a $R_\{ij\}$ to liczba \'bf\'b9danych zasob\f1\lang1033\'f3\f0\lang1045 w \f1\lang1033 typu $j$ przetrzymywanych przez proces $i$). Wektor $A$ oznacza liczb\f0\'ea dost\'eapnych zasob\f1\'f3w ka\f0\'bfdego typu.\par
+\tab\tab 2. Definiujemy relacj\'ea $A <= B$ dla wektor\f1\'f3w $A$ i $B$ tak, \f0\'bfe zapis ten oznacza, \'bfe ka\'bfdy element z $A$ jest mniejszy lub r\f1\'f3wny odpowiadaj\f0\'b9cemu mu elementowi z $B$.\par
+\tab\tab 3. Wszystkie procesy na pocz\'b9tku s\'b9 niezaznaczone. Na koniec dzia\'b3ania algorytmu nieoznaczone procesy s\'b9 zakleszczone.\par
+\tab\tab 4. Znajd\'9f nieoznaczony proces $P_i$, dla kt\f1\'f3rego $R_i \f0\lang1045 <=\f1\lang1033  A$.\par
+\f0\lang1045\tab\tab 5. \f1\lang1033 Je\f0\'bfeli taki proces istnieje, dodaj $C_i$ do $A$(zwolnij zasoby przetrzymywane przez proces i). Oznacz proces i przejd\'9f do 4.  \par
+\tab\tab 6. Je\'bfeli nie ma takiego procesu, algorytm si\'ea ko\'f1czy.\par
+usuwanie:\par
+\tab\tab wyw\'b3aszczenie procesu i tymczasowe odebranie zasobu i przekazanie innemu procesowi\par
+\tab\tab zabicie jednego z proces\f1\'f3w, kt\'f3re przetrzymuj\f0\'b9 zasoby\par
+b) zapobieganie zakleszczeniom \f2\endash  system zarz\f0\'b9dza zasobami w taki spos\f1\'f3b, \f0\'bfeby zakleszczenia nie wyst\'b9pi\'b3y.\par
+i) usuni\'eacie wzajemnego wykluczania: unikanie przypisywania zasob\f1\'f3w procesom, chyba \f0\'bfe jest to absolutnie konieczne\par
+ii) eliminacja Hold-and-Wait Condition( proces mo\'bfe trzyma\'e6 dost\'eap do zasob\f1\'f3w, czekaj\f0\'b9c na otrzymanie dost\'eapu do innych zasob\f1\'f3w\f0 ):\par
+\tab wszystkie procesy \'bf\'b9daj\'b9 zasob\f1\'f3w przed rozpocz\f0\'eaciem wykonywania \f2\endash  wymaga przewidywania przysz\f0\'b3o\'9cci\par
+\tab je\'bfeli zas\f1\'f3b jest niedost\f0\'eapny, zwolnij dotychczas pozyskane zasoby\par
+iii) wirtualizacja(brak bezpo\'9credniego dost\'eapu) zasob\f1\'f3w, kt\'f3ra pozwoli na wyw\f0\'b3aszczanie proces\f1\'f3w, kt\'f3re je przetrzymuj\f0\'b9 (np. procesy zapisuj\'b9 rzeczy do wydrukowania na dyskua a deamon drukarki jako jedyny ma do niej faktyczny dost\'eap)\par
+iiii) eliminacja Circular Wait Condition:\par
+jeden proces mo\'bfe uzyska\'e6 dost\'eap tylko do jednego zasobu jednocze\'9cnie. Je\'bfeli potrzebuje kolejnego, to musi zwolni\'e6 poprzedni (niepraktyczne np. gdy proces ma wys\'b3a\'e6 skopiowa\'e6 zawarto\'9c\'e6 dysku do drukarki).\par
+nadajemy numery zasobom. Procesy mog\'b9 uzyskiwa\'e6 dost\'eap do zasob\f1\'f3w jedynie w kolejno\f0\'9cci rosn\'b9cej wzgl\'eadem numer\f1\'f3w zasob\'f3w (musz\f0\'b9 zwolni\'e6 wcze\'9cniejsze), zapobiega to cyklom w grafie alokacji zasob\f1\'f3w.\par
+\f0\lang1045 Nieudana pr\f1\lang1033\'f3ba zapobiegania mo\f0\'bfe doprowadzi\'e6 do:\par
+uwi\'eazienia: (ii) zwalnianie zasob\f1\'f3w w przypadku niemo\f0\'bfno\'9cci uzyskania kolejnego prowadzi do sytuacji gdzie procesy nie s\'b9 w stanie uzyska\'e6 wszystkich zasob\f1\'f3w, bo pr\'f3buj\f0\'b9  si\'ea \'84przepu\'9cci\'e6\rdblquote\par
+g\'b3odzenia: (ii) proces mo\'bfe nigdy nie dosta\'e6 \'bf\'b9danych zasob\f1\'f3\f0 w\par
+\lang1045 Zad.2\par
+race condition - sytuacja, w kt\f1\lang1033\'f3\f0\lang1045 rej min. 2 w\'b9tki korzystaj\'b9 z tych samych danych w tym samym czasie i je modyfikuj\'b9 bez synchronizacji,.\par
+min=2, max=50*2=100\par
+tabelka w L5.pdf\par
+w przypadku k proces\f1\lang1033\'f3\f0\lang1045 w - min=2, max=50*k\lang21  \par
+Zad.3\par
+wzajemne wykluczanie(mutex - mutual exclusion) - zapobieganie sytuacjom, w kt\f1\lang1033\'f3\f0\lang21 rych min.2 procesy znajduj\'b9 si\'ea w sekcji krytycznej.Sekcja krytyczna jest fragmentem kodu, w kt\f1\lang1033\'f3rym w\f0\'b9tki (lub procesy) odwo\'b3uj\'b9 si\'ea do wsp\f1\'f3lnego zasobu\f0\lang1045 .\par
+Idea: blocked == true oznacza ch\'ea\'e6 wej\'9ccia do sekcji krytycznej. Po uruchomieniu P proces ustawia warto\'9c\'e6 blocked na true (L6). Jego tura nadejdzie (L10) dopiero wtedy, gdy uzyskamy pewno\'9c\'e6, \'bfe drugi proces nie jest zainteresowany sekcj\'b9 krytyczn\'b9, sko\'f1czy\'b3 w niej prac\'ea (L8). Przechodzimy do sekcji krytycznej (L12) i po wykonaniu pracy porzucamy zainteresowanie sekrytem (L13). \par
+Kontrprzyk\'b3ad: \par
+\f2\bullet  stan pocz\f0\'b9tkowy:  \par
+o blocked = \{false, false\} \par
+o turn = 0 \par
+\f2\bullet  P1 wykonuje si\f0\'ea \par
+o wchodzi do p\'eatli L7 \'84while (turn != id)\f2\rdblquote  (0 != 1) \par
+o nie wchodzi w do p\f0\'eatli L8 \'84while (blocked[1 - id])\f2\rdblquote  (blocked[0] == false) \par
+\f0 o wstrzymuje wykonanie przed L10 \'84turn = id\f2\rdblquote , zostaje wyw\f0\'b3aszczony \par
+\f2\bullet  stan: \par
+o blocked = \{false, true\} \par
+o turn = 0 \par
+\bullet  P0 wykonuje si\f0\'ea o nie wchodzi do p\'eatli L7 \'84while (turn != id)\f2\rdblquote  (0 != 0) \par
+o L12: zaczyna wykonywa\f0\'e6 sekcj\'ea krytyczn\'b9, zostaje wyw\'b3aszczony \par
+\f2\bullet  stan: \par
+o blocked = \{\f0 tru\f2 e, true\} \par
+o turn = 0 \par
+\bullet  P1 wznawia wykonanie  \par
+\f0 o zaczyna od L10 \'84turn = id\f2\rdblquote , wychodzi z p\f0\'eatli \par
+o L12: wchodzi w sekcj\'ea krytyczn\'b9. \par
+Mechanizm nie zawsze dzia\'b3a dobrze, poniewa\'bf pozwala, \'bfeby dwa procesy by\'b3y w sekcji krytycznej. \par
+Zad.4\par
+Jak dzia\'b3a - flag i turn jak w Zad.3.  Dla danego id, P(id) powtarza niesko\'f1czenie nast\'eapuj\'b9cy ci\'b9g operacji. Najpierw m\f1\lang1033\'f3\f0\lang1045 wimy \'bfe chcemy wej\'9c\'e6 do S.K.(strefy krytycznej), nast\'eapnie "oddajemy" dost\'eap do S.K. drugiemu procesowi(turn=1-id). Nast\'eapnie w p\'eatli czekamy a\'bf tamten proces wyjdzie ze strefy lub przyzna nam mo\'bfliwo\'9c\'e6 wst\'eapu do S.K. P\f1\lang1033\'f3\f0\lang1045\'bfniej wchodzimy do S.K. i po wyj\'9cciu oznaczamy brak ch\'eaci wej\'9ccia do S.K.\par
+Dow\f1\lang1033\'f3\f0\lang1045 d poprawno\'9cci -P0 i P1 nigdy nie mog\'b9 znajdowa\'e6 si\'ea w sekcji krytycznej w tym samym czasie: je\'9cli P0 znajduje si\'ea w sekcji krytycznej, to flag[0] jest true. Dodatkowo, albo flaga [1] jest false (co oznacza, \'bfe P1 opu\'9cci\'b3 swoj\'b9 sekcj\'ea krytyczn\'b9), albo turn == 0 (co oznacza, \'bfe P1 w\'b3a\'9cnie pr\f1\lang1033\'f3buje wej\f0\'9c\'e6 do sekcji krytycznej, ale \'b3askawie czeka), lub P1 znajduje si\'ea na etykiecie P1_gate (pr\f1\'f3buje aby wej\f0\'9c\'e6 do sekcji krytycznej, po ustawieniu flagi [1] na warto\'9c\'e6 true, ale przed ustawieniem nale\'bfy ustawi\'e6 warto\'9c\'e6 0 i zaj\'eate oczekiwanie). Wi\'eac je\'9cli oba procesy znajduj\'b9 si\'ea w swoich krytycznych sekcjach, w\f1\'f3wczas dochodzimy do wniosku, \f0\'bfe stan musi spe\'b3nia\'e6 flag\'ea [0] i flag\'ea [1] oraz zwrot = 0 i zwrot = 1. \'afaden stan nie mo\'bfe spe\'b3ni\'e6 zar\f1\'f3wno zwrotu = 0, jak i zwrotu = 1, wi\f0\'eac nie mo\'bfe by\'e6 stanu, w kt\f1\'f3rym oba procesy znajduj\f0\'b9 si\'ea w swoich krytycznych sekcjach. (Jest to argument, kt\f1\'f3ry jest rygorystyczny\f0\lang1045\par
+}
+ 

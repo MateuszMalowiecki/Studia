@@ -1,0 +1,59 @@
+{\rtf1\ansi\ansicpg1250\deff0\nouicompat\deflang1045{\fonttbl{\f0\fnil\fcharset238 Calibri;}{\f1\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.17763}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22 L1\par
+Zad.1\f1\lang21\par
+\f0\lang1045 S\f1\lang21 hell : \f0\lang1045 P\f1\lang21 rogram dzia\f0\'b3aj\'b9cy w OS-ie, dostarcza interfejs u\'bfytkownika do komunikacji z OS-em. Mog\'b9 by\'e6 tekstowe(interpreter polece\'f1 uruchamiany w trybie tekstowym; np. Bash(Linux), Cmd, Powershell(WIdnows)) i graficzne(mened\'bfer plik\f1\lang1033\'f3w kontrolowan\f0\lang1045 y\f1\lang1033  przy pomocy myszy\f0 ; np. Aqua(Mac OS X), Eksplorator(Windows)\lang21 ). \par
+OS: Program, kt\f1\lang1033\'f3\f0\lang21 ry zarz\'b9dza hardwar'em i softwar'em oraz  wykonuje niskopoziomowe komendy do podstawowej obs\'b3ugi komputera, tj. zarz\'b9dzanie systemem plik\f1\lang1033\'f3w,\f0\lang1045  \f1\lang1033 caching, paging. Przyk\f0\'b3ady: Rodzina Unix-a(BSD, Linux, MacOS), Rodzina Windowsa(Windows 10, Windows 7).\par
+Kernel : Podstawowa cz\'ea\'9c\'e6 SO. Pierwszy program, kt\'f3ry jest \'b3adowany do pami\'eaci g\'b3\f1\'f3\f0 wnej. Zarz\'b9dza pami\'eaci\'b9, procesami i dyskiem. Dziel\'b9 si\'ea na j\'b9dra monolityczne (wszystkie us\'b3ugi os dzia\'b3aj\'b9 wzd\'b3u\'bf g\'b3\f1\'f3\f0 wnym w\'b9tkiem j\'b9dra; np. j\'b9dro Linux'a i FreeBSD) i mikroj\'b9dra(do implementacji us\'b3ug u\'bfywa SySCalli; np. GNUHurd, MINIX, MkLinux).\par
+G\'b3\f1\'f3\f0 wne zadania SO: dostarczanie API dla programist\f1\'f3\f0 w, zarz\'b9dzanie zasobami systemowymi(czas procesora, pami\'ea\'e6), wykonywanie bazowych zada\'f1(rozpozananie inputu, wys\'b3anie na ekran outputu, kontrola urz\'b9dze\'f1 peryferyjnych).\par
+Zad.2\par
+lata 1955-65\par
+zadanie - (w BS)zbi\f1\'f3\f0 r program\f1\'f3\f0 w(w postaci ta\'9cmy) przetwarzanych przez BS. W innych systemach (??) pojedyncze zadanie.\par
+system wsadowy - system, kt\f1\'f3\f0 ry kolekcjonuje programy na kartach, \'b3\'b9czy je w pakiet wej\'9cciowy(przy pomocy komputera IBM 1401), nast\'eapnie ta\'9cma wej\'9cciowa jest przekazywana do IBM 7094, kt\f1\'f3\f0 ry wykonuje obliczenia i zwraca ta\'9cm\'ea wyj\'9cciow\'b9. Na koniec 1401 drukuje wynik za pomoc\'b9 ta\'9cmy wyj\'9cciowej. Brak bezpo\'9credniego dost\'eapu u\'bfytkownika do procesora.\par
+monitor-Nadzorca ci\'b9gu zdarze\'f1. Urz\'b9dzenie \'b3aduj\'b9ce kolejne programy (i przekazuj\'b9ce w postaci kart do obszaru u\'bfytkownika, kt\f1\'f3\f0 ry przekazuje do 1401). Mia\'b3 zegary, IO, ochron\'ea pami\'eaci, sterowniki. \par
+planowanie zada\'f1 - stworzenie kolejki zada\'f1 i wykonywanie kolejnych zada\'f1 z kolejki najszybciej jak si\'ea da(bez przestoj\f1\'f3\f0 w) mi\'eadzy kolejnymi zadaniami.\par
+j\'eazyk kontroli zada\'f1 - rodzaj j\'eazyka programowania s\'b3u\'bfacy do instruowania monitora.\par
+Znaczenie polece\'f1:\par
+$stop - definiuje koniec stosu prac\par
+$ibedt - przekazuje kontrol\'ea edytorowi systemu(urz\'b9dzeniu kt\f1\'f3\f0 re modyfikuje, dodaje, usuwa lub zast\'eapuje rekordy systemu operacyjnego "IBSYS" w celu spe\'b3nienia wymaga\'f1 odpowiedniej instrukcji)\par
+$ibsys - przekazuje kontrol\'ea kierownikowi systemu(o ile mia\'b3 j\'b9 wcze\'9cniej edytor lub podsystem) , po czym kierownik odczytuje i wykonuje kolejne karty do momentu wczytania karty $execute(przekazuj\'b9cej kontrol\'ea podsystemowi) lub karty $ibedt(przekazuj\'b9cej kontrol\'ea edytorowi).\par
+$job(z argumentami mod, Fortran Ijob6, FAP job 25, weekly report)- definiuje pocz\'b9tek pracy\par
+$execute (z argumentami Fortran - Fortran II Processor, IBFSAP - Fortran II Processor, 9PAC - 9PAC, Sort - System sortuj\'b9cy, IBJob - Procesor IBJOB) - definiuje pocz\'b9tek segmentu pracy, kt\f1\'f3\f0 ra ma by\'e6 wykonana przez okre\'9clony podysystem\par
+$release - zwolnienie jednostki przypisanej do \'9cci\'9cle okre\'9clonej funkcji jednostki systemu z tej  funkcji (np. SYSUT1, SYSUT2, SYSUT3, SYSUT4).\par
+Zastosowania:\par
+-zarz\'b9dzanie bazami danych\par
+-konwersje danych i filtry\par
+-SLURM(Simple Linux Utility for Resource Management) system kolejkowy do dzia\'b3a\'f1 w centrach obliczeniowych\par
+Zad.3 \par
+Wieloprogramowe systemy wsadowe - systemy wsadowe, pozwalaj\'b9ce trzyma\'e6 w pami\'eaci wi\'eacej ni\'bf jedno zadanie(poprzez podzia\'b3 pami\'eaci na cz\'ea\'9cci i trzymanie osobnych zada\'f1 w r\f1\'f3\f0\'bfnych kawa\'b3kach pami\'eaci).\par
+Dlaczego wprowadzono? - urz\'b9dzenia I/O s\'b9 cz\'easto wolniejsze ni\'bf procesor. Dzi\'eaki trzymaniu wi\'eacej ni\'bf jedno zadanie mo\'bfemy prze\'b3\'b9cza\'e6 si\'ea pomi\'eadzy zadaniami w trakcie wykonywani operacji I/O na jednym z nich.\par
+systemy z podzia\'b3em czasu - systemy umo\'bfliwiaj\'b9ce interakcj\'ea w czasie dzia\'b3ania programu. Jednoczesny dost\'eap ma wielu u\'bfytkownik\f1\'f3\f0 w za pomoc\'b9 terminali, a SO przeplata wykonywanie ich program\f1\'f3w\f0  w kr\f1\'f3tkotrwa\f0\'b3ych dost\'eapach do procesora, czyli kwantach oblicze\'f1, dzi\'eaki czemu u\'bfytkowink my\'9cli, \'bfe ma ci\'b9g\'b3\'b9 interakcj\'ea z programem.\par
+W jaki spos\f1\'f3\f0 b wyewoluowa\'b3y? - w wielu zadaniach po\'bf\'b9dany by\'b3 tryb w kt\f1\'f3\f0\lang1045 rym u\'bfytkownik pozostaje w interakcji z komputerem.\par
+system interaktywny - system kt\f1\lang1033\'f3\f0\lang1045 ry pozwala\'b3 wp\'b3ywa\'e6 na system operacyjny podczas pracy innego programu. Interaktywny a nie wieloprogramowy by\'b3 np. DOS.\par
+Zad.4\par
+
+\pard\ri-56\sa200\sl276\slmult1 wyw\'b3aszczenie : Mechanizm pozwalaj\'b9cy wstrzyma\'e6 dany proces na rzecz innego. Dzi\'eaki temu rozwi\'b9zaniu zawieszenie jednego procesu nie powoduje blokady ca\'b3ego systemu operacyjnego.Potrzebne mechanizmy: przerwania(\'bfeby zawiesi\'e6 wykonanie obecnego procesu i wybra\'e6(za pomoc\'b9 schedulera) nast\'eapny proces do wykonania),  syscalle(\'bfeby OS m\f1\lang1033\'f3g\f0\'b3 odzyska\'e6 kontrol\'ea po wykonaniu przerwania), prze\'b3\'b9czanie kontekstu.\par
+
+\pard\sa200\sl276\slmult1 algorytm rotacyjny: ka\'bfdy program dostaje pewien kwant czasu i programy s\'b9 na li\'9ccie cyklicznej. Jak kwant czasu mija to program, kt\f1\'f3ry si\f0\'ea w tym czasie nie zako\'f1czy\'b3 zostaje wyw\'b3aszczony i przeskakujemy do kolejnego(a stary program wywalamy na koniec listy). Jak si\'ea sko\'f1czy to go wywalamy z listy. Implementacja naj\'b3atwiejsza poprzez trzymanie (przez schduler) wszystkich niezako\'f1czonych program\f1\'f3\f0 w i wykonanie wyw\'b3aszcze\'f1 przez timer interrupt.\par
+dyspozytor i planista - cz\'ea\'9cci systemu operacyjnego odpowiedzialne za przydzielanie zadaniom czasu procesora w ramach prze\'b3\'b9czania zada\'f1 i wstrzymanie danego zadania po zako\'f1czeniu przydzielonego czasu. Decyzja o tym, kt\f1\'f3remu procesowi przydzieli\f0\'e6 czas procesora jest podejmowana przez algorytm szeregowania. Planista realizuje polityk\'ea, a dyspozytor realizuje mechanizm\par
+Polityka to zbi\f1\'f3r zasad jakie maj\f0\'b9 by\'e6 realizowane do zrobienia czego\'9c, np. to, \'bfe kolejka jest FIFO albo \'bfe jest priorytetowa. \par
+Mechanizm to implementacja danej polityki, np. FIFO implementowane na li\'9ccie, priorytetowa implementowana na kopcu.\par
+Zad.5\par
+a\f1 )\f0\lang1045  Bez szybkiego tworzenia lub komunikacji:\par
+- Monolity\f1\lang1033  staj\f0\'b9 si\'ea bardziej naturalnym sposobem programowania\par
+- W tych monolitach nale\'bfy wyrazi\'e6 wiele zasad. To zach\'eaca do C ++ i rozbudowanej wewn\'eatrznej organizacji kodu, zamiast C i stosunkowo p\'b3askich wewn\'eatrznych hierarchii.\par
+-Kiedy procesy nie mog\'b9 unikn\'b9\'e6 potrzeby komunikacji, robi\'b9 to poprzez mechanizmy, kt\f1\'f3re s\f0\'b9 niezgrabne, nieefektywne i niepewne (takie jak pliki tymczasowe).\par
+-Konieczno\'9c\'e6 nauki i u\'bfywania asynchronicznych operacji we / wy.\par
+b) \par
+\lang1045 -Pliki danych b\'ead\'b9 dost\'eapne tylko za po\'9crednictwem dedykowanych narz\'eadzi. Deweloperzy b\'ead\'b9 traktowa\'e6 narz\'eadzia jako centralne (zamiast plik\f1\lang1033\'f3\f0\lang1045 w danych). Dlatego r\f1\lang1033\'f3\f0\'bfne wersje format\f1\'f3w plik\'f3w b\f0\'ead\'b9 zwykle niekompatybilne.\par
+-(opcjonalnie)Nawet je\'9cli obs\'b3ugiwany jest interfejs wiersza polecenia, skrypty i potoki, bardzo niewiele filtr\f1\'f3w ewoluuje.\par
+\f0\lang1045 c)\par
+Drogie narz\'eadzia programistyczne i z\'b3o\'bfone, nieprzejrzyste API tworz\'b9 ma\'b3e i elitarne kultury programowania, w kt\f1\lang1033\'f3\f0\lang1045 rych projekty programistyczne s\'b9 du\'bfymi, powa\'bfnymi przedsi\'eawzi\'eaciami - musz\'b9 one przynie\'9c\'e6 korzy\'9cci, kt\f1\lang1033\'f3re uzasadniaj\f0\'b9 koszt zainwestowanego zar\f1\'f3wno twardego, jak i mi\f0\'eakkiego (ludzkiego) kapita\'b3u. Du\'bfe, powa\'bfne projekty maj\'b9 tendencj\'ea do tworzenia du\'bfych, powa\'bfnych program\f1\'f3w (i zbyt cz\f0\'easto du\'bfych kosztownych awarii).\par
+Niedrogie narz\'eadzia i proste interfejsy wspieraj\'b9 swobodne programowanie, kultury hobbystyczne i eksploracj\'ea. Projekt\lang1045 y\f1\lang1033  mo\f0 g\'b9 by\'e6 ma\'b3e, a niepowodzenie nie jest katastrof\'b9. Zmienia to styl, w jaki ludzie rozwijaj\'b9 kod; mi\'eadzy innymi wykazuj\'b9 mniejsz\'b9 tendencj\'ea do nadmiernego pope\'b3niania nieudanych podej\'9c\'e6.\par
+d)\par
+- Zdalna administracja systemem b\'eadzie s\'b3abo obs\'b3ugiwana, trudniejsza w u\'bfyciu i bardziej obci\'b9\'bfaj\'b9ca sie\'e6.\par
+- Nawet proste nieinteraktywne programy powoduj\'b9 obci\'b9\'bfenie GUI lub rozbudowanego interfejsu skryptowego.\par
+-Serwery i procesy dzia\'b3aj\'b9ce w tle b\'ead\'b9 prawdopodobnie niemo\'bfliwe, a przynajmniej raczej trudne, do zaprogramowania w dowolny spos\f1\'f3b.\f0\par
+- (opcjonalnie)Programy nie b\'ead\'b9 zaprojektowane do wsp\f1\'f3\f0\'b3pracy w nieoczekiwany spos\f1\'f3b - poniewa\f0\'bf nie mog\'b9.(Syscalle???) Wyj\'9ccia nie s\'b9 u\'bfyteczne jako wej\'9ccia.\par
+}
+ 
