@@ -51,8 +51,8 @@
   \begin{itemize}
       \item Vertices represent random variables
       \item Edges mean random variables depedency
+	  \item Edges in graph are parametrized by value      
       \item We will talk only about directed graphs
-      \item Edges in graph are parametrized by value
   \end{itemize}
 \end{frame}
 \begin{frame}
@@ -60,15 +60,7 @@
   \begin{itemize}
       \item Model selection
       \item Estimation of the edge parameters from data
-      \item Computation of marginal vertex probabilities and exceptations, from their jonit distribution
-  \end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Challenges}
-  \begin{itemize}
-      \item Model selection
-      \item Estimation of the edge parameters from data
-      \item Computation of marginal vertex probabilities and exceptations, from their jonit distribution
+      \item Computation of marginal vertex probabilities and exceptations, from their joint distribution
   \end{itemize}
 \end{frame}
 \begin{frame}
@@ -96,17 +88,6 @@ Z=\sum_{x \in X} f(x)
 \end{equation}
 \end{frame}
 \begin{frame}
-\frametitle{Density function}
-Probability density function over graph $G$, can be represented as:
-\begin{equation}
-f(x)=\frac{1}{Z}\prod_{c \in C}{\psi_c(x_c)}
-\end{equation}
-where $C$ is the set of maximal cliques and $\psi_c$ are clique potentials and 
-\begin{equation}
-Z=\sum_{x \in X} f(x)
-\end{equation}
-\end{frame}
-\begin{frame}
 \frametitle{Dependence structure}
 \begin{itemize}
 \item Consider three-node clique. It could represent the dependence structure of the distributions:
@@ -121,16 +102,6 @@ f_3(x,y,z)=\frac{1}{Z}*\psi(x,y,z)
 \end{frame}
 \begin{frame}
 \frametitle{Undirected Graphical Models for Continuous Variables}
-\begin{itemize}
-\item Consider three-node clique. It could represent the dependence structure of the distributions:
-\begin{equation}
-f_2(x,y,z)=\frac{1}{Z}*\psi(x,y)*\psi(x,z)*\psi(y,z)
-\end{equation}
-\begin{equation}
-f_3(x,y,z)=\frac{1}{Z}*\psi(x,y,z)
-\end{equation}
-\end{itemize}
-\includegraphics[width=15cm, height=4cm]{Graph}
 \end{frame}
 \begin{frame}
 \frametitle{Undirected Graphical Models for Continuous Variables}
@@ -141,28 +112,22 @@ f_3(x,y,z)=\frac{1}{Z}*\psi(x,y,z)
 \includegraphics[width=5cm, height=4cm]{Gaussian_image}
 \end{frame}
 \begin{frame}
-\frametitle{Undirected Graphical Models for Continuous Variables}
-\end{frame}
-\begin{frame}
 \frametitle{Gaussian distribution properties}
 \begin{itemize}
 \item All conditional distributions are also Gaussian
-\item The inverse covariance matrix($\theta = \Sigma^{-1}$)
+\item The inverse covariance matrix($\Theta = \Sigma^{-1}$)
 contains information about the partial covariances
 \end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{Example}
-\end{frame}
-\begin{frame}
-\frametitle{Estimation of the Parameters when the Graph Structure is Know}
+\frametitle{Estimation of the parameters when the graph structure is known}
 \begin{itemize}
 \item Suppose that we have complete graph (clique)
 \item We have N multivariate normal realizations $x_i , i = 1,... ,N$ with population mean $\mu$ and covariance $\Sigma$. Let
 \begin{equation}
 S=\frac{1}{N}*\sum_{i=1}^{N} (x_i-\overline{x})*(x_i-\overline{x})^T
 \end{equation}
-where $\overline{x}$ is the sample mean vector.
+be the empirical covariance matrix, where $\overline{x}$ is the sample mean vector.
 \item The log-likelihood of data can be written as: 
 \begin{equation}
 l(\Theta)=log(det(\Theta))-trace(S*\Theta)
@@ -174,9 +139,8 @@ l(\Theta)=log(det(\Theta))-trace(S*\Theta)
 \begin{frame}
 \frametitle{Equality-constrained convex optimization problem}
 \begin{itemize}
-\item We assume that graphs are not complete(some edges are missing)
-\item We would like to maximize
-(10) under the constraints that some pre-defined subset of the parameters are zero.
+\item Now we assume that graphs are not complete(some edges are missing)
+\item We would like to maximize log-likelihood function under the constraints that some pre-defined subset of the parameters are zero.
 \item A number of methods have been proposed for solving it
 \item We outline a simple alternate approach 
 \end{itemize}
@@ -198,7 +162,7 @@ l(\Theta)=log(det(\Theta))-trace(S*\Theta)
 \begin{equation}
 l_C(\Theta)=log(det(\Theta))-trace(S*\Theta)-\sum_{(j, k)\notin E}{\gamma_{jk}*\theta_{jk}}
 \end{equation}
-\item Gradient equation for maximizing (11) can be written as:
+\item Gradient equation for maximizing (7) can be written as:
 \begin{equation}
 \Theta^{-1} - S - \Gamma = 0
 \end{equation}
@@ -210,7 +174,7 @@ where $\Gamma$ is a matrix of Lagrange parameters.
 \frametitle{Alternate approach - details ctd.}
 \begin{itemize}
 \item For simplicity let’s focus on the
-last row and column. Then the upper right block of equation (12) can be written as
+last row and column. Then the upper right block of equation (8) can be written as
 \begin{equation}
 w_{12}-s_{12}-\gamma_{12}=0
 \end{equation}
@@ -229,21 +193,19 @@ I & 0\\
 \begin{equation}
 W_{11} * \theta_{12} + w_{12}*\theta_{22}=0 \iff w_{12}=\frac{-W_{11}*\theta_{12}}{\theta_{22}}
 \end{equation}
-\item Let's say $\beta = −\theta_{12} / \theta_{22}$
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Alternate approach - details ctd.}
 \begin{itemize}
-
 \item Let's say $\beta = −\theta_{12} / \theta_{22}$
 \item Then 
 \begin{equation}
 W_{11}*\beta-s_{12}-\gamma_{12} = 0
 \end{equation}
 \item These can be interpreted as the $p - 1$ estimating equations for the regression of $X_p$ on the other predictors.
-\item To solve (15) we will use subset regression.
+\item To solve (11) we will use subset regression.
 \end{itemize}
 \end{frame}
 
@@ -251,7 +213,7 @@ W_{11}*\beta-s_{12}-\gamma_{12} = 0
 \frametitle{Subset regression}
 \begin{itemize}
 \item Suppose there are $p−q$ nonzero elements in $\gamma_{12}$
-\item By removing these $p-q$ elements (and also reducing $\beta$ to $\beta^*$ by removing its p − q zero elements. We get system of q equations:
+\item By removing these $p-q$ elements (and also reducing $\beta$ to $\beta^*$ by removing its $p − q$ zero elements). We get system of q equations:
 \begin{equation}
 W_{11}^* * \beta^* - s_{12}^* = 0
 \end{equation}
@@ -295,7 +257,7 @@ log(det(\Theta))-trace(S*\Theta)-\lambda*||\Theta||_1
 \Theta^{-1} - S - \lambda*Sign(\Theta) = 0
 \end{equation}
 \item We assume that if $\theta_{jk} = 0$ then $Sign(\theta_{jk}) \in \{-1, 1\}$ and otherwise it is singum function.
-\item Next we can have analogue of (15):
+\item Next we can have analogue of (11):
 \begin{equation}
 W_{11}*\beta - s_{12} + \lambda * sign(\beta) = 0
 \end{equation}
@@ -337,7 +299,7 @@ S(x, t)=sign(x) * (|x| - t)_+
 \end{frame}
 
 \begin{frame}
-\frametitle{Grpahical example}
+\frametitle{Graphical example}
 \includegraphics[width=7cm, height=6cm]{lasso solutions}
 \end{frame}
 
@@ -378,7 +340,7 @@ Pr(X_j=1 | X_{-j}=x_{-j})=\frac{1}{1 + exp(-\theta_{j0} - \sum_{(j, k) \in E} \t
 \item Suppose we have observations $x_i \in \{0,1\}^p$
 \item The log-likelihood is
 \begin{equation}
-l(\theta) = \sum_{i=1}^N log( P(X_i = x_i, \Theta)) = \sum_{i=1}^N (\sum_{(j, k) \in E} \theta_{jk} * x_{ij} * x_{ik} - \Phi(\Theta))
+l(\Theta) = \sum_{i=1}^N log( P(X_i = x_i, \Theta)) = \sum_{i=1}^N (\sum_{(j, k) \in E} \theta_{jk} * x_{ij} * x_{ik} - \Phi(\Theta))
 \end{equation} 
 \item Gradient of log-likelihood is:
 \begin{equation}
@@ -386,7 +348,7 @@ l(\theta) = \sum_{i=1}^N log( P(X_i = x_i, \Theta)) = \sum_{i=1}^N (\sum_{(j, k)
 \end{equation}
 where
 \begin{equation}
-\frac{\partial \Phi(\Theta)}{\partial \theta_{jk}}  = \sum_{x \in \{0, 1\}^p} x_j * x_k * p(x, \Theta)= E_{\Theta}(X_jX_k)
+\frac{\partial \Phi(\Theta)}{\partial \theta_{jk}}  = \sum_{x \in \{0, 1\}^p} x_j * x_k * P(x, \Theta)= E_{\Theta}(X_jX_k)
 \end{equation}
 \end{itemize}
 \end{frame}
@@ -417,24 +379,6 @@ E( X_jX_k )= \frac{1}{N} * \sum_{i=1}^N x_{ij} * x_{ik}
 \end{frame}
 
 \begin{frame}
-\frametitle{ Poisson log-linear modeling}
-\begin{itemize}
-\item We treat problem as regression problem.
-\item Vector y is the vector of $2^p$ counts in each of the possible distribution.
-\item Matrix Z has $2^p$ rows and up to $1+p+p^2$ columns that characterize each of the distribution
-\item Cost is $O(p^4 * 2^p)$. 
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{ Estimation, when p is big}
-\begin{itemize}
-\item Let's say $p > 30$. In this case we can approximate the gradient with methods:
-   %\subitem Mean field approximation - TODO
-\end{itemize}
-\end{frame}
-
-\begin{frame}
 \frametitle{ Hidden Nodes}
 \begin{itemize}
 \item We can make Markov's graph complexity better by including hidden nodes.
@@ -450,17 +394,17 @@ l(\Theta) = \sum_{i=1}^N log[Pr_{\Theta}(X_V = x_{iV})] = \\ \sum_{i=1}^N log\Bi
 \begin{itemize}
 \item The gradient is:
 \begin{equation}
-\frac{\partial l(\Theta)}{\partial \theta_{jk}} = E_{V} * E_{\Theta}(X_jX_k|X_v) -  E_{\Theta}(X_jX_k)
+\frac{\partial l(\Theta)}{\partial \theta_{jk}} = E_{V} * E_{\Theta}(X_jX_k|X_V) -  E_{\Theta}(X_jX_k)
 \end{equation}
 \item The value of the first term depends whether variables $X_j$ and $X_k$ are hidden or not. If both are visible $E_V$ is mean of them. If one or both are hidden, they are first imputed given the visible data, and then averaged over the hidden variables.
-\item $E_{\theta}(X_jX_k | X_v)$ is given by formula:
-\[E_{\theta}(X_jX_k | X_v = x_{iv}) = \begin{cases}
-    x_{ij}*x_{ik}       & \quad \text{if } j, k \in V\\
-     x_{ij}*Pr_{\Theta}(X_k = 1 | X_V = x_{iV})       & \quad \text{if } j \in V, k \in H\\
-     Pr_{\Theta}(X_j = 1, X_k = 1 | X_V = x_{iV})       & \quad \text{if } j, k \in H\\
+\item $E_{\Theta}(X_jX_k | X_v)$ is given by formula:
+\end{itemize}
+\[E_{\Theta}(X_jX_k | X_V = x_{iV}) = \begin{cases}
+    x_{ij}*x_{ik}       & j, k \in V\\
+     x_{ij}*Pr_{\Theta}(X_k = 1 | X_V = x_{iV})       & j \in V, k \in H\\
+     Pr_{\Theta}(X_j = 1, X_k = 1 | X_V = x_{iV})       & j, k \in H\\
 \end{cases} 
 \]
-\end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -473,8 +417,8 @@ l(\Theta) = \sum_{i=1}^N log[Pr_{\Theta}(X_V = x_{iV})] = \\ \sum_{i=1}^N log\Bi
 \end{frame}
 
 \begin{frame}
-\frametitle{ Restricted Boltzmann Machines }
-TODO: Think if this slide is neccessary
+\frametitle{The End}
+Thank you for your attention
 \end{frame}
 \end{document}
 %\column{0.5\textwidth}
