@@ -1,0 +1,68 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\title{Rozwiązania zadań 2 i 6 z listy nr.4 z przedmiotu "Rachunek prawdopodobieństwa dla informatyków"}
+\date{13 grudnia 2021}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Zadanie 2}
+\subsection*{Treść}
+ W urnie mamy $b$ kul białych i $c$ czarnych. Po wyciągnięciu kuli z urny wrzucamy ją z powrotem i dokładamy $d$ kul tego samego koloru. Jakie jest prawdopodobieństwo wyciągnięcia $k$ kul czarnych w $n$ losowaniach?
+\subsection*{Rozwiązanie}
+Niech $X_1, X_2, ..., X_n$ będzie ciągiem zmiennych losowych, takim że:
+\begin{equation}
+ X_i = 
+ \begin{cases}
+        1, & \text{jeśli w i-tym losowaniu wylosowano kulę czarną} \\
+        0, & \text{w p.p.}
+  \end{cases}
+\end{equation} 
+dodatkowo niech 
+\begin{equation}
+S_k = \Big\{(x_1, x_2, ..., x_n) \in \{0, 1\}^n \Big| \sum_{i=1}^n x_i = k\Big\}
+\end{equation}
+Zauważmy, że $|S_k| = {n \choose k}$. Wartość którą chcemy policzyć w tym zadaniu jest
+\begin{equation}
+\sum_{(x_1, x_2, ..., x_n) \in S_k} P(X_1 = x_1, X_2 = x_2, ..., X_n = x_n)
+\end{equation}
+Poczyńmy najpierw następującą obserwację: \\
+\textbf{Obserwacja 1}: Każdy ciąg ze zbioru $S_k$ jest tak samo prawdopodobny, tzn:
+\begin{align*}
+\forall(x_1, x_2, ..., x_n) \in S_k, (y_1, y_2, ..., y_n) \in S_k:  P(X_1 = x_1, X_2 = x_2, ..., X_n = x_n) = \\ P(X_1 = y_1, X_2 = y_2, ..., X_n = y_n)
+\end{align*}
+Rozważmy zatem ciąg niemalejący z $S_k$ : $(0, 0, ..., 0, 1, ..., 1)$. Zauważmy, że wartość (3) możemy zapisać jako:
+\begin{equation}
+{n \choose k} * P(X_1=0, ..., X_{n-k} = 0, X_{n-k+1} = 1, ..., X_n=1)
+\end{equation}
+natomiast:
+\begin{align*}
+P(X_1=0, ..., X_{n-k} = 0, X_{n-k+1} = 1, ..., X_n=1) = \frac{b}{b+c} * \frac{b+d}{b+c+d} * ... \\ * \frac{b+(n-k-1)*d}{b+c+(n-k-1)*d} * \frac{c}{b+c+(n-k)*d} * ... \frac{c+(k-1)*d}{b+c+(n-1)*d}  = \\ \frac{\prod_{i=0}^{n-k+1} (b + i * d) * \prod_{i=0}^{k-1} (c + i * d)}{\prod_{i=0}^{n-1} (b + c + i * d)}
+\end{align*} 
+Zatem rozwiązanie zadania wynosi:
+\begin{equation}
+{n \choose k} * \frac{\prod_{i=0}^{n-k+1} (b + i * d) * \prod_{i=0}^{k-1} (c + i * d)}{\prod_{i=0}^{n-1} (b + c + i * d)}
+\end{equation}
+\section*{Zadanie 6}
+\subsection*{Treść}
+Przesyłane siecią pliki mogą z prawdopodobieństwem $p$ być poprawnie przesłane, prawdopodobieństwem $q$ być przesłane ale z pewnymi uszkodzeniami albo z prawdopodobieństwem $1-p-q$ w trakcie przesyłu sieć się może zawiesić. Jakie jest prawdopodobieństwo, że w trakcie wielokrotnego (niezależnego) przesyłania plików poprawne przesłanie nastąpi przed zawieszeniem sieci
+\subsection*{Rozwiązanie}
+Wyobraźmy sobie, że wykonujemy wielokrotne przesyłanie pliku (z uszkodzeniami lub bez) do momentu pierwszego zawieszenia sieci i pytamy się jakie jest prawdopodobieństwo, że w trakcie tych przesyłów, przynajmniej 1 raz uda nam się przesłać plik bez uszkodzeń. Niech dla $0 < i < j$ zmienne losowe $X_{i, j}$ będą zdefiniowane następująco:
+\begin{equation}
+ X_{i, j} = 
+ \begin{cases}
+        1, & \parbox[t]{.6\textwidth}{jeśli pierwsze poprawne przesłanie było w i-tej próbie, a pierwsze zawieszenie sieci w j-tej} \\
+        0, & \text{w p.p.}
+ \end{cases}
+\end{equation}
+Zauważmy, że $P(X_{i, j} = 1) = q^{i-1} * p * (p + q)^{j - i - 1} * (1 - p - q)$. Interesuje nas wartość:
+\begin{align*}
+\sum_{i = 1}^{\infty} \sum_{j = i + 1}^{\infty} P(X_{i, j} = 1) = \sum_{i = 1}^{\infty} \sum_{j = i + 1}^{\infty} q^{i-1} * p * (p + q)^{j - i - 1} * (1 - p - q) = \\ p * (1 - p - q) * \sum_{i = 1}^{\infty} q^{i-1} * \sum_{j = 0}^{\infty} (p + q)^{j} = p * (1 - p - q) * \frac{1}{1-q} * \frac{1}{1 - p -q} = \frac{p}{1-q}
+\end{align*}
+Zatem odpowiedzią jest $\frac{p}{1 - q}$
+\end{document}
