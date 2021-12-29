@@ -27,6 +27,11 @@ type term =
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
+  | TmExcDef of info * string * term * ty
+  | TmRaiseExc of info * exception * ty
+  | TmTryCatch of info * term * (exception * term) list
+
+type exception = TmExc of string * term
 
 type binding =
     NameBind 
@@ -107,6 +112,10 @@ let tmmap onvar ontype c t =
   | TmSucc(fi,t1)   -> TmSucc(fi, walk c t1)
   | TmPred(fi,t1)   -> TmPred(fi, walk c t1)
   | TmIsZero(fi,t1) -> TmIsZero(fi, walk c t1)
+  | TmExcDef(fi,name, t1,ty) -> TmExcDef(fi,name, walk c t1,ty)
+  | TmRaiseExc(fi, TmExc(name, t), ty) -> TmRaiseExc(fi, TmExc(name, walk c t), ty)
+  | TmTryCatch(fi, t, handlers) -> 
+    TmTryCatch(fi, walk c t, map (fun (TmExc(name, t), t1) -> (TmExc(name, walk c t), walk c t1)) handlers)
   in walk c t
 
 let typeShiftAbove d c tyT =
@@ -184,6 +193,17 @@ let getTypeFromContext fi ctx i =
      | _ -> error fi 
        ("getTypeFromContext: Wrong kind of binding for variable " 
          ^ (index2name fi ctx i)) 
+
+(*Exceptions functions*)
+let havehandler exc handlers = match (exc, handlers) with
+  | (_, []) -> false
+  | (TmRaiseExc(fi1, (TmExc(_, v)), ty1), (TmRaiseExc(fi2, (TmExc(_, v)), ty1), _)::tail) -> true
+  | (exc, _::tail) -> havehandler exc tail
+
+let gethandler exc handlers = match (exc, handlers) with
+  | (_, []) -> raise NoRuleApplies
+  | (TmRaiseExc(fi1, (TmExc(_, v)), ty1), (TmRaiseExc(fi2, (TmExc(_, v)), ty1), handler)::tail) -> handler
+  | (exc, _::tail) -> gethandler exc tail
 (* ---------------------------------------------------------------------- *)
 (* Extracting file info *)
 
@@ -200,6 +220,9 @@ let tmInfo t = match t with
   | TmSucc(fi,_) -> fi
   | TmPred(fi,_) -> fi
   | TmIsZero(fi,_) -> fi
+  | TmExcDef(fi,_,_,_) -> fi
+  | TmRaiseExc(fi,_,_) -> fi
+  | TmTryCatch(fi,_,_) -> fi
 
 (* ---------------------------------------------------------------------- *)
 (* Printing *)
@@ -322,6 +345,13 @@ and printtm_ATerm outer ctx t = match t with
        | TmSucc(_,s) -> f (n+1) s
        | _ -> (pr "(succ "; printtm_ATerm false ctx t1; pr ")")
      in f 1 t1
+  | TmExcDef(_, name, t1,ty) -> (pr "Exception: "; pr name; pr "in term: "; printtm_ATerm outer ctx t1)
+  | TmRaiseExc(_, TmExc(name, t), ty) -> 
+    (pr "Thrown exception: "; pr name; pr "with subterm: "; printtm_ATerm outer ctx t1)
+  | TmTryCatch(_, t, handlers) -> 
+    (pr "Handling of term: "; printtm_ATerm outer ctx t; 
+      pr "with handlers: "; 
+      map (fun (TmExc(name, _) as exc, t1) -> pr name; pr " -> "; printtm_ATerm outer ctx t1; pr ", ") handlers)
   | t -> pr "("; printtm_Term outer ctx t; pr ")"
 
 let printtm ctx t = printtm_Term true ctx t 
