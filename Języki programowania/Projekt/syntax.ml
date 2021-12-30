@@ -28,10 +28,10 @@ type term =
   | TmPred of info * term
   | TmIsZero of info * term
   | TmExcDef of info * string * term * ty
-  | TmRaiseExc of info * exception * ty
-  | TmTryCatch of info * term * (exception * term) list
-
-type exception = TmExc of string * term
+  | TmRaiseExc of info * tmexception * ty
+  | TmTryCatch of info * term * (tmhandledexception * term) list
+and tmexception = TmExc of string * term
+and tmhandledexception = TmHandledExc of string * string
 
 type binding =
     NameBind 
@@ -94,6 +94,7 @@ let tymap onvar c tyT =
   | TyRec(x,tyT) -> TyRec(x,walk (c+1) tyT)
   | TyId(b) as tyT -> tyT
   | TyArr(tyT1,tyT2) -> TyArr(walk c tyT1,walk c tyT2)
+  | TyUnit -> TyUnit
   | TyBool -> TyBool
   | TyNat -> TyNat
   in walk c tyT
@@ -115,7 +116,7 @@ let tmmap onvar ontype c t =
   | TmExcDef(fi,name, t1,ty) -> TmExcDef(fi,name, walk c t1,ty)
   | TmRaiseExc(fi, TmExc(name, t), ty) -> TmRaiseExc(fi, TmExc(name, walk c t), ty)
   | TmTryCatch(fi, t, handlers) -> 
-    TmTryCatch(fi, walk c t, map (fun (TmExc(name, t), t1) -> (TmExc(name, walk c t), walk c t1)) handlers)
+    TmTryCatch(fi, walk c t, List.map (fun (TmHandledExc(name, x), t1) -> (TmHandledExc(name, x), walk c t1)) handlers)
   in walk c t
 
 let typeShiftAbove d c tyT =
@@ -195,14 +196,14 @@ let getTypeFromContext fi ctx i =
          ^ (index2name fi ctx i)) 
 
 (*Exceptions functions*)
-let havehandler exc handlers = match (exc, handlers) with
+let rec havehandler exc handlers = match (exc, handlers) with
   | (_, []) -> false
-  | (TmRaiseExc(fi1, (TmExc(_, v)), ty1), (TmRaiseExc(fi2, (TmExc(_, v)), ty1), _)::tail) -> true
+  | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> true
   | (exc, _::tail) -> havehandler exc tail
 
-let gethandler exc handlers = match (exc, handlers) with
-  | (_, []) -> raise NoRuleApplies
-  | (TmRaiseExc(fi1, (TmExc(_, v)), ty1), (TmRaiseExc(fi2, (TmExc(_, v)), ty1), handler)::tail) -> handler
+let rec gethandler exc handlers = match (exc, handlers) with
+  (*| (_, []) -> raise NoRuleApplies*)
+  | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> handler
   | (exc, _::tail) -> gethandler exc tail
 (* ---------------------------------------------------------------------- *)
 (* Extracting file info *)
@@ -347,11 +348,11 @@ and printtm_ATerm outer ctx t = match t with
      in f 1 t1
   | TmExcDef(_, name, t1,ty) -> (pr "Exception: "; pr name; pr "in term: "; printtm_ATerm outer ctx t1)
   | TmRaiseExc(_, TmExc(name, t), ty) -> 
-    (pr "Thrown exception: "; pr name; pr "with subterm: "; printtm_ATerm outer ctx t1)
+    (pr "Thrown exception: "; pr name; pr "with subterm: "; printtm_ATerm outer ctx t)
   | TmTryCatch(_, t, handlers) -> 
     (pr "Handling of term: "; printtm_ATerm outer ctx t; 
       pr "with handlers: "; 
-      map (fun (TmExc(name, _) as exc, t1) -> pr name; pr " -> "; printtm_ATerm outer ctx t1; pr ", ") handlers)
+      (List.iter (fun (TmHandledExc(name, _) as exc, t1) -> pr name; pr " -> "; printtm_ATerm outer ctx t1; pr ", ") handlers))
   | t -> pr "("; printtm_Term outer ctx t; pr ")"
 
 let printtm ctx t = printtm_Term true ctx t 

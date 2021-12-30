@@ -29,8 +29,8 @@ let rec eval1 ctx t = match t with
       t2
   | TmIf(_,TmFalse(_),_,t3) ->
       t3
-  | TmIf(_,TmRaiseExc(fi, (TmExc(_, v)), t),_,_) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmIf(_,TmRaiseExc(fi, (TmExc(name, v)), t),_,_) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmIf(fi,t1,t2,t3) ->
       let t1' = eval1 ctx t1 in
       TmIf(fi, t1', t2, t3)
@@ -39,10 +39,10 @@ let rec eval1 ctx t = match t with
   | TmApp(fi,v1,t2) when isval ctx v1 ->
       let t2' = eval1 ctx t2 in
       TmApp(fi, v1, t2')
-  | TmApp(_,TmRaiseExc(fi, (TmExc(_, v)), t),_) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
-  | TmApp(_,_,TmRaiseExc(fi, (TmExc(_, v)), t)) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmApp(_,TmRaiseExc(fi, (TmExc(name, v)), t),_) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
+  | TmApp(_,_,TmRaiseExc(fi, (TmExc(name, v)), t)) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmApp(fi,t1,t2) ->
       let t1' = eval1 ctx t1 in
       TmApp(fi, t1', t2)
@@ -50,13 +50,13 @@ let rec eval1 ctx t = match t with
       (match v1 with
          TmAbs(_,_,_,t12) -> termSubstTop t t12
        | _ -> raise NoRuleApplies)
-  | TmFix(_, TmRaiseExc(fi, (TmExc(_, v)), t)) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmFix(_, TmRaiseExc(fi, (TmExc(name, v)), t)) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmFix(fi,t1) ->
       let t1' = eval1 ctx t1
       in TmFix(fi,t1')
-  | TmSucc(_, TmRaiseExc(fi, (TmExc(_, v)), t)) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmSucc(_, TmRaiseExc(fi, (TmExc(name, v)), t)) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmSucc(fi,t1) ->
       let t1' = eval1 ctx t1 in
       TmSucc(fi, t1')
@@ -64,8 +64,8 @@ let rec eval1 ctx t = match t with
       TmZero(dummyinfo)
   | TmPred(_,TmSucc(_,nv1)) when (isnumericval ctx nv1) ->
       nv1
-  | TmPred(_,TmRaiseExc(fi, (TmExc(_, v)), t)) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmPred(_,TmRaiseExc(fi, (TmExc(name, v)), t)) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmPred(fi,t1) ->
       let t1' = eval1 ctx t1 in
       TmPred(fi, t1')
@@ -73,21 +73,24 @@ let rec eval1 ctx t = match t with
       TmTrue(dummyinfo)
   | TmIsZero(_,TmSucc(_,nv1)) when (isnumericval ctx nv1) ->
       TmFalse(dummyinfo)
-  | TmIsZero(fi, TmRaiseExc(fi, (TmExc(_, v)), t)) when isval ctx v ->
-      TmRaiseExc(fi, (TmExc(_, v)), t)
+  | TmIsZero(_, TmRaiseExc(fi, (TmExc(name, v)), t)) when isval ctx v ->
+      TmRaiseExc(fi, (TmExc(name, v)), t)
   | TmIsZero(fi,t1) ->
       let t1' = eval1 ctx t1 in
       TmIsZero(fi, t1')
   | TmExcDef(_, _, t, _) -> t
-  | TmRaiseExc(fi, (TmExt (TmRaiseExc(fi', (TmExc(_, v)), ty))), ty2) when isval ctx v ->
-      (TmRaiseExc(fi', (TmExt v), ty))
-  | TmRaiseExc(fi, (TmExt t), ty) ->
+  | TmRaiseExc(fi, (TmExc (name, TmRaiseExc(fi', (TmExc(name2, v)), ty))), ty2) when isval ctx v ->
+      (TmRaiseExc(fi', (TmExc (name2, v)), ty))
+  | TmRaiseExc(fi, (TmExc (name, t)), ty) ->
       let t' = eval1 ctx t in
-      TmRaiseExc(fi, (TmExt t'), ty)
+      TmRaiseExc(fi, (TmExc (name, t')), ty)
   | TmTryCatch(_, v, _) when isval ctx v ->
     v
-  | TmTryCatch(fi, TmRaiseExc(fi, (TmExc(_, v)), t) as exc, handlers) when isval ctx v -> 
-    if havehandler exc handlers then gethandler exc handlers else exc
+  | TmTryCatch(fi, TmRaiseExc(fi', TmExc(name, v), ty), handlers) when isval ctx v -> 
+    let exc = TmExc(name, v) in
+    if havehandler exc handlers 
+    then gethandler exc handlers 
+    else TmRaiseExc(fi', exc, ty)
   | TmTryCatch(fi, t, handlers) ->
     let t' = eval1 ctx t in
     TmTryCatch(fi, t', handlers)
@@ -142,15 +145,15 @@ let rec tyeqv seen ctx tyS tyT =
      | (TyUnit,TyUnit) -> true
      | _ -> false
 
-let is_defined_in_context exc exc_ctx = match (exc, exc_ctx) with
+let rec is_defined_in_context exc exc_ctx = match (exc, exc_ctx) with
   | (_, []) -> false
-  | (TmRaiseExc(fi1, (TmExc(name, _)), ty1), (name, _)::tail) -> true
-  | (exc, _::tail) -> is_defined_in_context exc tail
+  | (excname, (excname2, _)::tail) when excname=excname2 -> true
+  | (excname2, _::tail) -> is_defined_in_context exc tail
 
-let definition_in_context exc exc_ctx = match (exc, exc_ctx) with
-  | (_, []) -> false
-  | (TmRaiseExc(fi1, (TmExc(name, _)), ty1), (name, ty)::tail) -> ty
-  | (exc, _::tail) -> definition_in_context exc tail
+let rec definition_in_context exc exc_ctx = match (exc, exc_ctx) with
+  | (_, []) -> raise NoRuleApplies
+  | (excname, (excname2, ty)::tail) when excname=excname2 -> ty
+  | (excname, _::tail) -> definition_in_context excname tail
 
 let tyeqv ctx tyS tyT = tyeqv [] ctx tyS tyT
 
@@ -198,16 +201,16 @@ let rec typeof ctx exc_ctx t =
   | TmIsZero(fi,t1) ->
       if tyeqv ctx (typeof ctx exc_ctx t1) TyNat then TyBool
       else error fi "argument of iszero is not a number"
-  | TmExcDef(fi,name, t1,ty) -> typeof ctx (name, ty)::exc_ctx t1
-  | TmRaiseExc(fi, exc, ty) -> 
-    if (is_defined_in_context exc exc_ctx `and` tyeqv ctx (definition_in_context exc exc_ctx) (typeof ctx exc_ctx t1)) 
+  | TmExcDef(fi,name, t1,ty) -> typeof ctx ((name, ty)::exc_ctx) t1
+  | TmRaiseExc(fi, TmExc(name, t), ty) -> 
+    if (is_defined_in_context name exc_ctx && tyeqv ctx (definition_in_context name exc_ctx) (typeof ctx exc_ctx t)) 
     then ty 
     else raise NoRuleApplies
   | TmTryCatch(fi, t, handlers) -> 
     let tyT = typeof ctx exc_ctx t in
-    if (for_all (fun (exc, _) -> is_defined_in_context exc exc_ctx) handlers `and`
-      for_all (fun (TmExc(_, x) as exc, t1) -> let ctx'=addbinding ctx x (VarBind(definition_in_context exc exc_ctx))
-          tyeqv ctx' (typeof ctx' exc_ctx t1) tyT)  handlers) then tyT else raise NoRuleApplies
+    if (List.for_all (fun (TmHandledExc(name, x), _) -> is_defined_in_context name exc_ctx) handlers &&
+      List.for_all (fun (TmHandledExc(name, x), t1) -> let ctx'=addbinding ctx x (VarBind(definition_in_context name exc_ctx))
+          in tyeqv ctx' (typeof ctx' exc_ctx t1) tyT) handlers) then tyT else raise NoRuleApplies
 
 let evalbinding ctx b = match b with
     TmAbbBind(t,tyT) ->

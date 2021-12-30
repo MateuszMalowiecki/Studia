@@ -26,6 +26,11 @@ type term =
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
+  | TmExcDef of info * string * term * ty
+  | TmRaiseExc of info * tmexception * ty
+  | TmTryCatch of info * term * (tmhandledexception * term) list
+and tmexception = TmExc of string * term
+and tmhandledexception = TmHandledExc of string * string
 
 type binding =
     NameBind 
@@ -57,6 +62,10 @@ val termSubstTop: term -> term -> term
 val typeShift : int -> ty -> ty
 val typeSubstTop: ty -> ty -> ty
 (*val tytermSubstTop: ty -> term -> term*)
+
+(*Exceptions functions*)
+val havehandler : tmexception -> (tmhandledexception * term) list -> bool
+val gethandler : tmexception -> (tmhandledexception * term) list -> term
 
 (* Printing *)
 val printtm: context -> term -> unit
