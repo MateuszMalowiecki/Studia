@@ -12,6 +12,7 @@ type ty =
   | TyUnit
   | TyNat
   | TyBool
+  | TyNotTyped
 
 type term =
   | TmVar of info * int * int
@@ -26,7 +27,7 @@ type term =
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
-  | TmExcDef of info * string * term * ty
+  | TmExcDef of info * string * ty * term
   | TmRaiseExc of info * tmexception * ty
   | TmTryCatch of info * term * (tmhandledexception * term) list
 and tmexception = TmExc of string * term

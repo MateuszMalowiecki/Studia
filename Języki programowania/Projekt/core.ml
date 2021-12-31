@@ -78,7 +78,7 @@ let rec eval1 ctx t = match t with
   | TmIsZero(fi,t1) ->
       let t1' = eval1 ctx t1 in
       TmIsZero(fi, t1')
-  | TmExcDef(_, _, t, _) -> t
+  | TmExcDef(_, _, _, t) -> t
   | TmRaiseExc(fi, (TmExc (name, TmRaiseExc(fi', (TmExc(name2, v)), ty))), ty2) when isval ctx v ->
       (TmRaiseExc(fi', (TmExc (name2, v)), ty))
   | TmRaiseExc(fi, (TmExc (name, t)), ty) ->
@@ -157,23 +157,23 @@ let rec definition_in_context exc exc_ctx = match (exc, exc_ctx) with
 
 let tyeqv ctx tyS tyT = tyeqv [] ctx tyS tyT
 
-let rec typeof ctx exc_ctx t =
+let rec typeof1 ctx exc_ctx t =
   match t with
     TmVar(fi,i,_) -> getTypeFromContext fi ctx i
   | TmAbs(fi,x,tyT1,t2) ->
       let ctx' = addbinding ctx x (VarBind(tyT1)) in
-      let tyT2 = typeof ctx' exc_ctx t2 in
+      let tyT2 = typeof1 ctx' exc_ctx t2 in
       TyArr(tyT1, typeShift (-1) tyT2)
   | TmApp(fi,t1,t2) ->
-      let tyT1 = typeof ctx exc_ctx t1 in
-      let tyT2 = typeof ctx exc_ctx t2 in
+      let tyT1 = typeof1 ctx exc_ctx t1 in
+      let tyT2 = typeof1 ctx exc_ctx t2 in
       (match simplifyty ctx tyT1 with
           TyArr(tyT11,tyT12) ->
             if tyeqv ctx tyT2 tyT11 then tyT12
             else error fi "parameter type mismatch"
         | _ -> error fi "arrow type expected")
   | TmFix(fi, t1) ->
-      let tyT1 = typeof ctx exc_ctx t1 in
+      let tyT1 = typeof1 ctx exc_ctx t1 in
       (match simplifyty ctx tyT1 with
            TyArr(tyT11,tyT12) ->
              if tyeqv ctx tyT12 tyT11 then tyT12
@@ -185,32 +185,43 @@ let rec typeof ctx exc_ctx t =
   | TmFalse(fi) -> 
       TyBool
   | TmIf(fi,t1,t2,t3) ->
-     if tyeqv ctx (typeof ctx exc_ctx t1) TyBool then
-       let tyT2 = typeof ctx exc_ctx t2 in
-       if tyeqv ctx tyT2 (typeof ctx exc_ctx t3) then tyT2
+     if tyeqv ctx (typeof1 ctx exc_ctx t1) TyBool then
+       let tyT2 = typeof1 ctx exc_ctx t2 in
+       if tyeqv ctx tyT2 (typeof1 ctx exc_ctx t3) then tyT2
        else error fi "arms of conditional have different types"
      else error fi "guard of conditional not a boolean"
   | TmZero(fi) ->
       TyNat
   | TmSucc(fi,t1) ->
-      if tyeqv ctx (typeof ctx exc_ctx t1) TyNat then TyNat
+      if tyeqv ctx (typeof1 ctx exc_ctx t1) TyNat then TyNat
       else error fi "argument of succ is not a number"
   | TmPred(fi,t1) ->
-      if tyeqv ctx (typeof ctx exc_ctx t1) TyNat then TyNat
+      if tyeqv ctx (typeof1 ctx exc_ctx t1) TyNat then TyNat
       else error fi "argument of pred is not a number"
   | TmIsZero(fi,t1) ->
-      if tyeqv ctx (typeof ctx exc_ctx t1) TyNat then TyBool
+      if tyeqv ctx (typeof1 ctx exc_ctx t1) TyNat then TyBool
       else error fi "argument of iszero is not a number"
-  | TmExcDef(fi,name, t1,ty) -> typeof ctx ((name, ty)::exc_ctx) t1
+  | TmExcDef(fi,name, ty,t1) -> typeof1 ctx ((name, ty)::exc_ctx) t1
   | TmRaiseExc(fi, TmExc(name, t), ty) -> 
-    if (is_defined_in_context name exc_ctx && tyeqv ctx (definition_in_context name exc_ctx) (typeof ctx exc_ctx t)) 
-    then ty 
-    else raise NoRuleApplies
+    if (is_defined_in_context name exc_ctx) 
+    then 
+      let tyT2 = typeof1 ctx exc_ctx t in
+      if tyeqv ctx tyT2 (definition_in_context name exc_ctx) then ty
+      else error fi "Type of subterm and exception definition mismatch"
+    else error fi ("Undefined exception in context: " ^ name)
   | TmTryCatch(fi, t, handlers) -> 
-    let tyT = typeof ctx exc_ctx t in
-    if (List.for_all (fun (TmHandledExc(name, x), _) -> is_defined_in_context name exc_ctx) handlers &&
-      List.for_all (fun (TmHandledExc(name, x), t1) -> let ctx'=addbinding ctx x (VarBind(definition_in_context name exc_ctx))
-          in tyeqv ctx' (typeof ctx' exc_ctx t1) tyT) handlers) then tyT else raise NoRuleApplies
+    let tyT = typeof1 ctx exc_ctx t in
+    if (List.for_all (fun (TmHandledExc(name, x), _) -> is_defined_in_context name exc_ctx) handlers)
+    then if (List.for_all (fun (TmHandledExc(name, x), t1) -> let ctx'=addbinding ctx x (VarBind(definition_in_context name exc_ctx))
+          in tyeqv ctx' (typeof1 ctx' exc_ctx t1) tyT) handlers) 
+        then tyT 
+        else error fi "One of try handlers have undefined exception"
+    else error fi "Type of subterm and exception definition mismatch for one of try handlers."
+
+let rec typeof ctx exc_ctx t = 
+  try typeof1 ctx exc_ctx t 
+  with 
+    | (Exit _) -> TyNotTyped
 
 let evalbinding ctx b = match b with
     TmAbbBind(t,tyT) ->

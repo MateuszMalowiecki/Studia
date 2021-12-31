@@ -5,6 +5,8 @@ open Support.Pervasive
 (* ---------------------------------------------------------------------- *)
 (* Datatypes *)
 
+exception NoRuleApplies
+
 type ty =
     TyVar of int * int
   | TyRec of string * ty
@@ -13,6 +15,7 @@ type ty =
   | TyUnit
   | TyNat
   | TyBool
+  | TyNotTyped
 
 type term =
   | TmVar of info * int * int
@@ -27,7 +30,7 @@ type term =
   | TmSucc of info * term
   | TmPred of info * term
   | TmIsZero of info * term
-  | TmExcDef of info * string * term * ty
+  | TmExcDef of info * string * ty * term
   | TmRaiseExc of info * tmexception * ty
   | TmTryCatch of info * term * (tmhandledexception * term) list
 and tmexception = TmExc of string * term
@@ -97,6 +100,7 @@ let tymap onvar c tyT =
   | TyUnit -> TyUnit
   | TyBool -> TyBool
   | TyNat -> TyNat
+  | TyNotTyped -> TyNotTyped
   in walk c tyT
 
 let tmmap onvar ontype c t = 
@@ -113,7 +117,7 @@ let tmmap onvar ontype c t =
   | TmSucc(fi,t1)   -> TmSucc(fi, walk c t1)
   | TmPred(fi,t1)   -> TmPred(fi, walk c t1)
   | TmIsZero(fi,t1) -> TmIsZero(fi, walk c t1)
-  | TmExcDef(fi,name, t1,ty) -> TmExcDef(fi,name, walk c t1,ty)
+  | TmExcDef(fi,name, ty,t1) -> TmExcDef(fi,name, ty, walk c t1)
   | TmRaiseExc(fi, TmExc(name, t), ty) -> TmRaiseExc(fi, TmExc(name, walk c t), ty)
   | TmTryCatch(fi, t, handlers) -> 
     TmTryCatch(fi, walk c t, List.map (fun (TmHandledExc(name, x), t1) -> (TmHandledExc(name, x), walk c t1)) handlers)
@@ -202,9 +206,9 @@ let rec havehandler exc handlers = match (exc, handlers) with
   | (exc, _::tail) -> havehandler exc tail
 
 let rec gethandler exc handlers = match (exc, handlers) with
-  (*| (_, []) -> raise NoRuleApplies*)
   | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> handler
   | (exc, _::tail) -> gethandler exc tail
+  | (_, []) -> raise NoRuleApplies
 (* ---------------------------------------------------------------------- *)
 (* Extracting file info *)
 
@@ -216,7 +220,7 @@ let tmInfo t = match t with
   | TmAbs(fi,_,_,_) -> fi
   | TmApp(fi, _, _) -> fi
   | TmFix(fi,_) -> fi
-  | TmUnit(fi) as t -> fi
+  | TmUnit(fi) -> fi
   | TmZero(fi) -> fi
   | TmSucc(fi,_) -> fi
   | TmPred(fi,_) -> fi
@@ -281,11 +285,13 @@ and printty_AType outer ctx tyT = match tyT with
             ^ (List.fold_left (fun s (x,_) -> s ^ " " ^ x) "" ctx)
             ^ " }]")
   | TyId(b) -> pr b
+  | TyUnit -> pr "Unit"
   | TyBool -> pr "Bool"
   | TyNat -> pr "Nat"
+  | TyNotTyped -> pr "Because of the above exception, the expression has no type"
   | tyT -> pr "("; printty_Type outer ctx tyT; pr ")"
 
-let printty ctx tyT = printty_Type true ctx tyT 
+let printty ctx tyT = printty_Type true ctx tyT; print_newline() 
 
 let rec printtm_Term outer ctx t = match t with
     TmIf(fi, t1, t2, t3) ->
@@ -311,6 +317,14 @@ let rec printtm_Term outer ctx t = match t with
        pr "fix "; 
        printtm_Term false ctx t1;
        cbox()
+  | TmExcDef(_, name, ty,t1) -> (pr "exception "; pr name; pr " of "; printty_Type outer ctx ty; pr " in "; printtm_Term outer ctx t1)
+  | TmRaiseExc(_, TmExc(name, t), ty) -> 
+    (pr "raise "; pr name; pr " "; printtm_Term outer ctx t; pr " as "; printty_Type outer ctx ty;)
+  | TmTryCatch(_, t, handlers) -> 
+    (pr "try "; printtm_Term outer ctx t; 
+      pr " catch {"; 
+      (List.iter (fun (TmHandledExc(name, _), t1) -> pr name; pr " -> "; printtm_Term outer ctx t1; pr ", ") handlers));
+      pr "}"
   | t -> printtm_AppTerm outer ctx t
 
 and printtm_AppTerm outer ctx t = match t with
@@ -346,13 +360,6 @@ and printtm_ATerm outer ctx t = match t with
        | TmSucc(_,s) -> f (n+1) s
        | _ -> (pr "(succ "; printtm_ATerm false ctx t1; pr ")")
      in f 1 t1
-  | TmExcDef(_, name, t1,ty) -> (pr "Exception: "; pr name; pr "in term: "; printtm_ATerm outer ctx t1)
-  | TmRaiseExc(_, TmExc(name, t), ty) -> 
-    (pr "Thrown exception: "; pr name; pr "with subterm: "; printtm_ATerm outer ctx t)
-  | TmTryCatch(_, t, handlers) -> 
-    (pr "Handling of term: "; printtm_ATerm outer ctx t; 
-      pr "with handlers: "; 
-      (List.iter (fun (TmHandledExc(name, _) as exc, t1) -> pr name; pr " -> "; printtm_ATerm outer ctx t1; pr ", ") handlers))
   | t -> pr "("; printtm_Term outer ctx t; pr ")"
 
 let printtm ctx t = printtm_Term true ctx t 

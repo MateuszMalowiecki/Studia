@@ -11,6 +11,8 @@ open Support.Error
 open Syntax
 open Core
 
+exception NoRuleApplies
+
 let searchpath = ref [""]
 
 let argDefs = [
@@ -88,13 +90,13 @@ let rec process_file f ctx exc_ctx =
 and process_command ctx exc_ctx cmd = match cmd with
     Import(f) -> 
       process_file f ctx exc_ctx
-  | Eval(fi,t) -> 
-      let tyT = typeof ctx exc_ctx t in
-      let t' = eval ctx t in
-      printtm_ATerm true ctx t'; 
-      print_break 1 2;
+  | Eval(fi,t) ->  
+      printtm_ATerm true ctx t;
+      pr " evals to: ";
+      printtm_ATerm true ctx (eval ctx t); 
+      print_space();
       pr ": ";
-      printty ctx tyT;
+      printty ctx (typeof ctx exc_ctx t);
       force_newline();
       ctx
   | Bind(fi,x,bind) -> 

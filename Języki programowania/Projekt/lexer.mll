@@ -12,23 +12,14 @@ open Support.Error
 let reservedWords = [
   (* Keywords *)
   ("import", fun i -> Parser.IMPORT i);
-  ("as", fun i -> Parser.AS i);
-  ("String", fun i -> Parser.USTRING i);
-  ("type", fun i -> Parser.TYPE i);
   ("Rec", fun i -> Parser.REC i);
   ("if", fun i -> Parser.IF i);
   ("then", fun i -> Parser.THEN i);
   ("else", fun i -> Parser.ELSE i);
   ("true", fun i -> Parser.TRUE i);
   ("false", fun i -> Parser.FALSE i);
-  ("timesfloat", fun i -> Parser.TIMESFLOAT i);
-  ("Float", fun i -> Parser.UFLOAT i);
-  ("inert", fun i -> Parser.INERT i);
-  ("let", fun i -> Parser.LET i);
-  ("in", fun i -> Parser.IN i);
   ("lambda", fun i -> Parser.LAMBDA i);
   ("fix", fun i -> Parser.FIX i);
-  ("letrec", fun i -> Parser.LETREC i);
   ("unit", fun i -> Parser.UNIT i);
   ("Unit", fun i -> Parser.UUNIT i);
   ("Bool", fun i -> Parser.BOOL i);
@@ -36,8 +27,13 @@ let reservedWords = [
   ("pred", fun i -> Parser.PRED i);
   ("iszero", fun i -> Parser.ISZERO i);
   ("Nat", fun i -> Parser.NAT i);
-  ("case", fun i -> Parser.CASE i);
+  ("exception", fun i -> Parser.EXCEPTION i);
   ("of", fun i -> Parser.OF i);
+  ("in", fun i -> Parser.IN i);
+  ("raise", fun i -> Parser.RAISE i);
+  ("as", fun i -> Parser.AS i);
+  ("try", fun i -> Parser.TRY i);
+  ("catch", fun i -> Parser.CATCH i);
   
   (* Symbols *)
   ("_", fun i -> Parser.USCORE i);

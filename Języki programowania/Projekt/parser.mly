@@ -23,23 +23,14 @@ open Syntax
 
 /* Keyword tokens */
 %token <Support.Error.info> IMPORT
-%token <Support.Error.info> AS
-%token <Support.Error.info> USTRING
-%token <Support.Error.info> TYPE
 %token <Support.Error.info> REC
 %token <Support.Error.info> IF
 %token <Support.Error.info> THEN
 %token <Support.Error.info> ELSE
 %token <Support.Error.info> TRUE
 %token <Support.Error.info> FALSE
-%token <Support.Error.info> TIMESFLOAT
-%token <Support.Error.info> UFLOAT
-%token <Support.Error.info> INERT
-%token <Support.Error.info> LET
-%token <Support.Error.info> IN
 %token <Support.Error.info> LAMBDA
 %token <Support.Error.info> FIX
-%token <Support.Error.info> LETREC
 %token <Support.Error.info> UNIT
 %token <Support.Error.info> UUNIT
 %token <Support.Error.info> BOOL
@@ -47,8 +38,13 @@ open Syntax
 %token <Support.Error.info> PRED
 %token <Support.Error.info> ISZERO
 %token <Support.Error.info> NAT
-%token <Support.Error.info> CASE
+%token <Support.Error.info> EXCEPTION
 %token <Support.Error.info> OF
+%token <Support.Error.info> IN
+%token <Support.Error.info> RAISE
+%token <Support.Error.info> AS
+%token <Support.Error.info> TRY
+%token <Support.Error.info> CATCH
 
 /* Identifier and constant value tokens */
 %token <string Support.Error.withinfo> UCID  /* uppercase-initial */
@@ -140,6 +136,12 @@ Command :
   | LCID Binder
       { fun ctx -> ((Bind($1.i,$1.v,$2 ctx)), addname ctx $1.v) }
 
+TyBinder :
+    /* empty */
+      { fun ctx -> TyVarBind }
+  | EQ Type
+      { fun ctx -> TyAbbBind($2 ctx) }
+
 /* Right-hand sides of top-level bindings */
 Binder :
     COLON Type
@@ -156,6 +158,14 @@ Type :
           let ctx1 = addname ctx $2.v in
           TyRec($2.v,$4 ctx1) }
 
+/* An "arrow type" is a sequence of atomic types separated by
+   arrows. */
+ArrowType :
+    AType ARROW ArrowType
+     { fun ctx -> TyArr($1 ctx, $3 ctx) }
+  | AType
+            { $1 }
+
 /* Atomic types are those that never need extra parentheses */
 AType :
     LPAREN Type RPAREN  
@@ -166,24 +176,12 @@ AType :
             TyVar(name2index $1.i ctx $1.v, ctxlength ctx)
           else 
             TyId($1.v) }
+  | UUNIT
+      { fun ctx -> TyUnit }  
   | BOOL
       { fun ctx -> TyBool }
   | NAT
       { fun ctx -> TyNat }
-
-TyBinder :
-    /* empty */
-      { fun ctx -> TyVarBind }
-  | EQ Type
-      { fun ctx -> TyAbbBind($2 ctx) }
-
-/* An "arrow type" is a sequence of atomic types separated by
-   arrows. */
-ArrowType :
-    AType ARROW ArrowType
-     { fun ctx -> TyArr($1 ctx, $3 ctx) }
-  | AType
-            { $1 }
 
 Term :
     AppTerm
@@ -198,6 +196,21 @@ Term :
       { fun ctx ->
           let ctx1 = addname ctx "_" in
           TmAbs($1, "_", $4 ctx, $6 ctx1) }
+  | EXCEPTION LCID OF Type IN Term
+      {fun ctx ->
+        TmExcDef($1, $2.v, $4 ctx, $6 ctx)}
+  | EXCEPTION UCID OF Type IN Term
+      {fun ctx ->
+        TmExcDef($1, $2.v, $4 ctx, $6 ctx)}
+  | RAISE LCID Term AS Type
+      {fun ctx ->
+        TmRaiseExc($1, TmExc($2.v, $3 ctx), $5 ctx)}
+  | RAISE UCID Term AS Type
+      {fun ctx ->
+        TmRaiseExc($1, TmExc($2.v, $3 ctx), $5 ctx)}
+  | TRY Term CATCH LCURLY Handlers RCURLY
+      {fun ctx ->
+        TmTryCatch($1, $2 ctx, $5 ctx)}
 
 AppTerm :
     ATerm
@@ -216,24 +229,6 @@ AppTerm :
       { fun ctx -> TmPred($1, $2 ctx) }
   | ISZERO ATerm
       { fun ctx -> TmIsZero($1, $2 ctx) }
-
-FieldTypes :
-    /* empty */
-      { fun ctx i -> [] }
-  | NEFieldTypes
-      { $1 }
-
-NEFieldTypes :
-    FieldType
-      { fun ctx i -> [$1 ctx i] }
-  | FieldType COMMA NEFieldTypes
-      { fun ctx i -> ($1 ctx i) :: ($3 ctx (i+1)) }
-
-FieldType :
-    LCID COLON Type
-      { fun ctx i -> ($1.v, $3 ctx) }
-  | Type
-      { fun ctx i -> (string_of_int i, $1 ctx) }
 
 TermSeq :
     Term 
@@ -262,35 +257,16 @@ ATerm :
             | n -> TmSucc($1.i, f (n-1))
           in f $1.v }
 
-Fields :
-    /* empty */
-      { fun ctx i -> [] }
-  | NEFields
-      { $1 }
-
-NEFields :
-    Field
-      { fun ctx i -> [$1 ctx i] }
-  | Field COMMA NEFields
-      { fun ctx i -> ($1 ctx i) :: ($3 ctx (i+1)) }
-
-Field :
-    LCID EQ Term
-      { fun ctx i -> ($1.v, $3 ctx) }
-  | Term
-      { fun ctx i -> (string_of_int i, $1 ctx) }
-
-Cases :
-    Case
+Handlers :
+    Handler
       { fun ctx -> [$1 ctx] }
-  | Case VBAR Cases
+  | Handler VBAR Handlers
       { fun ctx -> ($1 ctx) :: ($3 ctx) }
 
-Case :
-    LT LCID EQ LCID GT DDARROW AppTerm
+Handler :
+    LCID LCID DDARROW AppTerm
       { fun ctx ->
-          let ctx1 = addname ctx $4.v in
-          ($2.v, ($4.v, $7 ctx1)) }
-
+          let ctx1 = addname ctx $2.v in
+          (TmHandledExc($1.v, $2.v), $4 ctx1) }
 
 /*   */
