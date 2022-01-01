@@ -206,7 +206,7 @@ let rec havehandler exc handlers = match (exc, handlers) with
   | (exc, _::tail) -> havehandler exc tail
 
 let rec gethandler exc handlers = match (exc, handlers) with
-  | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> handler
+  | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> termSubstTop v handler
   | (exc, _::tail) -> gethandler exc tail
   | (_, []) -> raise NoRuleApplies
 (* ---------------------------------------------------------------------- *)
@@ -268,7 +268,7 @@ and printty_ArrowType outer ctx  tyT = match tyT with
     TyArr(tyT1,tyT2) ->
       obox0(); 
       printty_AType false ctx tyT1;
-      if outer then pr " ";
+      if outer then print_space();
       pr "->";
       if outer then print_space() else break();
       printty_ArrowType outer ctx tyT2;
@@ -319,12 +319,14 @@ let rec printtm_Term outer ctx t = match t with
        cbox()
   | TmExcDef(_, name, ty,t1) -> (pr "exception "; pr name; pr " of "; printty_Type outer ctx ty; pr " in "; printtm_Term outer ctx t1)
   | TmRaiseExc(_, TmExc(name, t), ty) -> 
-    (pr "raise "; pr name; pr " "; printtm_Term outer ctx t; pr " as "; printty_Type outer ctx ty;)
+    (pr "raise "; pr name; print_space(); printtm_Term outer ctx t; pr " as "; printty_Type outer ctx ty;)
   | TmTryCatch(_, t, handlers) -> 
-    (pr "try "; printtm_Term outer ctx t; 
-      pr " catch {"; 
-      (List.iter (fun (TmHandledExc(name, _), t1) -> pr name; pr " -> "; printtm_Term outer ctx t1; pr ", ") handlers));
-      pr "}"
+    pr "try "; printtm_Term outer ctx t; 
+    pr " catch {"; 
+    (List.iter (fun (TmHandledExc(name, x), t1) ->
+      (let (ctx',x') = (pickfreshname ctx x) in 
+      pr name; print_space(); pr x'; pr " -> "; printtm_Term outer ctx' t1; print_space())) handlers);
+    pr "}"
   | t -> printtm_AppTerm outer ctx t
 
 and printtm_AppTerm outer ctx t = match t with

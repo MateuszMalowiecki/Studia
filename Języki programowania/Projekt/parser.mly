@@ -268,5 +268,9 @@ Handler :
       { fun ctx ->
           let ctx1 = addname ctx $2.v in
           (TmHandledExc($1.v, $2.v), $4 ctx1) }
+    | UCID LCID DDARROW AppTerm
+      { fun ctx ->
+          let ctx1 = addname ctx $2.v in
+          (TmHandledExc($1.v, $2.v), $4 ctx1) }
 
 /*   */

@@ -15,4 +15,8 @@ raise RunTimeException 0 as Nat;
 
 exception RunTimeException of Bool in (raise RunTimeException true as Nat);
 
-exception RunTimeException of Nat in try (raise RunTimeException 0 as Nat) catch {RunTimeException 0 ==> 42 | RunTimeException 1 ==> 43};
+exception RunTimeException of Nat in try unit catch { RunTimeException x ==> unit };
+
+exception RunTimeException of Nat in try (raise RunTimeException 0 as Unit) catch { RunTimeException x ==> unit };
+
+exception RunTimeException of Nat in try (raise RunTimeException 0 as Nat) catch { RunTimeException x ==> succ x };
