@@ -17,6 +17,18 @@ exception RunTimeException of Bool in (raise RunTimeException true as Nat);
 
 exception RunTimeException of Nat in try unit catch { RunTimeException x ==> unit };
 
+try unit catch { RunTimeException x ==> unit };
+
 exception RunTimeException of Nat in try (raise RunTimeException 0 as Unit) catch { RunTimeException x ==> unit };
 
 exception RunTimeException of Nat in try (raise RunTimeException 0 as Nat) catch { RunTimeException x ==> succ x };
+
+exception RunTimeException of Nat in 
+  exception DivByZeroException of Nat in
+    try (raise RunTimeException 0 as Nat) catch { DivByZeroException x ==> succ x };
+
+exception RunTimeException of Nat in (lambda x:Nat. raise RunTimeException x as Bool) 0;
+
+exception RunTimeException of Nat in if iszero(0) then pred(raise RunTimeException 0 as Nat) else 0;
+
+exception RunTimeException of Nat in if iszero(succ 0) then pred(raise RunTimeException 0 as Nat) else 0;

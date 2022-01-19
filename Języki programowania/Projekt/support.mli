@@ -45,6 +45,7 @@ module Error : sig
      action to be performed is just to print a given string. *)
   val err : string -> 'a
   val error : info -> string -> 'a
+  val type_error : info -> string -> 'a
 
   (* Variants that print a message but do not fail afterwards *)
   val warning : string -> unit

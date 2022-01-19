@@ -6,7 +6,7 @@ open Support.Error
 (* Data type definitions *)
 type ty =
     TyVar of int * int
-  | TyRec of string * ty
+  (*| TyRec of string * ty*)
   | TyId of string
   | TyArr of ty * ty
   | TyUnit
@@ -35,7 +35,7 @@ and tmhandledexception = TmHandledExc of string * string
 
 type binding =
     NameBind 
-  | TyVarBind
+  (*| TyVarBind*)
   | TyAbbBind of ty
   | TmAbbBind of term * (ty option)
   | VarBind of ty

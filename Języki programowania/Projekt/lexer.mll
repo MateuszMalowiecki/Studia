@@ -12,7 +12,6 @@ open Support.Error
 let reservedWords = [
   (* Keywords *)
   ("import", fun i -> Parser.IMPORT i);
-  ("Rec", fun i -> Parser.REC i);
   ("if", fun i -> Parser.IF i);
   ("then", fun i -> Parser.THEN i);
   ("else", fun i -> Parser.ELSE i);

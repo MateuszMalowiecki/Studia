@@ -7,9 +7,10 @@ open Support.Pervasive
 
 exception NoRuleApplies
 
+(*TODO: Check if all of these types and bindings are neccessary
+TyVar - type variables*)
 type ty =
     TyVar of int * int
-  | TyRec of string * ty
   | TyId of string
   | TyArr of ty * ty
   | TyUnit
@@ -38,7 +39,6 @@ and tmhandledexception = TmHandledExc of string * string
 
 type binding =
     NameBind 
-  | TyVarBind
   | TyAbbBind of ty
   | TmAbbBind of term * (ty option)
   | VarBind of ty
@@ -94,7 +94,6 @@ let rec name2index fi ctx x =
 let tymap onvar c tyT = 
   let rec walk c tyT = match tyT with
     TyVar(x,n) -> onvar c x n
-  | TyRec(x,tyT) -> TyRec(x,walk (c+1) tyT)
   | TyId(b) as tyT -> tyT
   | TyArr(tyT1,tyT2) -> TyArr(walk c tyT1,walk c tyT2)
   | TyUnit -> TyUnit
@@ -117,7 +116,7 @@ let tmmap onvar ontype c t =
   | TmSucc(fi,t1)   -> TmSucc(fi, walk c t1)
   | TmPred(fi,t1)   -> TmPred(fi, walk c t1)
   | TmIsZero(fi,t1) -> TmIsZero(fi, walk c t1)
-  | TmExcDef(fi,name, ty,t1) -> TmExcDef(fi,name, ty, walk c t1)
+  | TmExcDef(fi,name, ty,t1) -> TmExcDef(fi,name, ontype c ty, walk c t1)
   | TmRaiseExc(fi, TmExc(name, t), ty) -> TmRaiseExc(fi, TmExc(name, walk c t), ty)
   | TmTryCatch(fi, t, handlers) -> 
     TmTryCatch(fi, walk c t, List.map (fun (TmHandledExc(name, x), t1) -> (TmHandledExc(name, x), walk c t1)) handlers)
@@ -142,7 +141,6 @@ let typeShift d tyT = typeShiftAbove d 0 tyT
 let bindingshift d bind =
   match bind with
     NameBind -> NameBind
-  | TyVarBind -> TyVarBind
   | TyAbbBind(tyT) -> TyAbbBind(typeShift d tyT)
   | TmAbbBind(t,tyT_opt) ->
      let tyT_opt' = match tyT_opt with
@@ -170,13 +168,6 @@ let typeSubst tyS j tyT =
 
 let typeSubstTop tyS tyT = 
   typeShift (-1) (typeSubst (typeShift 1 tyS) 0 tyT)
-
-(*let rec tytermSubst tyS j t =
-  tmmap (fun fi c x n -> TmVar(fi,x,n))
-        (fun j tyT -> typeSubst tyS j tyT) j t
-
-let tytermSubstTop tyS t = 
-  termShift (-1) (tytermSubst (typeShift 1 tyS) 0 t)*)
 
 (* ---------------------------------------------------------------------- *)
 (* Context management (continued) *)
@@ -256,12 +247,6 @@ let small t =
   | _ -> false
 
 let rec printty_Type outer ctx tyT = match tyT with
-    TyRec(x,tyT) ->
-      let (ctx1,x) = (pickfreshname ctx x) in
-      obox(); pr "Rec "; pr x; pr ".";
-      print_space ();
-      printty_Type outer ctx1 tyT;
-      cbox()
   | tyT -> printty_ArrowType outer ctx tyT
 
 and printty_ArrowType outer ctx  tyT = match tyT with 
@@ -288,7 +273,7 @@ and printty_AType outer ctx tyT = match tyT with
   | TyUnit -> pr "Unit"
   | TyBool -> pr "Bool"
   | TyNat -> pr "Nat"
-  | TyNotTyped -> pr "Because of the above exception, the expression has no type"
+  | TyNotTyped -> pr "No type"
   | tyT -> pr "("; printty_Type outer ctx tyT; pr ")"
 
 let printty ctx tyT = printty_Type true ctx tyT; print_newline() 
@@ -365,12 +350,5 @@ and printtm_ATerm outer ctx t = match t with
   | t -> pr "("; printtm_Term outer ctx t; pr ")"
 
 let printtm ctx t = printtm_Term true ctx t 
-
-(*let prbinding ctx b = match b with
-    NameBind -> ()
-  | TyVarBind -> ()
-  | TyAbbBind(tyT) -> pr "= "; printty ctx tyT
-  | TmAbbBind(t,tyT) -> pr "= "; printtm ctx t
-  | VarBind(tyT) -> pr ": "; printty ctx tyT *)
 
 

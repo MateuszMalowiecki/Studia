@@ -137,8 +137,6 @@ Command :
       { fun ctx -> ((Bind($1.i,$1.v,$2 ctx)), addname ctx $1.v) }
 
 TyBinder :
-    /* empty */
-      { fun ctx -> TyVarBind }
   | EQ Type
       { fun ctx -> TyAbbBind($2 ctx) }
 
@@ -153,10 +151,6 @@ Binder :
 Type :
     ArrowType
                 { $1 }
-  | REC UCID DOT Type
-      { fun ctx ->
-          let ctx1 = addname ctx $2.v in
-          TyRec($2.v,$4 ctx1) }
 
 /* An "arrow type" is a sequence of atomic types separated by
    arrows. */

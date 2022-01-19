@@ -60,12 +60,12 @@ let checkbinding fi ctx exc_ctx b = match b with
      let tyT' = typeof ctx exc_ctx t in
      if tyeqv ctx tyT' tyT then TmAbbBind(t,Some(tyT))
      else error fi "Type of binding does not match declared type"
-  | TyVarBind -> TyVarBind
+  (*| TyVarBind -> TyVarBind*)
   | TyAbbBind(tyT) -> TyAbbBind(tyT)
 
 let prbindingty ctx exc_ctx b = match b with
     NameBind -> ()
-  | TyVarBind -> ()
+  (*| TyVarBind -> ()*)
   | TyAbbBind(tyT) -> pr ":: *"
   | VarBind(tyT) -> pr ": "; printty ctx tyT 
   | TmAbbBind(t, tyT_opt) -> pr ": ";
@@ -90,15 +90,20 @@ let rec process_file f ctx exc_ctx =
 and process_command ctx exc_ctx cmd = match cmd with
     Import(f) -> 
       process_file f ctx exc_ctx
-  | Eval(fi,t) ->  
-      printtm_ATerm true ctx t;
-      pr " evals to: ";
-      printtm_ATerm true ctx (eval ctx t); 
-      print_space();
-      pr ": ";
-      printty ctx (typeof ctx exc_ctx t);
-      force_newline();
-      ctx
+  | Eval(fi,t) -> 
+    let tyT = typeof ctx exc_ctx t in
+      (match tyT with
+          TyNotTyped -> force_newline();
+          ctx
+        | _ ->
+        printtm_ATerm true ctx t;
+        pr " evals to: ";
+        printtm_ATerm true ctx (eval ctx t); 
+        print_space();
+        pr "and has type: ";
+        printty ctx (tyT);
+        force_newline();
+        ctx)
   | Bind(fi,x,bind) -> 
       let bind = checkbinding fi ctx exc_ctx bind in
       let bind' = evalbinding ctx bind in
