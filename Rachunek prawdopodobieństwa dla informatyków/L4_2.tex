@@ -1,0 +1,127 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\title{Rozwiązania zadań 16 i 17 z listy nr.4 z przedmiotu "Rachunek prawdopodobieństwa dla informatyków"}
+\date{13 grudnia 2021}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Zadanie 16}
+\subsection*{Treść}
+Oblicz wartość oczekiwaną i wariancję następujących rozkładów: \\
+a) Geometryczny $G(p)$ \\
+b) Poissona $P(\lambda)$ \\
+c) Wykładniczy $E(\lambda)$ \\
+d) Jednostajny $U[a,b]$  \\
+\subsection*{Rozwiązanie}
+\subsubsection*{Rozkład geometryczny}
+Ponieważ rozkład geometryczny jest rozkładem dyskretnym, to skorzystamy ze wzoru:
+\begin{equation}
+E(X) = \sum_{i=0}^{\infty} i * P(X = i)
+\end{equation}
+Jak wiemy dla rozkładu geometrycznego:
+\begin{equation}
+P(X = i) = p * (1 - p)^{i-1}
+\end{equation}
+Podstawiając to do wzoru (1), i korzystając z tego, że $P(X=0) = 0 $, otrzymamy:
+\begin{align*}
+E(X) = \sum_{i=1}^{\infty} i * p * (1 - p)^{i-1} = p *  \sum_{i=1}^{\infty} i * (1 - p)^{i-1} = - p * \sum_{i=1}^{\infty} ((1 - p) ^ i)' = \\ -p * (\sum_{i=1}^{\infty} (1 - p) ^ i)' = -p * \Big(\frac{1-p}{p}\Big)' = -p * \Big(-\frac{1}{p^2}\Big) = \frac{1}{p}
+\end{align*}
+W celu policzenia wariancji skorzystamy ze wzoru:
+\begin{equation}
+V(X) = E(X^2) - (E(X))^2
+\end{equation}
+Znamy już $E(X)$ spróbujmy policzyć $E(X^2)$.
+\begin{align*}
+E(X^2) = \sum_{i=1}^{\infty} i^2 * p * (1 - p)^{i-1} = ... = -p * \Big(\sum_{i=1}^{\infty} i * (1 - p) ^ i\Big)' = -p * \Big[(1 - p) * \Big(\sum_{i=1}^{\infty} i * (1 - p) ^ {i - 1}\Big)\Big]' \\ = p * \Big[(1 - p) * \Big(-\frac{1}{p^2}\Big)\Big]' = p * \Big[\frac{1}{p} - \frac{1}{p^2} \Big]' = p * \Big[ \frac{2}{p^3} - \frac{1}{p^2} \Big] = \frac{2}{p^2} - \frac{1}{p}
+\end{align*}
+Jeśli podstawimy to teraz do wzoru (3) to wyjdzie nam:
+\begin{equation}
+V(X) = \frac{2}{p^2} - \frac{1}{p} - \frac{1}{p^2} = \frac{1}{p^2} - \frac{1}{p} = \frac{1 - p}{p^2}
+\end{equation}
+\subsubsection*{Rozkład Poissona}
+W celu obliczenia wartości oczekiwanej znowu skorzystamy ze wzoru (1) i z faktu, że dla rozkładu Poissona:
+\begin{equation}
+P(X=i) = \frac{e^{-\lambda} * \lambda ^ i}{i!}
+\end{equation}
+Zatem
+\begin{align*}
+E(X) = \sum_{i=0}^{\infty} i * \frac{e^{-\lambda} * \lambda ^ i}{i!} = e^{-\lambda} * \lambda \sum_{i=1}^{\infty} \frac{\lambda ^ {i-1}}{(i-1)!} = e^{-\lambda} * \lambda * e^{\lambda} = \lambda
+\end{align*}
+Podobnie w celu policzenia wariancji skorzystamy ze wzoru (3). Policzmy więc najpierw $E(X^2)$
+\begin{align*}
+E(X^2) = \sum_{i=0}^{\infty} i^2 * \frac{e^{-\lambda} * \lambda ^ i}{i!} = ... = e^{-\lambda} * \lambda * \sum_{i=1}^{\infty} i * \frac{\lambda ^ {i-1}}{(i-1)!} = \\ e^{-\lambda} * \lambda * \Big( \sum_{i=1}^{\infty} (i - 1) * \frac{\lambda ^ {i-1}}{(i-1)!} + \sum_{i=1}^{\infty} \frac{\lambda ^ {i-1}}{(i-1)!} \Big) = e^{-\lambda} * \lambda * \Big( \lambda * \sum_{i=2}^{\infty} \frac{\lambda ^ {i-2}}{(i-2)!} + e^{\lambda} \Big) = \\  e^{-\lambda} * \lambda * (\lambda * e^{\lambda} + e^{\lambda}) = \lambda * (\lambda + 1) = \lambda^2 + \lambda
+\end{align*}
+Zatem 
+\begin{equation}
+V(X) = \lambda^2 + \lambda - \lambda^2 = \lambda
+\end{equation}
+\subsubsection*{Rozkład wykładniczy}
+Ponieważ rozkład wykładniczy jest rozkładem ciągłym, więc w celu policzenia jego wartości oczekiwanej skorzystamy ze wzoru:
+\begin{equation}
+E(X) = \int_{-\infty}^{\infty} x * f(x) \,dx
+\end{equation}
+gdzie f(x) jest funkcją gęstości zmiennej losowej $X$. Funkcja gęstości zmiennej o rozkładzie wykładniczym jest dana wzorem:
+\begin{equation}
+f(x) =  \begin{cases}
+        \lambda * e^{-\lambda * x}, & x \geq 0 \\
+        0, & x < 0
+  		\end{cases}
+\end{equation}
+Zatem
+\begin{align*}
+E(X) =  \int_{0}^{\infty} x * \lambda * e^{-\lambda * x} \,dx = \lambda * \int_{0}^{\infty} x * e^{-\lambda * x} \,dx = \frac{\lambda}{\lambda} * ( \int_{0}^{\infty} e^{-\lambda * x} - \Big[ x * e^{-\lambda * x}\Big]_0^{\infty}) \\ = \Big[ \frac{-e^{-\lambda * x}}{\lambda}\Big]_0^{\infty} = \frac{1}{\lambda}
+\end{align*}
+W celu policzenia wariancji znowu policzymy najpierw $E(X^2)$.
+\begin{align*}
+E(X^2) =  \int_{0}^{\infty} x^2 * \lambda * e^{-\lambda * x} \,dx = ... = \frac{2}{\lambda} * \Big[ \frac{-e^{-\lambda * x}}{\lambda}\Big]_0^{\infty} = \frac{2}{\lambda ^ 2}
+\end{align*}
+Zatem
+\begin{equation}
+V(X) =  \frac{2}{\lambda ^ 2} -  \frac{1}{\lambda ^ 2} = \frac{1}{\lambda ^ 2}
+\end{equation}
+\subsubsection*{Rozkład jednostajny}
+W celu policzenia wartości oczekiwanej znowu skorzystamy ze wzoru(7). Funkcja gęstości zmiennej o rozkładzie jednostajnym jest dana wzorem:
+\begin{equation}
+f(x) = \begin{cases}
+       \frac{1}{b-a}, & a \leq x \leq b\\
+        0, & \text{w\ p.p.}
+  		\end{cases}
+\end{equation}
+Zatem
+\begin{align*}
+E(X) = \int_{a}^{b} x * \frac{1}{b-a} \,dx = \frac{1}{b-a} * \Big[ \frac{x^2}{2}\Big]_a^{b} = \frac{b^2 - a^2}{2 * (b - a)} = \frac{a + b}{2}
+\end{align*}
+W celu policzenia wariancji znowu policzymy w pierwszej kolejności $E(X^2)$:
+\begin{align*}
+E(X^2) = \int_{a}^{b} x^2 * \frac{1}{b-a} \,dx = \frac{1}{b-a} * \Big[ \frac{x^3}{3}\Big]_a^{b} = \frac{b^3 - a^3}{3 * (b - a)} = \frac{a^2 + a * b + b^2}{3}
+\end{align*}
+Zatem
+\begin{align*}
+V(X) = \frac{a^2 + a * b + b^2}{3} - \frac{a^2 + 2 * a * b + b^2}{4} = \frac{4 * a^2 + 4 * a * b + 4 * b^2 - 3 * a^2 - 6 * a * b - 3 * b^2}{12} \\ = \frac{a^2 - 2 * a * b + b^2}{12} = \frac{(a - b)^2}{12}
+\end{align*}
+\section*{Zadanie 17}
+\subsection*{Treść}
+Znaleźć gęstość prawdopodobieństwa zmiennej losowej $Y$ będącej polem koła, którego promień jest zmienną losową o rozkładzie jednostajnym na przedziale $[0,2]$.
+\subsection*{Rozwiązanie}
+Niech $X$ będzie zmienną losową o rozkładzie jednostajnym na przedziale $[0,2]$. Wtedy
+\begin{equation}
+Y = \pi * X^2
+\end{equation}
+Policzmy dystrybuantę zmiennej losowej $Y$. Jak dobrze wiemy jeśli $t < 0$, to $F_Y(t) = 0$, zaś jeśli $t > 4 * \pi$ to $F_Y(t) = 1$. Rozpatrzmy zatem $t \in [0; 4*\pi]$. Wtedy
+\begin{align*}
+F_Y(t) = P(Y \leq t) = P(\pi * X^2 \leq t) = P(X^2 \leq \frac{t}{\pi}) = \\ P\Big[-\sqrt{\frac{t}{\pi}} <= X <= \sqrt{\frac{t}{\pi}}\Big] = F_X\Big(\sqrt{\frac{t}{\pi}}\Big) - F_X\Big(-\sqrt{\frac{t}{\pi}}\Big) = F_X\Big(\sqrt{\frac{t}{\pi}}\Big) = \frac{1}{2} * \sqrt{\frac{t}{\pi}}
+\end{align*}
+Ponieważ funkcja gęstości jest pochodną dystrybuanty, zatem będzie ona zdefiniowana wzorem:
+\begin{equation}
+f_Y(t) =  \begin{cases}
+         \frac{1}{4 * \sqrt{t * \pi}}, & t \in [0; 4*\pi]\\
+        0, & \text(w\ p.p.)
+  		\end{cases}
+\end{equation}
+\end{document}

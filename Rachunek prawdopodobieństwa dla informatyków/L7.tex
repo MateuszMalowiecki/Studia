@@ -1,0 +1,69 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\title{Rozwiązania zadań 1 i 3 z listy nr. 7 z przedmiotu "Rachunek prawdopodobieństwa dla informatyków"}
+\date{31 stycznia 2022}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Zadanie 1}
+\subsection*{Treść}
+Dla danych z zadania 4 z listy 5 (Transfer pliku…) znaleźć $E(X|X \leq Y)$.
+\subsection*{Rozwiązanie}
+Jak pamiętamy:
+\begin{align*}
+X \sim G(1 - p) \\
+Y \sim G(1 - q)
+\end{align*}
+W celu policzenia $E(X|X \leq Y)$ skorzystamy z definicji warunkowej wartości oczekiwanej dla zmiennych dyskretnych:
+\begin{equation}
+E(X | X \leq Y) = \sum_{i=1}^{\infty} i * P(X = i | X <= Y) = \sum_{i=1}^{\infty} i * \frac{P(X = i \wedge X <= Y)}{P(X <= Y)}
+\end{equation}
+Zauważmy teraz, że
+\begin{equation}
+P(X <= Y) = \sum_{i=1}^{\infty} P(X=i) * P(Y >= i) = \sum_{i=1}^{\infty} p^{i - 1} * (1 - p) * q^i = (1 - p) * q * \sum_{i=1}^{\infty} (p * q)^{i - 1} = \frac{(1 - p) * q }{1 - p*q}
+\end{equation}
+Z kolei
+\begin{equation}
+P(X = i \wedge X <= Y) = P(X = i \wedge Y >= i) = P(X = i) * P(Y >= i) = p^{i - 1} * (1 - p) * q^i
+\end{equation}
+Zatem
+\begin{equation}
+E(X | X \leq Y) = \sum_{i=1}^{\infty} i * \frac{p^{i - 1} * (1 - p) * q^i}{\frac{(1 - p) * q }{1 - p*q}} = \frac{1 - p*q}{(1 - p) * q } * (1 - p) * q  * \sum_{i=1}^{\infty} i * (p*q)^{i-1} = (1 - p*q) *  \sum_{i=1}^{\infty} i * (p*q)^{i-1}
+\end{equation}
+Następnie można policzyć, że
+\begin{equation}
+\sum_{i=1}^{\infty} i * (p*q)^{i-1} = \frac{1}{(1 - p * q)^2}
+\end{equation}
+Zatem
+\begin{equation}
+E(X | X \leq Y) = (1 - p*q) * \frac{1}{(1 - p * q)^2} = \frac{1}{1 - p * q}
+\end{equation}
+\section*{Zadanie 3}
+\subsection*{Treść}
+Rzucamy dwiema kostkami do gry. Niech U oznacza minimum, a V maximum otrzymanych liczb. Wyznacz $P(U<3|V=4)$ oraz $E(U|V)$.
+\subsection*{Rozwiązanie}
+Oczywiście:
+\begin{equation}
+P(U < 3|V = 4) = \frac{P(U < 3 \wedge V=4)}{P(V=4)} =\frac{\frac{4}{36}}{\frac{7}{36}} = \frac{4}{7}
+\end{equation}
+Następnie w celu wyznaczenia przypomnijmy sobie, że jest to zmienna losowa taka że
+\begin{equation}
+P(E(U|V) = E(U|V=i)) = P(V=i)
+\end{equation}
+dla każdego i. Na początku obliczmy wartości $E(U|V = i)$ dla kolejnych i:
+\begin{align*}
+& E(U | V = 1) = \sum_{i=1}^6 i * P(U = i | V = 1) = 1 * P(U = 1 | V = 1) = 1 \\
+& E(U | V = 2) = \sum_{i=1}^6 i * P(U = i | V = 2) = 1 * P(U = 1 | V = 2) + 2 * P(U = 2 | V = 2) = 1 * \frac{2}{3} + 2 * \frac{1}{3} = \frac{4}{3} \\
+& E(U | V = 3) = 1 * P(U = 1 | V = 3) + 2 * P(U = 2 | V = 3) + 3 * P(U = 3 | V = 3) = \frac{9}{5} \\
+& E(U | V = 4) = \frac{16}{7} \\
+& E(U | V = 5) = \frac{25}{9} \\
+& E(U | V = 6) = \frac{36}{11}
+\end{align*}
+Następnie zauważmy, że $P(V=i) = \frac{2*i-1}{36}$. Zatem zmienna $E(U|V)$ ma rozkład: $\{ (1, \frac{1}{36}), (\frac{4}{3}, \frac{3}{36}), (\frac{9}{5}, \frac{5}{36}), (\frac{16}{7}, \frac{7}{36}), (\frac{25}{9}, \frac{9}{36}), (\frac{36}{11}, \frac{11}{36})\}$. Żeby sprawdzić poprawność tego rozkładu można sprawdzić czy $E(E(U|V)) = E(U)$. W tym przypadku, rzeczywiście $E(E(U|V)) = \frac{91}{36} = E(U)$
+\end{document}

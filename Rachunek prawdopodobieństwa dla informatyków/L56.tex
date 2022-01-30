@@ -1,0 +1,99 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\title{Rozwiązania zadań 15 z listy nr. 5 i 5 z listy nr.6 z przedmiotu "Rachunek prawdopodobieństwa dla informatyków"}
+\date{24 stycznia 2022}
+\author{Mateusz Małowiecki}
+
+\begin{document}
+\maketitle
+\section*{Zadanie 15}
+\subsection*{Treść}
+Przed głosowaniem nad impeachmentem prezydenta pewnego państwa, przeprowadzono sondaż. W ramach sondażu spytano n osób o to czy popierają usunięcie prezydenta. Zakładamy, że każda z pytanych osób została losowo i niezależnie od pozostałych wybrana ze zbioru osób uprawnionych do głosowania (w szczególności nie wykluczamy powtórzeń) oraz odpowiedziała TAK /NIE. Interesuje nas oszacowanie poparcia wniosku. Oszacuj jak duże powinno być n, żeby prawdopodobieństwo popełnienia błędu względnego większego niż 1\% było mniejsze 
+niż 5\%.
+\subsection*{Rozwiązanie}
+Niech:
+\begin{itemize}
+\item $m$ - liczba mieszkańców państwa
+\item $k$ - liczba osób, które zamierzają odpowiedzieć "TAK"
+\item $X_n$ - zmienna losowa, mówiąca ilu mieszkańców odpowiedziało "TAK" spośród $n$ wybranych
+\end{itemize}
+Oczywiście:
+\begin{equation}
+X_n \sim B\Big(n, \frac{k}{m}\Big)
+\end{equation}
+więc:
+\begin{equation}
+E(X_n) = \frac{n*k}{m}
+\end{equation}
+Zauważmy teraz że błąd względny dany jest wzorem:
+\begin{equation}
+\delta_x=\frac{|x-x_0|}{|x_0|}
+\end{equation}
+gdzie
+\begin{itemize}
+\item $x$ - wartość zmierzona
+\item $x_0$ - dokładna wartość
+\end{itemize}
+W naszym przypadku $x = \frac{X_n}{n}$ i $x_0 = \frac{k}{m}$. Zatem
+\begin{equation}
+\delta_x=\frac{|\frac{X_n}{n} - \frac{k}{m}|}{|\frac{k}{m}|} = \frac{|m|}{|n*k|} * \Big|X_n - \frac{k*n}{m}\Big|
+\end{equation}
+Korzystając z (2), możemy zauważyć, że
+\begin{equation}
+\delta_x = \frac{1}{E(X_n)} * |X_n - E(X_n)|
+\end{equation}
+Zatem
+\begin{equation}
+P(\delta_x \geq 0.01) = P(\frac{1}{E(X_n)} * |X_n - E(X_n)| \geq 0.01) = P(|X_n - E(X_n)| \geq 0.01 * E(X_n))
+\end{equation}
+Skorzystamy teraz z nierówności Chernoffa:
+\begin{equation}
+P(|Y - E(Y)| \geq \delta * E(Y)) \leq 2*e^{-\frac{\delta^2 * E(Y)}{3}}
+\end{equation}
+A zatem:
+\begin{equation}
+P(|X_n - E(X_n)| \geq 0.01 * E(X_n)) \leq 2*e^{-\frac{0.01^2 * E(X_n)}{3}}
+\end{equation}
+Zatem wystarczy znaleźć $n$ dla którego
+\begin{equation}
+2*e^{-\frac{0.01^2 * E(X_n)}{3}} < 0.05
+\end{equation}
+Po prostych przekształceniach otrzymamy:
+\begin{equation}
+n > 30000 * ln(4) * \frac{m}{k} \approx 41588 * \frac{m}{k}
+\end{equation}
+\section*{Zadanie 5}
+\subsection*{Treść}
+Wynik pomiaru opóźnienia w transmisji na pojedynczym odcinku sieci
+komputerowej obarczony jest błędem systematycznych 0.5 i błędem losowym będącym zmienną losową o średniej 0 i wariancji 1. Dokonano pomiaru sieci składającej się ze 100 odcinków (pomiary były niezależne od siebie). Niech $Y$ będzie błędem całkowitym popełnionych przy badaniu całej sieci. Oszacować prawdopodobieństwo tego, że: \\
+a) $Y < 75$ \\
+b) Wynik pomiaru nie przekracza rzeczywistej wartości mierzonego opóźnienia na trasie 100 odcinków. \\
+\subsection*{Rozwiązanie}
+Niech $Y_i$ - opóźnienie na i-tym odcinku. Oczywiście:
+\begin{equation}
+Y=\sum_{i=1}^n Y_i
+\end{equation} 
+Zauważmy, że 
+\begin{equation}
+Y_i = Z_i + 0.5
+\end{equation}
+dla pewnych zmiennych losowych $Z_i$ takich, że $E(Z_i) = 0$ i $V(Z_i) = 1$. Zatem $E(Y_i) = 0.5$ i $V(Y_i)=1$. W celu obliczenia prawdopodobieństw skorzystamy z centralnego twierdzenia granicznego. A zatem:
+\begin{equation}
+U=\frac{Y - 100 *\frac{1}{2}}{\sqrt{100 * 1}} \sim N(0, 1)
+\end{equation}
+\subsubsection*{podpunkt a}
+Chcemy oszacować $P(Y < 75)$, a zatem:
+\begin{equation}
+P(Y < 75) = P \Big(\frac{Y - 100 *\frac{1}{2}}{\sqrt{100 * 1}} < \frac{75 - 100 *\frac{1}{2}}{\sqrt{100 * 1}}\Big) = P (U < 2,5) \approx \Phi(2,5) = 0,993
+\end{equation}
+\subsubsection*{podpunkt b}
+Ponieważ rzeczywista wartość opóźnienia na trasie 100 odcinków wynosi 50, więc:
+\begin{equation}
+P(Y < 50) = P \Big(\frac{Y - 100 *\frac{1}{2}}{\sqrt{50 * 1}} < \frac{75 - 100 *\frac{1}{2}}{\sqrt{100 * 1}}\Big) = P (U < 0) \approx \Phi(0) = 0,5
+\end{equation}
+\end{document}
