@@ -47,9 +47,9 @@ module Error : sig
   val error : info -> string -> 'a
   val type_error : info -> string -> 'a
 
-  (* Variants that print a message but do not fail afterwards *)
+  (* Variants that print a message but do not fail afterwards 
   val warning : string -> unit
-  val warningAt : info -> string -> unit
+  val warningAt : info -> string -> unit*)
 end
 
 

@@ -37,6 +37,7 @@ let error fi s = errfAt fi (fun()-> print_string s; print_newline())
 let type_error fi s = errf (fun()-> print_string "Expression does not have a type: "; 
   print_newline(); print_string s; print_newline())
 
+(*
 let warning s =
   print_string "Warning: "; print_string s;
   print_newline()
@@ -44,7 +45,7 @@ let warning s =
 let warningAt fi s =
   printInfo fi; print_string " Warning: ";
   print_string s; print_newline()
-
+*)
 end
 
 (* ---------------------------------------------------------------------- *)

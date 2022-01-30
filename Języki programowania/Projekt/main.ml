@@ -60,12 +60,16 @@ let checkbinding fi ctx exc_ctx b = match b with
      let tyT' = typeof ctx exc_ctx t in
      if tyeqv ctx tyT' tyT then TmAbbBind(t,Some(tyT))
      else error fi "Type of binding does not match declared type"
-  (*| TyVarBind -> TyVarBind*)
   | TyAbbBind(tyT) -> TyAbbBind(tyT)
+
+let evalbinding ctx b = match b with
+    TmAbbBind(t,tyT) ->
+      let t' = eval ctx t in 
+      TmAbbBind(t',tyT)
+  | bind -> bind
 
 let prbindingty ctx exc_ctx b = match b with
     NameBind -> ()
-  (*| TyVarBind -> ()*)
   | TyAbbBind(tyT) -> pr ":: *"
   | VarBind(tyT) -> pr ": "; printty ctx tyT 
   | TmAbbBind(t, tyT_opt) -> pr ": ";
@@ -96,9 +100,9 @@ and process_command ctx exc_ctx cmd = match cmd with
           TyNotTyped -> force_newline();
           ctx
         | _ ->
-        printtm_ATerm true ctx t;
+        printtm ctx t;
         pr " evals to: ";
-        printtm_ATerm true ctx (eval ctx t); 
+        printtm ctx (eval ctx t); 
         print_space();
         pr "and has type: ";
         printty ctx (tyT);

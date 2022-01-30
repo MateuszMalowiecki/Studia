@@ -80,7 +80,7 @@ let rec eval1 ctx t = match t with
       TmIsZero(fi, t1')
   | TmExcDef(_, _, _, t) -> t
   | TmRaiseExc(fi, (TmExc (name, TmRaiseExc(fi', (TmExc(name2, v)), ty))), ty2) when isval ctx v ->
-      (TmRaiseExc(fi', (TmExc (name2, v)), ty))
+      (TmRaiseExc(fi, (TmExc (name2, v)), ty2))
   | TmRaiseExc(fi, (TmExc (name, t)), ty) ->
       let t' = eval1 ctx t in
       TmRaiseExc(fi, (TmExc (name, t')), ty)
@@ -140,6 +140,8 @@ let rec tyeqv seen ctx tyS tyT =
      | (TyUnit,TyUnit) -> true
      | _ -> false
 
+let tyeqv ctx tyS tyT = tyeqv [] ctx tyS tyT
+
 let rec is_defined_in_context exc exc_ctx = match (exc, exc_ctx) with
   | (_, []) -> false
   | (excname, (excname2, _)::tail) when excname=excname2 -> true
@@ -149,8 +151,6 @@ let rec definition_in_context exc exc_ctx = match (exc, exc_ctx) with
   | (_, []) -> raise NoRuleApplies
   | (excname, (excname2, ty)::tail) when excname=excname2 -> ty
   | (excname, _::tail) -> definition_in_context excname tail
-
-let tyeqv ctx tyS tyT = tyeqv [] ctx tyS tyT
 
 let rec typeof1 ctx exc_ctx t =
   match t with
@@ -217,9 +217,3 @@ let rec typeof ctx exc_ctx t =
   try typeof1 ctx exc_ctx t 
   with 
     | (Exit _) -> TyNotTyped
-
-let evalbinding ctx b = match b with
-    TmAbbBind(t,tyT) ->
-      let t' = eval ctx t in 
-      TmAbbBind(t',tyT)
-  | bind -> bind

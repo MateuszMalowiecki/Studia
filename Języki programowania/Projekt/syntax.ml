@@ -7,8 +7,6 @@ open Support.Pervasive
 
 exception NoRuleApplies
 
-(*TODO: Check if all of these types and bindings are neccessary
-TyVar - type variables*)
 type ty =
     TyVar of int * int
   | TyId of string
@@ -112,7 +110,7 @@ let tmmap onvar ontype c t =
   | TmApp(fi,t1,t2) -> TmApp(fi,walk c t1,walk c t2)
   | TmFix(fi,t1) -> TmFix(fi,walk c t1)
   | TmUnit(fi) as t -> t
-  | TmZero(fi)      -> TmZero(fi)
+  | TmZero(fi) as t -> t
   | TmSucc(fi,t1)   -> TmSucc(fi, walk c t1)
   | TmPred(fi,t1)   -> TmPred(fi, walk c t1)
   | TmIsZero(fi,t1) -> TmIsZero(fi, walk c t1)
@@ -190,14 +188,16 @@ let getTypeFromContext fi ctx i =
        ("getTypeFromContext: Wrong kind of binding for variable " 
          ^ (index2name fi ctx i)) 
 
+(* ---------------------------------------------------------------------- *)
 (*Exceptions functions*)
+
 let rec havehandler exc handlers = match (exc, handlers) with
   | (_, []) -> false
   | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> true
   | (exc, _::tail) -> havehandler exc tail
 
 let rec gethandler exc handlers = match (exc, handlers) with
-  | ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> termSubstTop v handler
+| ((TmExc (name, v)), (TmHandledExc (name', v'), handler)::tail) when name=name' -> termSubstTop v handler
   | (exc, _::tail) -> gethandler exc tail
   | (_, []) -> raise NoRuleApplies
 (* ---------------------------------------------------------------------- *)

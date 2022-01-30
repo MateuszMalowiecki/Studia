@@ -6,7 +6,6 @@ open Support.Error
 (* Data type definitions *)
 type ty =
     TyVar of int * int
-  (*| TyRec of string * ty*)
   | TyId of string
   | TyArr of ty * ty
   | TyUnit
@@ -35,7 +34,6 @@ and tmhandledexception = TmHandledExc of string * string
 
 type binding =
     NameBind 
-  (*| TyVarBind*)
   | TyAbbBind of ty
   | TmAbbBind of term * (ty option)
   | VarBind of ty
@@ -62,7 +60,6 @@ val termShift: int -> term -> term
 val termSubstTop: term -> term -> term
 val typeShift : int -> ty -> ty
 val typeSubstTop: ty -> ty -> ty
-(*val tytermSubstTop: ty -> term -> term*)
 
 (*Exceptions functions*)
 val havehandler : tmexception -> (tmhandledexception * term) list -> bool
@@ -72,7 +69,6 @@ val gethandler : tmexception -> (tmhandledexception * term) list -> term
 val printtm: context -> term -> unit
 val printtm_ATerm: bool -> context -> term -> unit
 val printty : context -> ty -> unit
-(*val prbinding : context -> binding -> unit*)
 
 (* Misc *)
 val tmInfo: term -> info

@@ -15,6 +15,10 @@ raise RunTimeException 0 as Nat;
 
 exception RunTimeException of Bool in (raise RunTimeException true as Nat);
 
+exception RunTimeException of Bool in 
+  exception DivByZeroException of Nat in
+    raise RunTimeException (raise DivByZeroException 0 as Bool) as Nat;
+
 exception RunTimeException of Nat in try unit catch { RunTimeException x ==> unit };
 
 try unit catch { RunTimeException x ==> unit };
